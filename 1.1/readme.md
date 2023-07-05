@@ -162,3 +162,138 @@ x,y int;
 ">>n" operator removes n zeros from the binary representation of a certain number
 
 "<<n" operator adds n zeros from the binary representation of a certain number
+
+## For
+- Normal for is like this
+  ```
+  for i:=0 ; i<10; i++ {
+    sum+=i
+  }
+  ```
+
+## For continued
+- Another way to make a for
+  ```
+  for ; sum < 1000; {
+    sum += sum
+  }
+  ```
+
+## While in go
+- The while in go uses for
+```
+for sum < 1000{
+    sum += sum
+}
+```
+
+## Forever Loop 
+```
+for{
+
+}
+```
+
+## If Statement
+- The if statement does not need parentheses
+```
+if x {}
+```
+
+## If with short statement
+- We can make a if in a short way but the value will only be accessible inside of the if
+  ```
+  if v:= x*x; v < y {
+    return v
+  }
+  ```
+- This "v" can only be accessed inside of the {}
+
+## If and else
+```
+if v:=x*x; v < 10{
+    return v
+}else{
+    //I CAN USE V here
+    return lim
+}
+// I cannot use v here
+```
+
+## Switch
+```
+switch(x){
+    case 1:
+    fmt.Println("lul")
+    default:
+    fmt.Println("Hallo")
+}
+```
+
+## Switch with no condition
+```
+switch{
+    case x < 12:
+    ...
+    case x > 12:
+    ...
+    default:
+    ...
+}
+```
+
+## Defer
+- This is a keyword that would a certain task until the neighboor task get executed
+- If multiple defers are stacked, they will run in order. The oldest will be the last to run.
+
+## Pointers
+- Pointers hold the memory address of a value
+  ```
+  var p *int
+  ```
+- This is how we pass the address to the pointer
+  ```
+  i := 42 
+  p = &i
+  ```
+- This is how we get the value:
+  ```
+  fmt.Println(*p) // PRINT THE VALUE
+  *p=21 //SET THE VALUE
+  ```
+
+## Structs
+```
+type Person struct{
+    name string,
+    familyName string
+}
+```
+
+## Structs Fields
+```
+type Vertex struct{
+    X int
+    Y int
+}
+func main(){
+    v:=Vertex{1,2}
+    v.X=4
+}
+```
+
+## Pointers to Structs
+The proccess is the same as other variable
+```
+v := Vertex{1, 2}
+p := &v
+```
+
+## Struct Literals
+```
+type Vertex struct{
+    Name string
+    Age int
+    Email string
+}
+```
