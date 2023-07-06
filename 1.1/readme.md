@@ -297,3 +297,152 @@ type Vertex struct{
     Email string
 }
 ```
+
+## Arrays 
+- To init a array we do something like [n]<type>, where n is the length and type is the type of the array
+ ```
+ var a [10]int
+ ```
+- Limited length
+
+## Slices
+- A slice is dynamically-sized
+```
+var s [] int = primes[1:4]
+a[1:4]
+```
+
+## Slices are like references to arrays
+- Slice does not store any data, it just describes a determined section
+- Changing his elements only change the elements of his underlying array
+
+## Slice literals
+- THis is a literal array
+  ```
+  [3]bool{true,true,false}
+  ```
+- This is a literal slice
+  ```
+  []bool{true,false,true,false}
+  ```
+
+## Slice defaults
+These slices expressions are equivalent:
+```
+a[0:10]
+a[:10]
+a[0:]
+a[:]
+```
+
+## Slice length and capacity
+- Slice has a length and a capacity
+- if you use [:2], it will create a new slice with the first 2 members (length 2) but the capacity will remain the same
+- if you use [2:], it will create a new slice with the first  2 members but decrease the capacity by 2
+
+## Nil slices
+- The zero value of a slice is nil
+- Nil slice has a length and capacity of 0
+
+## Create Slice with make
+- Slices can be created with a built-in make func
+```
+a:= make([]int,5)
+```
+- This results in a slice of length 5
+
+```
+b:=make([]int,0,5)
+```
+- This results in a slice of length 0 but capacity 5
+
+## Slices of slices
+- A slice can contain another slice
+
+## Appending to a slice
+We can append a slice to another
+```
+s = append(s,1)
+```
+We need to notice that if we crete a slice from a huge file for example.. if we do not cut that file into a piece and still mention it as a whole, we will pretty much not let the garbadge collection to take out the full mentioned file. We could take the part that interest us and mention that part exclusively, making the garbadge collector let out the entire data:
+```
+func CopyDigits(filename string) []byte {
+    b, _ := ioutil.ReadFile(filename)
+    b = digitRegexp.Find(b)
+    c := make([]byte, len(b))
+    copy(c, b)
+    return c
+}
+```
+
+## Range
+- Range is a form of loop
+- We can iterate all over the members, get that value and also the index with it
+  ```
+  for i,v := range pow {
+    fmt.Printf("2**%d=%d\n",i,v)
+  }
+  ```
+- You can skip the index or the value using "_" or ommiting it
+  ```
+  for _,v := range pow{
+
+  }
+  for i,_ := range pow{
+
+  }
+  for i := range pow{
+
+  }
+  ```
+
+## Maps
+- Maps keys to values
+- Zero value of map is nil
+  ```
+  var m map[string]int
+  ```
+
+## Map Literals
+- You can put a map literals like this:
+  ```
+  var m = map[string]Person{
+    "Pedro": Person{
+      Name: "Pedro",
+      Age: 12,
+    },
+    "Martins": Person{
+      Name: "Martins",
+      Age: 1
+    }
+  }
+  ```
+
+## Mutating Maps
+Insert or update map
+```
+m[key] = elem
+```
+Retrieve an element
+```
+elem=m[key]
+```
+Delete an element
+```
+delete(m,key)
+```
+Test that a key is present with a two-value assignment (if key is in m then ok=true, else ok=false. Also case the ok is false the elem is the zero value of the element type)
+```
+elem,ok=m[key]
+```
+
+## Function values
+We can pass function like values to functions
+```
+func compute(fc func(float64,float64)) float64{
+  fc(3,4)
+}
+```
+
+## Function closures
+- It is a function that calls a variable ouside his body
