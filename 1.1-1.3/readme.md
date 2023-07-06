@@ -446,3 +446,185 @@ func compute(fc func(float64,float64)) float64{
 
 ## Function closures
 - It is a function that calls a variable ouside his body
+
+## Methods
+- Go does not have classes
+- You can define methods on types
+```
+type Person struct{
+  Name: string
+  Age: int
+}
+
+func (p Person) Abs() float64{
+  return math.Sqrt(p.X*p.X + p.Y*p.Y)
+}
+
+func main(){
+  p:= Person(Name: "Pedro", Age: 1)
+  fmt.Println(p.Abs())
+}
+```
+- You can implement it in a normal way like this
+  ```
+  func Abs(p Person)float64{
+    ...
+  }
+  ```
+
+## Methods continued
+- You can also aggregate methods to a variable like int for example
+  ```
+  type teste int
+  func (t teste) roda(){
+    ...
+  }
+  ```
+
+## Pointer receivers
+- With pointer receivers you can change the value of the given type you used to ivoke the function
+  ```
+  type Teste int
+  func (t *Teste) changeValue(){
+    t=Teste(4)
+  }
+  ```
+- We can do the same thing using simply functions
+ ```
+ type Teste int
+ func changeValye(t *Teste){}
+ ```
+
+## Methods and pointer indirection
+- We can both use the receiver or create a function just for it, but in case we do the function we need to pass the pointer
+```
+RECEIVER:
+v.calc(2)
+Func way:
+calc(&v,2)
+```
+- Note that for pass the pointer the function needs to take a pointer, otherwise it will throw a error
+- Note that if you dont pass a pointer, it will create a copy of the variable you are passing
+  
+## Choosing a value or pointer receiver
+- Normally it is better to use pointer receiver but not both at the same time
+
+## Interfaces
+- It is a method signature
+- It describes which methods it is implementing
+- To implement a interface in go we do as so:
+ ```
+ type test interface{
+  printValue()
+ }
+
+ var t test
+
+ t = someStructure // SOME STRUCTURE IMPLEMENTS t
+ ```
+
+## Interfaces implemented implicity
+```
+type I interface{
+  M()
+}
+var i I = someStructure{someProp}
+i.M()
+```
+
+## Interface values
+- With interface we can assign different types to a given function
+- When we call the function present in the interface, that function will run according to his perspective, because different structs, with different types can have the same signature of function but the function itself is different
+```
+type Person struct{
+  Name string
+}
+type Albert struct{
+  Age int
+}
+type someVal interface{
+  GetProp()
+}
+func (p Person) GetProp(){
+  return p.Name
+}
+func (a Albert) GetProp(){
+  return a.Age
+}
+var x someVal = Person{Name: "Pedro"}
+var y someVal = Albert{Age: 2}
+x.GetProp()
+y.GetProp()
+``` 
+- Note that x returns a string on GetProp()
+- Note that y returns a int on GetProp()
+- When creating the method of that interface, we should implement a way out case it is nil that prop
+- Running a method on a nil interface causes a run time error
+- An empty interface can be used for when we dont know the type of a certain variable
+
+## Type assertions (interface)
+- We can and we should make verifications of type of a certain value before doing operations over it
+```
+var i interface{} = "hello"
+s,ok := i.(string) // CASE IT WENT OK = true, else false
+``` 
+
+## Type Switches (interface)
+- We can create a switch according to the type
+  ```
+  switch v:= i.(type){
+    case T:
+    // here v has type T
+    case S:
+    // here v has type S
+    default:
+    // no match; here v has the same type as i
+  }
+  ``` 
+
+## Stringers
+- This is the .toString(), that we have in java
+  ```
+  type Person struct{
+    Name string
+  }
+  func(p Person) String() string{
+    return "THIS WILL BE THE OUTPUT WHATEVER THE NAME VALUE"
+  }
+  ```
+
+## Errors
+- This is how a error occur
+  ```
+  i,err := strconv.Atoi("42")
+  if err != nil{
+    ... //ERROR HANDLING HERE
+  }
+  //NO ERROR HANDLING
+  ```
+- Another way to handle errors
+  ```
+  type MyError struct{
+    when time.time
+    what string
+  }
+  func (e *MyError) Error() string{
+    return fmt.Sprintf("at %v, %s",e.when,e.what)
+  }
+  func run() error{
+    return &MyError{
+      time.Now(),
+      "it did not work"
+    }
+  }
+
+  func main(){
+    if err := run(); err != nil {
+      fmt.Println(err)
+    }
+  }
+  ```
+
+## Reader
+- It is something like a buffer, that we use to read a stream of data
+- It is a slice of bytes, that we can specify the length and store content of a certain file.. We can loop all over a file using that slice of bytes and try to see if a file as something that we want
