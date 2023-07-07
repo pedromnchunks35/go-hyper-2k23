@@ -1,10 +1,10 @@
 # ROADMAP
-## 1. Basics of Go Programming:
-- [1.1] Learn the syntax, data types, variables, control structures, and functions in Go. [+ INFO](1.1-1.3/readme.md)
-- [1.2] Understand how to work with packages, import statements, and organizing code into multiple files. [+ INFO](1.1-1.3/readme.md)
-- [1.3] Get familiar with Go's idiomatic coding style and best practices. [+ INFO](1.1-1.3/readme.md)
+## 1. Basics of Go Programming: [+ INFO](1.1-1.3/readme.md)
+- [1.1] Learn the syntax, data types, variables, control structures, and functions in Go. 
+- [1.2] Understand how to work with packages, import statements, and organizing code into multiple files. 
+- [1.3] Get familiar with Go's idiomatic coding style and best practices.
 
-## 2. Concurrency and Goroutines:
+## 2. Concurrency and Goroutines: [+ INFO](2/readme.md)
 - Go's concurrency model is a key feature. Learn about goroutines, channels, and the sync package.
 - Understand how to write concurrent programs, handle race conditions, and synchronize access to shared resources.
 - Practice designing concurrent systems and explore patterns like fan-out/fan-in, worker pools, and select statements.
