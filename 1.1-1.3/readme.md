@@ -628,3 +628,22 @@ s,ok := i.(string) // CASE IT WENT OK = true, else false
 ## Reader
 - It is something like a buffer, that we use to read a stream of data
 - It is a slice of bytes, that we can specify the length and store content of a certain file.. We can loop all over a file using that slice of bytes and try to see if a file as something that we want
+
+## Images
+- We can define a image using interface image
+
+## Type Parameters
+- Go allows that we create a function that can take multiple types. But for that we need to use a state called comparable, so we can compare that multiple type
+  ```
+  func Index[T comparable](s[]T,x T) int{
+    ...
+  }
+  ```
+
+## Generic Types
+- Go also implements generic types for a certain struct
+  ```
+  type List[T any] struct{
+    ..
+  }
+  ```
