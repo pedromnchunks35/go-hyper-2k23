@@ -337,8 +337,8 @@ a[:]
 
 ## Slice length and capacity
 - Slice has a length and a capacity
-- if you use [:2], it will create a new slice with the first 2 members (length 2) but the capacity will remain the same
-- if you use [2:], it will create a new slice with the first  2 members but decrease the capacity by 2
+- if you use [:2], it will create a new slice with the first 2 members (length 2) 
+- if you use [2:], it will create a new slice with the members that are not the first 2 members
 
 ## Nil slices
 - The zero value of a slice is nil
