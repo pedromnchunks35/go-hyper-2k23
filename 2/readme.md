@@ -64,3 +64,9 @@ v,ok := <-ch
   
 ## Default Select  [Link](DefaultSelection/default-selection.go)
 - In case theres no receival of the channels we can use the default to do some action
+
+##  Sync.Mutex [Link](SyncMutex/mutex-counter.go)
+- Concept to avoid that multiple threads access the same variable
+- It locks and unlocks 
+- The concepts its called mutual exclusion
+- Defer is used to after all the other methods run unlock the variable
