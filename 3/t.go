@@ -1,13 +1,10 @@
 package main
-
-import (
-"fmt"
-"math/rand"
-)
+import "fmt"
 
 func main(){
-fmt.Println(rand.Int()%3)
-x:=[]int{1,2,3,4,5}
-fmt.Println(x[1:])
-fmt.Println(x[:2])
+low := 0
+high := 10
+for low <= high{
+fmt.Println(low,high)
+}
 }

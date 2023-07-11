@@ -17,6 +17,8 @@
 - It is O(n*logn)
 # Search Algorithms
 ###   1. Linear Search [Link](LinearSearch/linearSearch.go)
+- This is the normal Search
+- O(n)
 ###   2. Binary Search [Link](BinarySearch/binarySearch.go)
 # Graph Algorithms
 ###  1. Depth-First Search (DFS)
