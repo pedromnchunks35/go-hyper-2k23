@@ -9,8 +9,7 @@
 - Understand how to write concurrent programs, handle race conditions, and synchronize access to shared resources.
 - Practice designing concurrent systems and explore patterns like fan-out/fan-in, worker pools, and select statements.
 
-## 3. Data Structures and Algorithms in Go:
-- Study essential data structures such as arrays, slices, maps, and linked lists in Go.
+## 3. Data Algorithms Structures: [+ INFO](3/readme.md)
 - Learn common algorithms like searching, sorting, graph traversal, and recursion.
 - Implement these algorithms in Go, focusing on efficient code and understanding time and space complexities.
 
