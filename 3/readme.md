@@ -20,10 +20,18 @@
 - This is the normal Search
 - O(n)
 ###   2. Binary Search [Link](BinarySearch/binarySearch.go)
+- It only works with ordered lists
+- It dvides the list until finding the value which will be between the low and high
 # Graph Algorithms
-###  1. Depth-First Search (DFS)
-###  2. Breadth-First Search (BFS)
-###  3. Dijkstr's Algorithm
+###  1. Depth-First Search (DFS) [Link](DepthFirstSearch/dfs.go)
+- This is a graph search
+- It uses recursive methods to iterate the array of dests associated with the source
+- It will dive in to the leafs first and not into the pair (this is the difference against the Breadth)
+- O(V+E), V is number of Vertices and E the number of edges
+###  2. Breadth-First Search (BFS) [Link](BreathFirstSearch/bfs.go)
+- In this algorithm you create a queue, to place in orderer which elements you will iter. By itering a node you place his childs inside of the key right ahead, so by order you will check them one by one
+###  3. Dijkstr's Algorithm [Link](DijkstraAlgorithm/dijks.go)
+- It was conceived to solve the minimum time problem
 ###  4. Minimum Spanning Tree (MST)
 # Dynamic Programming
 ###  1. Memoization 

@@ -1,10 +1,10 @@
 package main
+
 import "fmt"
 
 func main(){
-low := 0
-high := 10
-for low <= high{
-fmt.Println(low,high)
-}
+x:=make(map[int][]int)
+x[1] = append(x[1],3)
+x[1] = append(x[1],4)
+fmt.Println(x)
 }
