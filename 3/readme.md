@@ -31,8 +31,24 @@
 ###  2. Breadth-First Search (BFS) [Link](BreathFirstSearch/bfs.go)
 - In this algorithm you create a queue, to place in orderer which elements you will iter. By itering a node you place his childs inside of the key right ahead, so by order you will check them one by one
 ###  3. Dijkstr's Algorithm [Link](DijkstraAlgorithm/dijks.go)
-- It was conceived to solve the minimum time problem
-###  4. Minimum Spanning Tree (MST)
+- It was conceived to solve the minimum time problem between two places
+- Its representation is a table where we place the shortest distance to the point we want to discover the shortest time and the respective previous point in relation to the point we current are that leads to the point we wanted to discover the shortest path
+- By steps it is something like this
+  ```
+  (ALL POINTS START WITH MINIMUM DISTANCE AS INFINITE)
+  Loop (UNTIL ALL THE POINTS ARE VISITED)
+    GET EDGES FROM THE POINT
+    MARK THAT CURRENT LOCATION AS VISITED
+    GO CHECK INTO THE TABLE IF THE MINIMUM COST
+  Loop
+  ```
+###  4. Minimum Spanning Tree (MST) [Link](Prims/prims.go)
+- This is a algorithm to find the shortest path that visits every point
+- There are 2 algorithms for this, but the most well known is prims
+- Prims firstly starts in a arbitary point
+- Selects everytime the smallest cost node
+- When the current nodes does not have more nodes, it will then go to the not yet visited nodes
+- After that it continues with the same logic until every node gets visited
 # Dynamic Programming
 ###  1. Memoization 
 ###  2. Recursion
