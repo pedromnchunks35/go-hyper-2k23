@@ -50,8 +50,11 @@
 - When the current nodes does not have more nodes, it will then go to the not yet visited nodes
 - After that it continues with the same logic until every node gets visited
 # Dynamic Programming
-###  1. Memoization 
-###  2. Recursion
+###  1. Memoization [Link](Memoization/memo.go)
+- Creating a cache for a given resource in order to not having to make the same solution once again
+###  2. Recursion [Link](Memozation/memo.go)
+- Recursion is using the result as a input of the same function
+- We did recursion in memoization as well.. so you can check that program as well
 # Tree Algorithms
 ###  1. Binary Trees
 ###  2. Binary Search Trees
