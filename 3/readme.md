@@ -55,10 +55,12 @@
 ###  2. Recursion [Link](Memozation/memo.go)
 - Recursion is using the result as a input of the same function
 - We did recursion in memoization as well.. so you can check that program as well
-# Tree Algorithms
-###  1. Binary Trees
-###  2. Binary Search Trees
-###  3. AVL Trees
+# Tree Algorithms 
+###  1. Binary Trees [LINK](BinaryTrees/binaryT.go)
+- This is the secound time we implement the binary tree algorithm, you can check more of that in the first lesson exercises
+###  2. Binary Search Trees [Link](BinaryTrees/binaryT.go)
+- Searching all over the leafs using recursive algorithm
+###  3. AVL Trees [LINK](AVLTrees/AVLT.go)
 ###  4. Red-Black Trees
 ###  5. Pre-orderer
 ###  6. In-order
