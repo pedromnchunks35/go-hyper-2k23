@@ -162,11 +162,129 @@ func InsertNode(node *Node, value int) (result *Node) {
 	return
 }
 
+/*
+* @param node, the node where we want to find the max
+
+* @returns The max value of a given node.. if the max value as a left side
+* we should put that left side on the place of that max value
+ */
+func GetMax(node *Node) (result *Node) {
+	current := node
+	for current.Right != nil {
+		current = current.Right
+	}
+	result = current
+	if current.Left != nil {
+		temp := current.Left
+		current.Left = nil
+		current = temp
+	}
+	return
+}
+
+/*
+? @param node, the node where we want to remove the value, it can be either the root
+? or the leaf depending of the lifecycle of the function
+
+? @param value, value that when found will be removed
+
+? @returns result, which is the tree without the desired node removed or a iteraction using
+? recursion
+*/
+func Delete(node *Node, value int) (result *Node) {
+	//? Stopping point when we reach the end of the iteraction
+	if node == nil {
+		return node
+	}
+
+	/*
+		? LEFT AND RIGHT Search of the value we want to delete
+	*/
+	if node.Value < value {
+		node.Right = Delete(node, value)
+	} else if node.Value > value {
+		node.Left = Delete(node.Left, value)
+	} else {
+		/*
+			? This is the part where we will decide how to delete because if the value isnt less or bigger
+			? it means that it is equal
+
+			? We will check if either of the nodes is nil, case it is we check first the left
+			? case the left is nil the temp will be right
+			? case even right is nil, root will be nil and the node will be deleted
+			? otherwise we turn root into left or right, depending of which one is not equal to nil
+		*/
+		if node.Left == nil || node.Right == nil {
+			temp := node.Left
+			if temp == nil {
+				temp = node.Right
+			}
+			if temp == nil {
+				node = nil
+			} else {
+				*node = *temp
+			}
+		} else {
+			/*
+				? This happens when not left and right are nil
+				? After it happens, we get the biggest number from the left Node and place it on the place
+				? of the deleted node
+			*/
+			temp := GetMax(node.Left)
+			node.Value = temp.Value
+			node.Left = Delete(node.Left, temp.Value)
+		}
+		/*
+			? return rot simply because the delete is complete
+		*/
+		if node == nil {
+			result = node
+			return
+		}
+		/*
+			? This is the balance part again
+
+			? The differenceis that instead of checking out by the value we check by making again the
+			? balance factor. By using it we can see if there is something left or right that unbalances
+			? the tree and then we rotate the same way as in the insertion according to it
+		*/
+		node.Heigth = max(node.Left.GetHeigth(), node.Right.GetHeigth()) + 1
+		balance := node.BalanceFactor()
+		if balance > 1 {
+			if node.Left.BalanceFactor() >= 0 {
+				result = RotateRight(node)
+				return
+			} else {
+				node.Left = RotateLeft(node.Left)
+				result = RotateRight(node)
+				return
+			}
+		}
+
+		if balance < -1 {
+			if node.Right.BalanceFactor() <= 0 {
+				result = RotateLeft(node)
+				return
+			} else {
+				node.Right = RotateRight(node.Right)
+				result = RotateLeft(node)
+				return
+			}
+		}
+	}
+	/*
+		? Simply return the node
+	*/
+	result = node
+	return
+}
+
 func main() {
 	root := InsertNode(nil, 2)
 	root = InsertNode(root, 4)
 	root = InsertNode(root, 3)
-	root = InsertNode(root, 5)
-	root = InsertNode(root, 6)
-	fmt.Println(root)
+	root = Delete(root, 3)
+	root = Delete(root, 2)
+	root = Delete(root, 4)
+	fmt.Printf("\n %v \n", root)
 }
