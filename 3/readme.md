@@ -61,6 +61,12 @@
 ###  2. Binary Search Trees [Link](BinaryTrees/binaryT.go)
 - Searching all over the leafs using recursive algorithm
 ###  3. AVL Trees [LINK](AVLTrees/AVLT.go)
+- It is a algorithm to by using recursion becoming able to balance the trees
+- This algorithm makes the search over the tree more fast after it
+- It shares 4 scenarios where you need to rotate the tree: Left Dig, Left->Right, Right Dig, Right left
+- We should Rotate according to the balanceFactor. Balance factor is BF = L - R
+- Also denote that every insertion we also make a loop back to update the heigth of every node
+- Check own impl to see the comments
 ###  4. Red-Black Trees
 ###  5. Pre-orderer
 ###  6. In-order
