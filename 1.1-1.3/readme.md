@@ -261,7 +261,14 @@ switch{
   fmt.Println(*p) // PRINT THE VALUE
   *p=21 //SET THE VALUE
   ```
-
+- Notes about pointers
+  ```
+   -> When you put the pointer as a receiver, you can change the values in it, but you cannot change the address
+   -> This means that for example when we want to change the pointers of a var, we need to return the given new pointer
+   -> If you swap *x -> *y, you need to on the function return the new pointer of *x and equal x=(func that returns new pointer), this also means that if you have other vars with pointers, and they are related to that x, you need to pass them to the vars as well using the relation between the x and those vars
+   -> If you have one pointer you need to keep passing the value to that value
+   -> On the other hand, change data is completly fine
+  ```
 ## Structs
 ```
 type Person struct{

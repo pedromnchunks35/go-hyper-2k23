@@ -67,7 +67,227 @@
 - We should Rotate according to the balanceFactor. Balance factor is BF = L - R
 - Also denote that every insertion we also make a loop back to update the heigth of every node
 - Check own impl to see the comments
+- When deleting the case is almost the same, we make the delete happen, then we check out the 4 scenarios using the balance factor, but if needed to delete another node besides the given one, to replace in another place we should also make a operation over than node, because even with pointers and because of the recurcion it will not delete
 ###  4. Red-Black Trees
+6 Rules:
+- Every node either red or black
+- Root is always black (case it isnt we need to force it as so)
+- New insertions are always red
+- Every path from root-leaf has the same number of Black nodes
+- No path can have two consecutive RED nodes
+- Nulls are black
+Rebalance:
+- Black Aunt Rotate
+  ```
+      Black
+    /       \
+    Red     Red
+  ```
+- Red Aunt Color Flip  
+  ```
+       Red
+     /      \
+     Black  Black
+  ```
+- Example
+  ```
+  1º Not valid because of 2 consecutive Red, 
+  color flip
+      3B
+    /   \
+   1R   5R
+         \
+         7R
+  
+  2º Not valid because the Root must be Black,
+  make root black
+      3R
+    /    \
+   1B    5B
+          \
+          7R
+  
+  3º
+      3B
+    /    \
+   1B    5B
+          \
+          7R
+  
+  4º Insert of 6. Invalid because we have a 
+  Black aunt, Black aunt we rotate
+      3B
+    /    \
+   1B    5B
+        /  \
+      []B  7R
+          /   
+         6R
+
+  5º Because the 6 is lesser than the black
+  null aunt, we rotate RL. After rotation
+  We need to fix the colors
+       3B
+     /   \
+    1B   6R
+        /  \
+       5B  7R
+
+  6º 
+       3B
+     /   \
+    1B   6B
+        /  \
+       5R  7R
+  
+  7º We add a 8, It is invalid,we need to
+  invert colors
+      3B
+     /   \
+    1B   6B
+        /  \
+       5R  7R
+            \
+            8R
+  
+  8º Flip color
+       3B
+     /   \
+    1B   6R
+        /  \
+       5B  7B
+            \
+            8R
+  
+  9º Insert 9, Invalid because of 2 R,
+  black null aunt
+       3B
+     /   \
+    1B   6R
+        /  \
+       5B  7B
+            \
+            8R
+             \
+             9R 
+  
+  10º Make the rotation left
+       3B
+     /   \
+    1B   6R
+        /  \
+       5B  8R
+          /  \
+         7B  9R
+
+  11º After rotation fix the colors
+      3B
+     /   \
+    1B   6R
+        /  \
+       5B  8B
+          /  \
+         7R  9R
+  ```
+Scenarios:
+- 1 (Right Rotation)
+  ```
+      6B
+     /  \
+    5R  []B
+   /
+  3R
+
+      5R
+     /  \
+    3R  6B
+
+      5B
+     /  \
+    3R   6R   
+  ```
+- 2 (LR Rotation)
+  ```
+     6B
+    /  \ 
+   3R  []B
+   \
+   5R
+
+       6B
+      /  \
+     5R  []B
+    /
+  3R
+
+      5R
+     /  \
+    3R  6B
+
+      5B
+     /  \
+    3R   6R 
+  ```
+- 3 (Left Rotation)
+  ```
+      6B
+     /  \
+   []B  7R
+          \
+          8R
+    
+      7R
+     /  \
+   6B   8R
+
+      7B
+    /   \
+   6R   8R
+  ```
+- 4 (RL rotation)
+  ```
+      5B
+    /   \
+  []B   8R
+        /
+       7R
+
+      5B
+     /  \
+    []B  7R
+          \
+          8R
+    
+      7R
+     /  \
+    5B  8R
+
+      7B
+     /  \
+    5R  8R 
+  ```
+- Another scenario (Main Root cannot be RED)
+  ```
+       5B
+      /  \
+     4R  7R
+          \
+          8R
+
+       5R
+      /  \
+     4B  7B
+          \
+          8R
+
+        5B
+      /   \
+     4B   7B
+           \
+           8R
+  ```
+
+
 ###  5. Pre-orderer
 ###  6. In-order
 ###  6. Post-order
