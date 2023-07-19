@@ -292,11 +292,9 @@ Scenarios:
 ###  6. In-order [Link](BinarieTreeTransversal/all-order.go)
 ###  7. Post-order [Link](BinarieTreeTransversal/all-order.go)
 # Hashing
-###  1. Hash Functions
-###  2. Collision Resolution(Separate Chaining and Open Addressing)
-###  3. SHA-1
-###  4. SHA-256
-###  5. MD5
+### 1. modulo division
+### 2. Bitwise Operations
+### 3. Hashtable
 # Greedy Algorithms
 ###  1. Activity Selection Problem
 ###  2. Knapsack problem
