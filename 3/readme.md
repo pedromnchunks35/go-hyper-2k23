@@ -286,11 +286,11 @@ Scenarios:
            \
            8R
   ```
+- We should always iterate over the node
 
-
-###  5. Pre-orderer
-###  6. In-order
-###  6. Post-order
+###  5. Pre-orderer [Link](BinarieTreeTransversal/all-order.go)
+###  6. In-order [Link](BinarieTreeTransversal/all-order.go)
+###  7. Post-order [Link](BinarieTreeTransversal/all-order.go)
 # Hashing
 ###  1. Hash Functions
 ###  2. Collision Resolution(Separate Chaining and Open Addressing)
