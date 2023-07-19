@@ -292,9 +292,19 @@ Scenarios:
 ###  6. In-order [Link](BinarieTreeTransversal/all-order.go)
 ###  7. Post-order [Link](BinarieTreeTransversal/all-order.go)
 # Hashing
-### 1. modulo division
-### 2. Bitwise Operations
-### 3. Hashtable
+### 1. Hash Function Basics: Gain a solid understanding of what a hash function is and how it works. Learn about the key components of a hash function, such as the input data, hash value, and the mapping process.
+
+### 2. Hash Function Properties: Explore the desirable properties of hash functions, including determinism (same input produces the same output), fast computation, uniformity (distribution of hash values), and preimage resistance (difficulty of finding the original input from the hash value).
+
+### 3. Hash Function Collision Resistance: Study collision resistance, which is the property that makes it difficult to find two different inputs that produce the same hash value. Learn about the birthday paradox and how it relates to collision probability in hash functions.
+
+### 4. Hash Function Design Techniques: Understand the common techniques used in designing hash functions, such as modular arithmetic, bitwise operations, mixing functions, and data-dependent rotations. Explore how these techniques contribute to achieving good hash function properties.
+
+### 5. Cryptographic Hash Functions: Dive into the characteristics and security considerations of cryptographic hash functions. Learn about hash function families like MD5, SHA-1, SHA-2, and SHA-3. Explore concepts like preimage resistance, second preimage resistance, and collision resistance in the context of cryptographic hash functions.
+
+### 6. Hash Functions in Practice: Explore real-world applications of hash functions, including checksums, data integrity checks, password hashing, digital signatures, and data deduplication.
+
+### 7.Hash Function Algorithms: Study specific hash function algorithms in detail, such as MD5, SHA-1, SHA-256, and others. Understand their design principles, algorithmic structures, and performance characteristics.
 # Greedy Algorithms
 ###  1. Activity Selection Problem
 ###  2. Knapsack problem
