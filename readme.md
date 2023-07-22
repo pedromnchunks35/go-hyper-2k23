@@ -22,6 +22,7 @@
 - Study Hyperledger Fabric's architecture, components, and smart contracts (chaincode).
 - Learn how to develop chaincode using the Go programming language.
 - Understand the transaction flow, state management, and endorsement policies in Hyperledger Fabric.
+- In order to make unit testing we need to study GRPC
 
 ## 6. Web Development with Go:
 - Learn how to build web applications using popular Go web frameworks like Gin or Echo.

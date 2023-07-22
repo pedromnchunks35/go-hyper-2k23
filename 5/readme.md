@@ -16,3 +16,4 @@
 ## Unit testing
 - In order to came up with unit testing we need to create a simulation of the event
 - In order to make such simulation we need to create 3 stubs: 1 for transaction,1 for state of the db and another for the chaincode itself
+- To understand how to do it we need to study GRPC [GRPC](../GRPC/readme.md)
