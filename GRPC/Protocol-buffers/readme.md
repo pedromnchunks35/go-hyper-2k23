@@ -134,3 +134,39 @@ message Foo {
 [!] We can also check what types are returned when we make the parse of the data from the serialization 
 
 ## Style Guide
+
+- File Structure
+  ```
+  1. License header
+  2. File Overview
+  3. Syntax
+  4. Package
+  5. Imports (sorted)
+  6. File options
+  7. Everything else
+  ```
+- Packages should be in lower case, unique names based on the project name and possibly based on the path of the file containing the protocol buffer type definitions
+- Use capital case without underscores for the message name. Variables you should use lowercase with underscores. Also, the numbers should be at the final
+  ```
+  message SongServerRequest {
+  optional string song_name = 1;
+  //ex for the numbers
+  option string song_name1 (instead of song_name_1)
+  }
+  ```
+- For repated fields use the plural of that word (accounts isntead of account)
+- Enums should all be upper case and with underscore (ex: FOO_BAR_SECOUND_VALUE). Also for enums you should use ";", instead of a ",".
+- Services should have the same logic as the message name, capital at beggining without underscores
+- In go we treat all enums as open
+
+## Best practises
+1. dont reuse tag numbers
+2. dont change the type of a field
+3. dont add a required field
+4. dont add a message with lots of fields
+5. Do include an unspecified value in an enum
+6. Use well known types and common types
+7. Reuse messages difinitions
+8. use reserved keyword for tag numbers for deleted fields
+9. dont change defaulf values of a field
+10. avoid using text serialization formats
