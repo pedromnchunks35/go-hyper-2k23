@@ -1,0 +1,88 @@
+//? We need to mention the syntax
+syntax = "proto3";
+
+package routeguide;
+
+option go_package="basic-tut/routeguide";
+
+//? Defining a Service for the route
+service RouteGuide{
+    /*
+    ? A simple RPC where the client sends a request to the server using the stub
+    ? and wait for a response to come back, just a normal function call 
+    ? It receives a given Point as argument and returns a Feature (This will be created more ahead)
+    */
+    rpc GetFeature(Point) returns (Feature){}
+    /* 
+    ? A Server-side streaming RPC, where the client sends a request to the server and gets a stream
+    ? to read a sequence of messages back, the client reads until there is no more messages. You
+    ? can specify the stream by placing the "stream" keyboard
+    ? It receives Rectangle as arguments and returns a stream Feature, feature and rectangle will be created after 
+    */
+    rpc ListFeatures(Rectangle) returns (stream Feature){}
+    /* 
+    ? Client side streaming RPC, where the client writes a sequence of messages and sends them to the server
+    ? , again using a provided stream. Once the client has finished writing the messages, it waits for the server
+    ? to read them all and return its response. You can specify a client-side streaming by putting "stream" in the input 
+    */
+    rpc RecordRoute(stream Point) returns (RouteSummary){}
+    /* 
+    ? Bidirectional streaming RPC where both sides send a sequence of messages, using a read-write stream.
+    ? The two streams operate indendently, so clients can read and write as they wish. To this one we put stream as both
+    ? input and return 
+    */
+    rpc RouteChat(stream RouteNote) returns (stream RouteNote){}
+}
+
+    /* 
+    ? Now we need to specify the inputs and outputs we just mentioned
+    ? In this one we will mention the "Point" 
+    */
+    message Point{
+        int32 latitude = 1;
+        int32 longitude = 2;
+    }
+
+    /* 
+    ? Rectangle, which defines a geographical area 
+    */
+    message Rectangle{
+        /* 
+        ? Cornet 1 
+        */
+        Point lo = 1;
+        /* 
+        ? Corner 2 
+        */
+        Point hi = 2;
+    }
+    
+    /* 
+    ? A event/feature that occurs in a given position, the name can be empty 
+    */
+    message Feature{
+        //? Name of the feature
+        string name = 1;
+        //? Position of that feature
+        Point location = 2;
+    }
+
+    //? Route Note which is sending a message to a given location
+    message RouteNote{
+        //? The location itself
+        Point location = 1;
+        //? Message
+        string message = 2;
+    }
+
+    //? The SUmmary of a given route
+    message RouteSummary{
+        //? Number of points received
+        int32 point_count = 1;
+        //? Number of features on that point
+        int32 feature_count = 2;
+        //? The distance covered in metres
+        int32 distance = 3;
+        //? THe duration of the traversal in seconds
+        int32 elapsed_time = 4;
+    }
