@@ -404,3 +404,8 @@ Run both programs once again
 # Flow Control
 - Explains what flow control is and how you can manually control it
 - We can manually control it if we intend it, but the flow is sestablish to gather good performance
+![Flow control](assets/flow-control.png)
+
+# Keepalive
+- This is a mechanisms to keep a connection alive, it is not related to health checks, it is only to check if connections are broken or not
+- They can be usefull when: network is less reliable, sending data via long-lived connection (which can be considered idle by proxy or load balancers) and when using a connection after a long period of inactivity
