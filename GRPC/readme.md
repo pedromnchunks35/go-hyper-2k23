@@ -409,3 +409,21 @@ Run both programs once again
 # Keepalive
 - This is a mechanisms to keep a connection alive, it is not related to health checks, it is only to check if connections are broken or not
 - They can be usefull when: network is less reliable, sending data via long-lived connection (which can be considered idle by proxy or load balancers) and when using a connection after a long period of inactivity
+
+# Performance Best Practises
+- Always re-use stubs and channels when possible
+- Use keepalive pings to keep HTTP/2 connections alive during periods of inactivity to allow RPCs to be made quickly without a delay
+- Use streaming RPCs when you need long-lived logical flow of data and if you dont use load balancing
+- In apps with high load or long-lived streaming need 2 kind of possible solutions: Create a separate channel for each area of high load. Use a pool of gRPC channels.
+  
+# Wait-for-Ready
+- Explains how to configure RPCs to wait for the server to be ready before sending the request
+- This is a feature that makes the stub wait until the server is available
+- With wait-for-Ready, in case of failure, it will put that invocation on a queue
+- Erro handling still necessary, but it is a good step for handling those kind of situations
+![Error scenario](assets/error-scenario.png)
+![State error scenario](assets/state-error-scenario.png)
+## Possible alternatives
+- Loop until does not throw a error
+- Accept failures that might have been avoided by waiting because you want to fail fast
+- There are examples in the docs of this
