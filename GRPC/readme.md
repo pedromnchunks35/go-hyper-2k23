@@ -388,3 +388,11 @@ Run both programs once again
 
 # Error Handling  
 - How gRPC deals with errors, and gRPC error codes
+
+## Standard error model
+- Case everything completes, we got a status ok
+- Case something goes wrong there are mechanisms to throw a error with a message explaining what went wrong
+
+## Richer Error Model
+[Possible errors](https://cloud.google.com/apis/design/errors#error_model)
+- go implements this error model
