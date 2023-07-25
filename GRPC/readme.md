@@ -396,3 +396,11 @@ Run both programs once again
 ## Richer Error Model
 [Possible errors](https://cloud.google.com/apis/design/errors#error_model)
 - go implements this error model
+![General errors](assets/general-errors.png)
+![Network failures](assets/network-failures.png)
+![Protocol errors](assets/protocol-erros.png)
+![Protocol errors v2](assets/protocol-errors2.png)
+
+# Flow Control
+- Explains what flow control is and how you can manually control it
+- We can manually control it if we intend it, but the flow is sestablish to gather good performance
