@@ -282,3 +282,19 @@ Run both programs once again
 	grpc.ClientStream
   }
   ```
+# Cancellation
+- Explanation of when should we cancel RPC's
+## Overview
+- It happens when a client is no longer interest in the result of a RPC call
+- Deadline also triggers this cancelation
+- When RPC is cancelled, the server should stop computation
+- Servers can also be clients of other servers, ideally we should cancel every operation (like cascade)
+![Grpc cancelation](assets/grpc-cancel.png)
+## Cancelling an RPC Call on the Client Side
+- Client cancells the RPC call using the method on the call object or on the context
+- Client does not provide details about the cancelation
+- The cancel normally provides a way to throw a client-side exception with the reason
+- The server may be busy when receiving the cancelation
+- The server must keep checking if the RPC that made the request keeps alive
+- Some languages handle it for us, others don't
+- Golang automatically cancels outgoing RPCs
