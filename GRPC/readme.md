@@ -370,3 +370,21 @@ Run both programs once again
 ## Life of a Target String
 ![Name resolver workflow](assets/name-resolver-workflow.png)
 - We have a example in go in the docs
+
+# Deadlines
+- Explanation of how we should use deadlines to deal with unreliable backends
+## Deadlines on the Client
+- By default there is no deadline, which means that the client may be waiting forever
+- We should set a deadline accordinaly to our system characteristics
+- After the deadline boundaries got crossed, the status error message returned is DEADLINE_EXCEED
+
+## Deadlines on the Server
+- Case the deadline given by the client is unrealistic, the server must reply with a CANCELLED status
+
+## Deadline Propagation
+- When there is a cancel, the cancel must propagate along the services that you may call from the server (i am speaking about calling another servers)
+  
+![Cancel Propagation](assets/cancel-propagation.png)
+
+# Error Handling  
+- How gRPC deals with errors, and gRPC error codes
