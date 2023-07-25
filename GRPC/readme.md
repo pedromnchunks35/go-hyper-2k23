@@ -298,3 +298,17 @@ Run both programs once again
 - The server must keep checking if the RPC that made the request keeps alive
 - Some languages handle it for us, others don't
 - Golang automatically cancels outgoing RPCs
+![Cancel proceder](assets/cancel-procedure.png)
+# Compression
+- Compresion is used to reduce the amount of bandwidth used when communicating between peers
+- It can be disabled based on call or message level for all the languages
+- Different languages can support channel compreension level if needed
+## Compression Method Asymmety Between Peers
+- gRPC supports assymetrically compressed communication
+- We can have both levels compressed or none
+- Case the client message is compressed by an algorithm not supported by the server, the message will return UNIMPLEMENTED error status on the server
+- The server will include a grpc-accept-encoding header to let other know wich algorithms he accepts
+- Case the error is UNIMPLEMENTED and the algorithm is on that header, then the error is another matter
+- Case the client does not have the algorithm requested in the header, the messages will come uncompressed
+- If the user wishs to disable compression, that will be instrumental in preventing BEAST and CRIME attacks (tradeof between efficiency for security) [Interesting topic](https://en.wikipedia.org/wiki/Transport_Layer_Security#BEAST_attack)
+- Keep in mind that this my be important for security purposes
