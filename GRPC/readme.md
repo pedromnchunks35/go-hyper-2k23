@@ -327,3 +327,29 @@ Run both programs once again
   
 ![Load Balancing Workflow](assets/load-balancing-workflow.png)
 - We can find a example of it on the docs
+# Custom Load Balancing Policies
+- Explains how custom load balancing policies can help optimize load balancing under unique ciscunstances
+## Overview
+- A gRPC load balancing policyis given a list of server IP addresses by the name resolver. The policy is responsible for maintaining connections to the servers and picking a connection to use when an RPC is sent
+## Implementing Your Own Policy
+- By default the policies is "pick_first", which means that it will try to fetch every ip address associated with the list, the first to work will be used
+- There is also round_robin, it spares the connections on the ip addresses
+- If the given policies do not match your requirements, then you should create a custom policy
+- In order to create a custom policy you need to:
+  - Register your implementation in the load balancer registry so that it can be referred to from the service config
+  - Parse the JSON configuration object of your implementation
+  - Manage what backends to maintain a connection with
+  - Implement a picker that will choose which backend to connect to when an RPC is made
+  - To enable your load balancer, configure it in your service config
+  
+![Custom load balancing](assets/custom-load-balancing-workflow.png)
+
+## Backend Metrics
+- You can have the metrics passed by responses (in-band)
+- Or you can have it out-band (separate RPCs from the backeds)
+
+## Service Mesh
+- Here you have a control plane to control the others
+- You cannot conig directly the service
+- The support is provided by the xDS protocol that the control plane uses to communicate with gRPC clients
+- Go does not support yet
