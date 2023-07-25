@@ -312,3 +312,18 @@ Run both programs once again
 - Case the client does not have the algorithm requested in the header, the messages will come uncompressed
 - If the user wishs to disable compression, that will be instrumental in preventing BEAST and CRIME attacks (tradeof between efficiency for security) [Interesting topic](https://en.wikipedia.org/wiki/Transport_Layer_Security#BEAST_attack)
 - Keep in mind that this my be important for security purposes
+# Custom Backend Metrics
+- Mechanism in gRPC library that allows users to inject custom metrics at the gRPC server and consume at gRPC clients to make custom load balancing algorithms
+## Overview
+- Simple load balancing decisions can be made by taking into account local or global knowledge of backend load
+- The custom backend metrics feature exposes APIs to allow users to implement the metrics feedback
+## Use Cases
+- Load balancing of servers with improvement
+## Metrics Reporting
+- There is already a standard for custom load balancing called [Orca](https://github.com/cncf/xds/blob/main/xds/data/orca/v3/orca_load_report.proto)
+- There are two metric reporting:
+    - Per-query metrics reporting, when the backend server applies the metrics in the trailling metadata when the corresponding RPC finishes. This is typically useful for short RPCs like unary calls
+    - Out-of-band metrics reporting: the backend server periodically pushes metrics data, this is good for all situations of calls
+  
+![Load Balancing Workflow](assets/load-balancing-workflow.png)
+- We can find a example of it on the docs
