@@ -105,3 +105,180 @@ Run both programs once again
 - Note that we are saying that we want to generate it on the same directory we are. Also, we need to be on that exac directory as well because of the package that the generated files will retain
 - After running this command it will generate two files: route_guide.pb.go, which stands for a protocol buffer to populate, serialize and retrieve request and response message types. route_guide_grpc.pb.go, which stands for a interface type (or stub) for clients to call with the methods defined in the RouteGuide service and a given interface type for servers to implement, also with the methods defined in the RouteGuide Service
 - We will firstly implement the server using this interface
+# ALTS authentication
+- This the gRPC authentication 
+- It stands for application Layer Transport Security (ALTS)
+- It is a mutual authentication and transport authentication developed by Google.
+- It was designed to meet the google requirements
+## Features
+- Create gRPC server & clients with ALTS as the transport security protocol
+- ALTS connections are end-to-end protected with privacy and integrity
+- Applications can access peer info such as the peer service account
+- Client authorization and server auth support
+- Minimal code changes to enable ALTS
+- Can be used on clouds, it can be applied in any platform with ALTS handshaker service
+## gRPC Client with ALTS Transport Security Protocol
+- Example of how to use it 
+  ```
+    import (
+    "google.golang.org/grpc"
+    "google.golang.org/grpc/credentials/alts"
+  )
+
+  altsTC := alts.NewClientCreds(alts.DefaultClientOptions())
+  conn, err := grpc.Dial(serverAddr, grpc.WithTransportCredentials(altsTC))
+  ```
+## gRPC Server with ALTS Transport Security Protocol
+- Example
+  ```
+  import (
+  "google.golang.org/grpc"
+  "google.golang.org/grpc/credentials/alts"
+  )
+
+  altsTC := alts.NewServerCreds(alts.DefaultServerOptions())
+  server := grpc.NewServer(grpc.Creds(altsTC))
+  ```
+## Server Authorization
+- gRPC has built-in server authorization supp using ALTS
+- Before the connection a given client can specify a list of expected server service accounts
+- Server service accounts are identities, they normally are represented by unique email addresses
+- The server guarantees that one of the identities provided by the client match one of the identities the server itself posesses
+- Case the authentication fails, the connection also fails
+- Example:
+  ```
+  import (
+  "google.golang.org/grpc"
+  "google.golang.org/grpc/credentials/alts"
+  )
+
+  clientOpts := alts.DefaultClientOptions()
+  // HERE WE SHOULD SPECIFY THE ACCOUNTS
+  clientOpts.TargetServiceAccounts = []string{expectedServerSA}
+  altsTC := alts.NewClientCreds(clientOpts)
+  conn, err := grpc.Dial(serverAddr, grpc.WithTransportCredentials(altsTC))
+  ```
+## Client Authorization
+- On a successful connection, the peer info is stored in the AltsContext. Assuming it knows the email, it can give permission to authorize the incoming RPC.
+  ```
+  import (
+  "google.golang.org/grpc"
+  "google.golang.org/grpc/credentials/alts"
+  )
+
+  err := alts.ClientAuthorizationCheck(ctx, []string{"foo@iam.gserviceaccount.com"})
+  ```
+# Generated-code reference
+- This is the description of the generated code with protoc
+- client-side RPC and server-side RPC are thread-safe. They are meant to be run on concurrent goroutines.
+- You cannot have multiple parallel read operations or multiple parallel write operations happening on the same stream
+- Individual streams support concurrent reads and writes
+- Same stream is serial, which means the order is maintained
+# Methods on generated server interfaces
+- On the server side, each Service, in the .proto file results in a function like this:
+  ```
+  func Register(name of the service)Server(s *grpc.Server, srv (name of the service)Server )
+  ```
+- The application can define a concrete impl of the BarServer interface and register it with grpc.Server instance (before starting the server instance)
+## Unary methods (Server side normal request-response)
+- The methods have the following signature on the generated service interface
+  ```
+  Foo(context.Context,*MsgA)(*MsgB,error)
+  ```
+- MsgA is the protobuf message sent from the client
+- MsgB is the protobuf message sent back from the Server
+
+## Server-streaming methods (Server side normal streaming from server to client)
+- For the server-streaming methods we have something like this:
+  ```
+  Foo(*MsgA,<ServiceName>_FooServer) error
+  ```
+- "(ServiceName)_FooServer" can be used to represent server-to-client stream of MsgB messages
+- The following interface is has follows:
+  ```
+  type <ServiceName>_FooServer interface{
+    Send(*MsgB) error
+    grpc.ServerStream
+  }
+  ```
+- Server side uses this method from the interface "Send" to send the messages
+- When the method returns something, the stream ends
+## Client-streaming methods (Server side normal receival of the stream by the client)
+- For the client streaming we have something alike, like this:
+ ```
+ Foo(<ServiceName>_FooServer) error
+ ```
+- This service can be used for both read the message stream and send single server response message
+- The interface to send messages is like this:
+  ```
+  type <ServiceName>_FooServer interface {
+	SendAndClose(*MsgA) error
+	Recv() (*MsgB, error)
+	grpc.ServerStream
+  }
+  ```
+- Recv can be used to get the next message in the stack, after the stack get empty it returns a error of EOF
+- Single message is SendAndClose
+## Bidi-streaming methods (Server side bidi connection, there is no close, we can send simultaneously)
+- These methods have the following signature on the generated service interface:
+  ```
+  Foo(<ServiceName>_FooServer) error
+  ```
+- It can be used to access both the client-server message and the server-to-client
+- The interface itself is something like this:
+  ```
+  type <ServiceName>_FooServer interface {
+	Send(*MsgA) error
+	Recv() (*MsgB, error)
+	grpc.ServerStream
+  }
+  ```
+- Recv is the same us upward
+- Response server-to-client message is sent by repeatedly caling the Send method
+# Methods on generated client interfaces
+- The methods here presented are relative to the client side
+## Unary Methods (Client side, to make the request and also the return)
+- The signature is something like this:
+  ```
+  (ctx context.Context, in *MsgA, opts ...grpc.CallOption) (*MsgB, error)
+  ```
+- *MsgA is the single request from client to server
+- *MsgB is the response from the server
+## Server-Streaming methods (client side receival of the stream)
+- It has the following signature on the generated client stub:
+  ```
+  Foo(ctx context.Context, in *MsgA, opts ...grpc.CallOption) (<ServiceName>_FooClient, error)
+  ```
+- The interface is something like this
+  ```
+  type <ServiceName>_FooClient interface {
+	Recv() (*MsgB, error)
+	grpc.ClientStream
+  }
+  ```
+## Client-Streaming methods (client side, send a stream)
+- Signature
+  ```
+  Foo(ctx context.Context, opts ...grpc.CallOption) (<ServiceName>_FooClient, error)
+  ```
+- Interface
+  ```
+  type <ServiceName>_FooClient interface {
+	Send(*MsgA) error
+	CloseAndRecv() (*MsgB, error)
+	grpc.ClientStream
+  }
+  ```
+## Bidi-Streaming methods (client side, bidi connection)
+- Signature
+  ```
+  Foo(ctx context.Context, opts ...grpc.CallOption) (<ServiceName>_FooClient, error)
+  ```
+- Interface
+  ```
+  type <ServiceName>_FooClient interface {
+	Send(*MsgA) error
+	Recv() (*MsgB, error)
+	grpc.ClientStream
+  }
+  ```
