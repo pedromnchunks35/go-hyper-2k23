@@ -353,3 +353,20 @@ Run both programs once again
 - You cannot conig directly the service
 - The support is provided by the xDS protocol that the control plane uses to communicate with gRPC clients
 - Go does not support yet
+
+# Custom Name Resolution
+- Here it explains normal resolution and custom implementations of it
+
+## Overview
+- Name resolution normally is known as DNS
+- There are a lot of mechanisms that may be used such as:
+  
+![Dns resolvers](assets/dns-resolvers.png)
+
+## Custom Name Resolvers
+- Reasons why this can be usefull is that it retains features that are not presented in the standard DNS, such as beeing reactive to the failure, scale-ups and scale-downs
+- It may have a JSON object that defines how traffic should be routed and load balanced across a particular service
+
+## Life of a Target String
+![Name resolver workflow](assets/name-resolver-workflow.png)
+- We have a example in go in the docs
