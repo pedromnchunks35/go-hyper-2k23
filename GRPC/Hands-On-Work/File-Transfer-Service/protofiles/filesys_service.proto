@@ -1,6 +1,33 @@
-syntax="proto3"
-package protofiles
-option go_package="filesys/protofiles"
+syntax="proto3";
+package protofiles;
+option go_package="filesys/protofiles";
+//? The service
 service FileSharing{
-    
+    //? Procedure for getting the file by giving details
+    rpc GetFile(FileDetails) returns (stream FileContent){}
+    //? Procedure for saving the file, which will return file details
+    rpc SaveFile(stream FileContent) returns (Confirmation){}  
+}
+
+//? The file details
+message FileDetails{
+    string name = 1;
+    string hash = 2;
+    int32 chunk_size = 3;
+}
+
+//? The content that will be delivered
+message FileContent{
+    string name = 1;
+    string hash = 2;
+    int32 default_chunk_size = 3;
+    int32 chunk_size = 4;
+    int32 chunk_number = 5;
+}
+
+//? Confirmation
+message Confirmation{
+    int32 status = 1;
+    string path = 2;
+    string msg = 3;
 }
