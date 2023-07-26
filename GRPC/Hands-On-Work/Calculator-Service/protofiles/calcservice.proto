@@ -1,0 +1,36 @@
+syntax="proto3";
+package protofiles;
+option go_package="calc/protofiles";
+//? Defining a Service for calculating
+service DoMath{
+    /*
+    ? Making a unary call for getting the calculation for two numbers
+    */
+    rpc CalcNumbers(OperationObj) returns (ResultObj){}
+    /*
+    ? Making a Stram client for the server calculation
+    */
+    rpc CalcListNumbers(stream OperationObj) returns (ResultObjList){}
+}
+//? Enum for the operations
+enum Op{
+    DIVI = 0;
+    MULT = 1;
+    SUMA = 2;
+    SUBT = 3;
+}
+//? The object with the desired operations
+message OperationObj{
+    int32 num1  = 1;
+    int32 num2  = 2;  
+    Op op = 3;
+}
+//? The object for the result
+message ResultObj{
+    int32 result = 1;
+    string msg = 2;
+}
+//? The List of result obj
+message ResultObjList{
+    repeated ResultObj result_list = 1;
+}

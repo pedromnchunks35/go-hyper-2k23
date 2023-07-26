@@ -427,3 +427,43 @@ Run both programs once again
 - Loop until does not throw a error
 - Accept failures that might have been avoided by waiting because you want to fail fast
 - There are examples in the docs of this
+# Hands On work
+1. Simple Calculator Service: [Link](./Hands-On-Work/Calculator-Service/readme.md)
+   
+   Create a gRPC service that performs basic arithmetic operations like addition, subtraction, multiplication, and division. The client can send requests with two numbers and the desired operation, and the server responds with the result.
+
+2. File Transfer Service: [Link](./Hands-On-Work/File-Transfer-Service/readme.md)
+   
+   Build a gRPC service for transferring files between a  client and server. The client can upload a file, and the server will store it. Additionally, the client can request a file from the server, and the server will send the file back to the client.
+
+3. To-Do List Application:
+   
+   Develop a to-do list application with gRPC. The client can add tasks, mark them as completed, and retrieve the list of tasks from the server.
+
+4. Real-Time Chat Application:
+   
+   Create a real-time chat application using gRPC bidirectional streaming. Multiple clients can connect to the server and exchange messages with each other.
+
+5. Weather Information Service:
+   
+   Build a gRPC service that provides weather information for different locations. The client can request weather data for a specific city, and the server will respond with the current weather conditions.
+
+6. User Authentication Service:
+   
+   Design a gRPC service for user authentication and authorization. The client can send login credentials, and the server will validate them and issue a token for subsequent authenticated requests.
+
+7. Image Processing Service:
+   
+   Develop a gRPC service for image processing. The client can send an image to the server, which will perform various image processing tasks like resizing, filtering, or adding effects, and then send the processed image back to the client.
+
+8. Online Bookstore:
+   
+   Create a gRPC-based online bookstore where clients can browse books, add them to a shopping cart, and place orders. The server manages the inventory and processes orders.
+
+9.  Stock Market Data Service:
+   
+    Build a gRPC service that provides real-time stock market data. Clients can subscribe to specific stocks, and the server will send updates whenever the stock prices change.
+
+10. Distributed Task Scheduler:
+    
+    Design a distributed task scheduler using gRPC. Clients can submit tasks, and the server distributes the tasks to available workers for processing.
