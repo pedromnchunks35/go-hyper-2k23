@@ -23,6 +23,7 @@ message FileContent{
     int32 default_chunk_size = 3;
     int32 chunk_size = 4;
     int32 chunk_number = 5;
+    bytes data = 6;
 }
 
 //? Confirmation
