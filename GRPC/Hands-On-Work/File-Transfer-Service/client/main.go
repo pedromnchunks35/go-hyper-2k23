@@ -99,15 +99,15 @@ func GetFile(client fls.FileSharingClient, details *fls.FileDetails) error {
 		result = append(result, chunk.Data...)
 	}
 	//? Write the file
-	err = ioutil.WriteFile(fmt.Sprintf("./filestore/%v", details.Name), result, 0644)
+	err = ioutil.WriteFile(fmt.Sprintf("%v%v", *path, details.Name), result, 0644)
 	if err != nil {
 		return fmt.Errorf("some error occured during file storing: %v", err)
 	}
-	confirmation, err := stream.Recv()
+	err = stream.CloseSend()
 	if err != nil {
-		return fmt.Errorf("some error occured with the request: %v", err)
+		return fmt.Errorf("error closing the stream: %v", err)
 	}
-	log.Printf("The response from the server: %v", confirmation)
+	log.Printf("Success retrieving the file :)")
 	return nil
 }
 
@@ -122,7 +122,6 @@ var (
 
 func main() {
 	flag.Parse()
-	fmt.Println(*chunkSize, *storefile)
 	opts := []grpc.DialOption{}
 	opts = append(opts, grpc.WithTransportCredentials(insecure.NewCredentials()))
 	conn, err := grpc.Dial("localhost:2000", opts...)
@@ -131,13 +130,14 @@ func main() {
 	}
 	defer conn.Close()
 	client := fls.NewFileSharingClient(conn)
-	context := context.Background()
 	if *storefile {
-		fmt.Println(*path, *chunkSize, *fileName)
 		if *path == "" || *chunkSize == 0 || *fileName == "" {
 			log.Fatalf("you need to set up path,chunkSize and name correctly")
 		}
-		client.SaveFile(context)
+		err := SaveFile(client)
+		if err != nil {
+			log.Fatalf("Some error occurred at the final of the procedure: %v", err)
+		}
 	} else if *getfile {
 		if *path == "" || *chunkSize == 0 || *fileName == "" || *hash == "" {
 			log.Fatalf("you need to set up path,chunkSize,hash and name correctly")
@@ -146,6 +146,9 @@ func main() {
 		fileDetails.ChunkSize = int32(*chunkSize)
 		fileDetails.Hash = *hash
 		fileDetails.Name = *fileName
-		client.GetFile(context, fileDetails)
+		err := GetFile(client, fileDetails)
+		if err != nil {
+			log.Fatalf("Some error occurred at the final of the procedure: %v", err)
+		}
 	}
 }
