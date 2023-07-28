@@ -1,0 +1,40 @@
+syntax = "proto3";
+package protofiles;
+option go_package = "task/protofiles";
+service TaskManager{
+    rpc CreateTask(Task) returns (Confirmation){}
+    rpc TaskCompleted(TaskMetaData) returns (Confirmation){}
+    rpc GetTasks(RequestMetaData) returns (TaskList){}
+}
+message Task{
+    string description = 1;
+    string start_date = 2;
+    string end_date = 3;
+    bool is_completed = 4; 
+}
+
+message Confirmation{
+    string msg = 1;
+}
+
+message TaskMetaData{
+    int32 id_task = 1;
+}
+
+message RequestMetaData{
+    int32 off_set = 1;
+    int32 page_size = 2;
+}
+
+message TaskData{
+    string description = 1;
+    string start_date = 2;
+    string end_date = 3;
+    bool is_completed = 4;
+    int32 id = 5;
+}
+
+message TaskList{
+    repeated TaskData task_data = 1;
+}
+
