@@ -440,7 +440,7 @@ Run both programs once again
    
    Develop a to-do list application with gRPC. The client can add tasks, mark them as completed, and retrieve the list of tasks from the server.
 
-4. Real-Time Chat Application:
+4. Real-Time Chat Application: [Link](./Hands-On-Work/Real-Time-Chat-Service/readme.md)
    
    Create a real-time chat application using gRPC bidirectional streaming. Multiple clients can connect to the server and exchange messages with each other.
 
