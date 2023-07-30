@@ -448,7 +448,7 @@ Run both programs once again
    
    Build a gRPC service that provides weather information for different locations. The client can request weather data for a specific city, and the server will respond with the current weather conditions.
 
-6. User Authentication Service:
+6. User Authentication Service: [Link](./Hands-On-Work/User-Auth-Service/readme.md)
    
    Design a gRPC service for user authentication and authorization. The client can send login credentials, and the server will validate them and issue a token for subsequent authenticated requests.
 

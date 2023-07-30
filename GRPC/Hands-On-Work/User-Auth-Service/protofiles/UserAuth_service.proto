@@ -1,0 +1,22 @@
+syntax = "proto3";
+package protofiles;
+option go_package="user-auth/protofiles";
+service UserAuth{
+    rpc Register(Credentials) returns(Confirmation){}
+    rpc Login(Credentials) returns(ConfirmationPlus){}
+    rpc HelloWorld(Jwt) returns(Confirmation){}
+}
+message Credentials{
+    string username = 1;
+    string password = 2;
+}
+message Confirmation{
+    string msg = 1;
+}
+message ConfirmationPlus{
+    string msg = 1;
+    string jwt = 2;
+}
+message Jwt{
+    string msg = 1;
+}
