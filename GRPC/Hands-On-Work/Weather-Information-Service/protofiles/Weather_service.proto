@@ -1,0 +1,58 @@
+syntax="proto3";
+package protofiles;
+option go_package="weather/protofiles";
+service WeatherService{
+    rpc RequestWeather(SearchDetails)returns(Information){}
+}
+
+message SearchDetails{
+    string country_name = 1;
+}
+
+message Information{
+    Location location = 1;
+    Current current = 2;
+}
+
+message Location{
+    string name = 1;
+    string region = 2;
+    string country = 3;
+    float lat = 4;
+    float lon = 5;
+    string tz_id = 6;
+    int32 localtime_epoch = 7;
+    string localtime = 8;
+}
+
+message Current{
+    int32 last_updated_epoch = 1;
+    string last_updated = 2;
+    float temp_c = 3;
+    float temp_f = 4;
+    int32 is_day = 5;
+    Condition condition = 6;
+    float wind_mph = 7;
+    float wind_kph = 8;
+    int32 wind_degree = 9;
+    string wind_dir = 10;
+    float pressure_mb = 11;
+    float pressure_in = 12;
+    float precip_mm = 13;
+    float precip_in = 14;
+    int32 humidity = 15;
+    int32 cloud = 16;
+    float feelslike_c = 17;
+    float feels_like_f = 18;
+    float vis_km = 19;
+    float vis_miles = 20;
+    float uv = 21;
+    float gus_mph = 22;
+    float gus_kph = 23;
+}
+
+message Condition{
+    string text = 1;
+    string icon = 2;
+    int32 code = 3;
+}

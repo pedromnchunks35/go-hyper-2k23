@@ -444,7 +444,7 @@ Run both programs once again
    
    Create a real-time chat application using gRPC bidirectional streaming. Multiple clients can connect to the server and exchange messages with each other.
 
-5. Weather Information Service:
+5. Weather Information Service: [Link](./Hands-On-Work/Weather-Information-Service/readme.md)
    
    Build a gRPC service that provides weather information for different locations. The client can request weather data for a specific city, and the server will respond with the current weather conditions.
 
