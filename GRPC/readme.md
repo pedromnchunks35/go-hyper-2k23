@@ -452,18 +452,6 @@ Run both programs once again
    
    Design a gRPC service for user authentication and authorization. The client can send login credentials, and the server will validate them and issue a token for subsequent authenticated requests.
 
-7. Image Processing Service:
+7. Unit testing RPC unary communication protocol [Link](./Hands-On-Work/Unit-Rpc/readme.md)
    
-   Develop a gRPC service for image processing. The client can send an image to the server, which will perform various image processing tasks like resizing, filtering, or adding effects, and then send the processed image back to the client.
-
-8. Online Bookstore:
-   
-   Create a gRPC-based online bookstore where clients can browse books, add them to a shopping cart, and place orders. The server manages the inventory and processes orders.
-
-9.  Stock Market Data Service:
-   
-    Build a gRPC service that provides real-time stock market data. Clients can subscribe to specific stocks, and the server will send updates whenever the stock prices change.
-
-10. Distributed Task Scheduler:
-    
-    Design a distributed task scheduler using gRPC. Clients can submit tasks, and the server distributes the tasks to available workers for processing.
+   Unit testing a simple RPC unary communication protocol

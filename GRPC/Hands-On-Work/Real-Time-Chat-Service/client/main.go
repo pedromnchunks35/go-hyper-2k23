@@ -4,6 +4,7 @@ import (
 	"bufio"
 	c "chat/protofiles"
 	"context"
+	"flag"
 	"fmt"
 	"io"
 	"log"
@@ -80,6 +81,7 @@ func Join(client c.ChatClient, firstMessage *c.Message) error {
 		for {
 			//? Get the message
 			message, err := reader.ReadString('\n')
+			message = strings.TrimRight(message, "\r\n")
 			message = strings.TrimRight(message, "\n")
 			if err != nil {
 				return fmt.Errorf("unexpected error just occured %v", err)
@@ -132,11 +134,14 @@ func Join(client c.ChatClient, firstMessage *c.Message) error {
 	return nil
 }
 
+var addr = flag.String("addr", "localhost", "The addr")
+
 func main() {
+	flag.Parse()
 	//? initiate the conn
 	var opts []grpc.DialOption
 	opts = append(opts, grpc.WithTransportCredentials(insecure.NewCredentials()))
-	conn, err := grpc.Dial("localhost:2000", opts...)
+	conn, err := grpc.Dial(fmt.Sprintf("%v:2000", *addr), opts...)
 	if err != nil {
 		log.Fatalf("some error occured making the dial %v", err)
 	}
@@ -150,6 +155,7 @@ func main() {
 		fmt.Println("3- Exit")
 		fmt.Println("*******************************************************************************************************")
 		opt, err := reader.ReadString('\n')
+		opt = strings.TrimRight(opt, "\r\n")
 		opt = strings.TrimRight(opt, "\n")
 		if err != nil {
 			log.Fatalf("Some error occured reading the opt: %v", err)
@@ -162,6 +168,7 @@ func main() {
 			fmt.Println("Please write down the username")
 			fmt.Println("*******************************************************************************************************")
 			username, err := reader.ReadString('\n')
+			username = strings.TrimRight(username, "\r\n")
 			username = strings.TrimRight(username, "\n")
 			if err != nil {
 				log.Fatalf("Some error occured reading the username: %v", err)
@@ -171,6 +178,7 @@ func main() {
 				fmt.Println("Please write down the password")
 				fmt.Println("*******************************************************************************************************")
 				password, err := reader.ReadString('\n')
+				password = strings.TrimRight(password, "\r\n")
 				password = strings.TrimRight(password, "\n")
 				if err != nil {
 					log.Fatalf("Some error occured reading the password: %v", err)
@@ -189,6 +197,7 @@ func main() {
 			fmt.Println("Please write down the username")
 			fmt.Println("*******************************************************************************************************")
 			username, err := reader.ReadString('\n')
+			username = strings.TrimRight(username, "\r\n")
 			username = strings.TrimRight(username, "\n")
 			if err != nil {
 				log.Fatalf("Some error occured reading the username: %v", err)
@@ -198,6 +207,7 @@ func main() {
 				fmt.Println("Please write down the password")
 				fmt.Println("*******************************************************************************************************")
 				password, err := reader.ReadString('\n')
+				password = strings.TrimRight(password, "\r\n")
 				password = strings.TrimRight(password, "\n")
 				if err != nil {
 					log.Fatalf("Some error occured reading the password: %v", err)

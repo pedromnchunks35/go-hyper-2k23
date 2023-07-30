@@ -152,7 +152,7 @@ func (csv *ChatServer) Join(stream c.Chat_JoinServer) error {
 }
 
 func main() {
-	lis, err := net.Listen("tcp", "localhost:2000")
+	lis, err := net.Listen("tcp", "0.0.0.0:2000")
 	if err != nil {
 		log.Fatalf("Some error occured listening the server")
 	}
