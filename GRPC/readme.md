@@ -456,6 +456,38 @@ Run both programs once again
    
    Unit testing a simple RPC unary communication protocol
 
-8. Unit testing RPC streams && Unit testing RPC bidirecional streams
-   
-   Unit testing the communication protocol of streaming and also the bidirecional streams
+8. Unit testing RPC stream server [Link](./Hands-On-Work/Stream-Server-Unit-Testing/server/wearable_service_test.go)
+  
+   Unit testing a simple server stream
+
+9. Unit testing RPC stream client [Link](./Hands-On-Work/Stream-Client-Unit-Testing/server/wearable_test.go)
+    
+    Unit testing a simple client stream
+
+10. Unit testing RPC bidirecional [Link](./Hands-On-Work/Bidi-Unit-Testing/server/wearable_test.go)
+    
+    Unit testing a simple bidirecional stream
+
+11. Unit testing calculator service
+    
+    Unit testing the service calculator that we once created
+
+12. Unit testing File transfer Service
+    
+    Unit testing the service of file transfering that we once created
+
+13. Unit testing To-do list
+    
+    Unit testing the service of to-do list that we once created
+
+14. Unit testing live chat
+    
+    Unit testing the service of live chat that we once created
+
+15. Unit testing weather information
+    
+    Unit testing the weather information that we once created
+
+16. Unit testing authentication service
+
+    Unit testing the authentication service that we once created
