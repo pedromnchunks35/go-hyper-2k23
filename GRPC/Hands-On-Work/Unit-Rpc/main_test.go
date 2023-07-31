@@ -26,8 +26,15 @@ func TestMain(m *testing.M) {
 }
 
 func TestValue(t *testing.T) {
+	testStruct.Map["test2"] = 3
 	fmt.Println(testStruct.Map["test"])
-	if 2 == testStruct.Map["test"] {
+	if 2 != testStruct.Map["test"] {
 		t.Errorf("The numbers must be equal")
+	}
+}
+
+func TestAnother(t *testing.T) {
+	if testStruct.Map["test2"] != 3 {
+		t.Errorf("It suppose to be equal")
 	}
 }

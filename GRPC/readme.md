@@ -452,6 +452,10 @@ Run both programs once again
    
    Design a gRPC service for user authentication and authorization. The client can send login credentials, and the server will validate them and issue a token for subsequent authenticated requests.
 
-7. Unit testing RPC unary communication protocol [Link](./Hands-On-Work/Unit-Rpc/readme.md)
+7. Unit testing RPC unary communication protocol [Link](./Hands-On-Work/UnaryUnitTesting/server/main_test.go)
    
    Unit testing a simple RPC unary communication protocol
+
+8. Unit testing RPC streams && Unit testing RPC bidirecional streams
+   
+   Unit testing the communication protocol of streaming and also the bidirecional streams
