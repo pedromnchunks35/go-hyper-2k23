@@ -55,8 +55,8 @@ func (Filesys *Filesys) GetFile(details *fls.FileDetails, stream fls.FileSharing
 			}
 			//? Chunk creation
 			tempPos = currentBytePos + int(details.ChunkSize)
-			if tempPos > len(fileData)-1 {
-				tempPos = len(fileData) - 1
+			if tempPos > len(fileData) {
+				tempPos = len(fileData)
 			}
 			chunk := fileData[currentBytePos:tempPos]
 			currentBytePos = tempPos
