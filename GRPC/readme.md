@@ -488,6 +488,6 @@ Run both programs once again
     
     Unit testing the weather information that we once created
 
-16. Unit testing authentication service
+16. Unit testing authentication service [Link](./Hands-On-Work/User-Auth-Service/test)
 
     Unit testing the authentication service that we once created
