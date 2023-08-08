@@ -1,0 +1,2 @@
+# Go sdk gateway
+- In order to understand how to take advantage of this, we will check the example of application of the docs. We can take advantage of it by reading what a function does in their code.

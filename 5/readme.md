@@ -15,5 +15,8 @@
 
 ## Unit testing
 - In order to came up with unit testing we need to create a simulation of the event
-- In order to make such simulation we need to create 3 stubs: 1 for transaction,1 for state of the db and another for the chaincode itself
+- In order to make such simulation we need to create 3 components (mocks): 1 for transaction,1 for state of the db and another for the chaincode itself [This is our impl](./generic-mock/)
 - To understand how to do it we need to study GRPC [GRPC](../GRPC/readme.md)
+
+## Application to iteract with the network
+- In order to communicate with the application we need to use the go sdk, this is the one responsible for everything that happens in the network, but we will be more concerned about the [gateway](./application-gateway/readme.md)
