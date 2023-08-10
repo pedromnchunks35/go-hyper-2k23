@@ -105,14 +105,15 @@ func newSign() identity.Sign {
 	return sign
 }
 
+// ? Function to listen events after the last transaction
 func eventListener(ctx context.Context, network *client.Network) {
 	fmt.Println("\n*** Start chaincode event listening")
-
+	//? Gather events
 	events, err := network.ChaincodeEvents(ctx, *chaincodeName)
 	if err != nil {
 		panic(fmt.Errorf("failed to start chaincode event listening: %w", err))
 	}
-
+	//? Print them on the console
 	go func() {
 		for event := range events {
 			asset := formatJSON(event.Payload)
@@ -121,17 +122,20 @@ func eventListener(ctx context.Context, network *client.Network) {
 	}()
 }
 
+// ? Function to convert the bytes into json format (in vertical for better readability)
 func formatJSON(data []byte) string {
 	var result bytes.Buffer
+	//? Parse to json in a more readable form
 	if err := json.Indent(&result, data, "", "  "); err != nil {
-		panic(fmt.Errorf("failed to parse JSON: %w", err))
+		log.Fatalf("something went wrong parsing the json %v", err)
 	}
 	return result.String()
 }
 
+// ? Function to update a asset with a given contract
 func updateAsset(contract *client.Contract) {
 	fmt.Printf("\n--> Submit transaction: UpdateAsset, %s update appraised value to 200\n", "1")
-
+	//? Make the update
 	_, err := contract.SubmitTransaction("UpdateAsset", "1", "blue", "10", "Sam", "200")
 	if err != nil {
 		panic(fmt.Errorf("failed to submit transaction: %w", err))
@@ -139,6 +143,54 @@ func updateAsset(contract *client.Contract) {
 
 	fmt.Println("\n*** UpdateAsset committed successfully")
 }
+
+// ? Creating a asset
+func createAsset(contract *client.Contract) uint64 {
+	fmt.Printf("\n--> Submit transaction: CreateAsset, %s owned by Sam with appraised value 100\n", "100")
+	//? Make a submission that we should await
+	_, commit, err := contract.SubmitAsync("CreateAsset", client.WithArguments("100", "blue", "10", "Sam", "100"))
+	if err != nil {
+		panic(fmt.Errorf("failed to submit transaction: %w", err))
+	}
+	//? Get the status
+	status, err := commit.Status()
+	if err != nil {
+		panic(fmt.Errorf("failed to get transaction commit status: %w", err))
+	}
+
+	if !status.Successful {
+		panic(fmt.Errorf("failed to commit transaction with status code %v", status.Code))
+	}
+
+	fmt.Println("\n*** CreateAsset committed successfully")
+	//? return the block number
+	return status.BlockNumber
+}
+
+func replayChaincodeEvents(ctx context.Context, network *client.Network, firstBlock uint64) {
+	fmt.Println("\n*** Start chaincode event replay***")
+	events, err := network.ChaincodeEvents(ctx, *chaincodeName, client.WithStartBlock(firstBlock))
+	if err != nil {
+		log.Fatalf("error getting events from the first blocl %v", err)
+	}
+	//? Read the events until a certain phase
+	for {
+		select {
+		case <-time.After(10 * time.Second):
+			log.Fatalf("to much time after the await of the event")
+
+		case event := <-events:
+			asset := formatJSON(event.Payload)
+			fmt.Printf("\n<-- Chaincode event replayed: %s - %s\n", event.EventName, asset)
+
+			if event.EventName == "DeleteAsset" {
+				// Reached the last submitted transaction so return to stop listening for events
+				return
+			}
+		}
+	}
+}
+
 func main() {
 	//? Create a client connection
 	clientConnection := newGrpcConnection()
@@ -164,6 +216,8 @@ func main() {
 	//? Network and contract get
 	network := gateway.GetNetwork(*channelName)
 	contract := network.GetContract(*chaincodeName)
+	//? Create a asset that returns the block number for future usage
+	firstBlockNumber := createAsset(contract)
 	//? Context used for event listening
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
@@ -171,4 +225,6 @@ func main() {
 	eventListener(ctx, network)
 	//? update a asset
 	updateAsset(contract)
+	//? Replay the events from the block containing the first transaction
+	replayChaincodeEvents(ctx, network, firstBlockNumber)
 }
