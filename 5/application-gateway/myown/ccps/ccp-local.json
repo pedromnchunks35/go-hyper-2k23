@@ -1,0 +1,95 @@
+{
+    "name": "basic-network",
+    "version": "1.0.0",
+    "client": {
+        "organization": "Org1",
+        "connection": {
+            "timeout": {
+                "peer": {
+                    "endorser": "300"
+                },
+                "orderer": "300"
+            }
+        }
+    },
+    "channels": {
+        "channel1": {
+            "peers": {
+                "peer1": {
+                    "endorsingPeer": true,
+                    "chaincodeQuery": true,
+                    "ledgerQuery": true,
+                    "eventSource": true
+                }
+            }
+        }
+    },
+    "orderers": {
+        "orderer": {
+            "url": "grpcs://192.168.1.101:7050",
+            "mspid": "Org1MSP",
+            "grpcOptions": {
+                "ssl-target-name-override": "192.168.1.101",
+                "hostnameOverride": "192.168.1.101"
+            },
+            "tlsCACerts": {
+                "path": "./ccps/local/ca.pem"
+            }
+        }
+    },
+    "organizations": {
+        "Org1": {
+            "mspid": "Org1MSP",
+            "peers": [
+                "peer1"
+            ],
+            "certificateAuthorities": [
+                "hospital.tls-ca",
+                "iter",
+                "hospital.org1-ca"
+            ]
+        }
+    },
+    "peers": {
+        "peer1": {
+            "url": "grpcs://192.168.1.100:7051",
+            "grpcOptions": {
+                "ssl-target-name-override": "192.168.1.100",
+                "hostnameOverride": "192.168.1.100",
+                "request-timeout": 120001
+            },
+            "tlsCACerts": {
+                "path": "./ccps/local/ca.pem"
+            }
+        }
+    },
+    "certificateAuthorities": {
+        "hospital.tls-ca": {
+            "url": "https://192.168.1.78:7777",
+            "grpcOptions": {
+                "verify": true
+            },
+            "tlsCACerts": {
+                "path": "./ccps/local/ca.pem"
+            }
+        },
+        "iter": {
+            "url": "https://192.168.1.78:7779",
+            "grpcOptions": {
+                "verify": true
+            },
+            "tlsCACerts": {
+                "path": "./ccps/local/ca.pem"
+            }
+        },
+        "hospital.org1-ca": {
+            "url": "https://192.168.1.78:7778",
+            "grpcOptions": {
+                "verify": true
+            },
+            "tlsCACerts": {
+                "path": "./ccps/local/ca.pem"
+            }
+        }
+    }
+}
