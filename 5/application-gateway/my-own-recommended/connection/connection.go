@@ -19,7 +19,7 @@ func newGrpcConnection(tlsCertPath string, peerAddress string) (*grpc.ClientConn
 	certPool.AddCert(certificate)
 	cred := credentials.NewClientTLSFromCert(
 		certPool,
-		peerAddress,
+		"",
 	)
 	conn, err := grpc.Dial(peerAddress, grpc.WithTransportCredentials(cred))
 	if err != nil {
@@ -53,6 +53,5 @@ func CreateConnection(tlsCertPath string, peerAddress string, certPath string, m
 	if err != nil {
 		return nil, err
 	}
-	defer gw.Close()
 	return gw, nil
 }
