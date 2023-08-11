@@ -19,3 +19,11 @@ func GetAssets(contract *client.Contract) {
 	}
 	fmt.Println(string)
 }
+
+func CreateAsset(contract *client.Contract, id string, color string, size string, owner string, appraisedValue string) {
+	res, err := contract.Evaluate("CreateAsset", client.WithArguments(id, color, size, owner, appraisedValue))
+	if err != nil {
+		fmt.Printf("error creating asset %v\n", err)
+	}
+	fmt.Println(res)
+}

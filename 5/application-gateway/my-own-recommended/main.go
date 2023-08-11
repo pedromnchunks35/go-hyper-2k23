@@ -21,4 +21,5 @@ func main() {
 	channel := gateway.GetNetwork("channel1")
 	contract := channel.GetContract("basic")
 	ch.GetAssets(contract)
+	ch.CreateAsset(contract, "6", "yellow", "1", "Carol", "10")
 }
