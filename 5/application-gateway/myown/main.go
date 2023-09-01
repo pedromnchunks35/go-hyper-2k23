@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"encoding/json"
 	"flag"
 	"fmt"
 	"log"
@@ -195,6 +196,15 @@ func operation(reader *bufio.Reader, contract *gateway.Contract, op int) ([]byte
 	}
 }
 
+// ? Struct for the asset itself, denote that we tell how we want the json to be formated
+type Asset struct {
+	AppraisedValue int    `json:"AppraisedValue"`
+	Color          string `json:"Color"`
+	ID             string `json:"ID"`
+	Owner          string `json:"Owner"`
+	Size           int    `json:"Size"`
+}
+
 func main() {
 	flag.Parse()
 	fmt.Println("**********************************************************")
@@ -204,7 +214,7 @@ func main() {
 		walletMeta := &w.WalletMetadata{}
 		walletMeta.CertPath = "./msp/local/certfiles/cert.pem"
 		walletMeta.KeyStorePath = "./msp/local/keystore/"
-		walletMeta.MspName = "pedro"
+		walletMeta.MspName = "Org1MSP"
 		walletMeta.User = "pedro"
 		walletMeta.WalletPath = "./localwallet"
 		wallet, err := w.WalletHandler(*walletMeta)
@@ -212,7 +222,7 @@ func main() {
 			log.Fatalf("error setting the wallet")
 		}
 		connectionInfo := &g.ConnectionMetadata{}
-		connectionInfo.CcpPath = "./ccps/ccp-local.json"
+		connectionInfo.CcpPath = "./ccps/ccp-local.yaml"
 		connectionInfo.User = "pedro"
 		connectionInfo.Wallet = wallet
 		con, err := g.CreateConnection(*connectionInfo)
@@ -223,12 +233,17 @@ func main() {
 		if err != nil {
 			log.Fatalf("error in the getting of the channel1 %v", err)
 		}
-		contract := net.GetContract("basic_1.0:e4de097efb5be42d96aebc4bde18eea848aad0f5453453ba2aad97f2e41e0d57")
+		contract := net.GetContract("basic")
 		res, err := contract.EvaluateTransaction("GetAllAssets")
 		if err != nil {
 			log.Fatalf("error in evaluation %v", err)
 		}
-		fmt.Println(res)
+		var resultConverted []Asset
+		err = json.Unmarshal(res, &resultConverted)
+		if err != nil {
+			log.Fatalf("error in marshall %v", err)
+		}
+		fmt.Println(resultConverted)
 	} else {
 		reader := bufio.NewReader(os.Stdin)
 		mainMenu(reader)

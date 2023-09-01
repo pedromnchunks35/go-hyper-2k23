@@ -1,7 +1,6 @@
 package gateway
 
 import (
-	"fmt"
 	"path/filepath"
 
 	"github.com/hyperledger/fabric-sdk-go/pkg/core/config"
@@ -16,7 +15,6 @@ type ConnectionMetadata struct {
 
 // ? Function to create a connection
 func CreateConnection(connectionInfo ConnectionMetadata) (*gateway.Gateway, error) {
-	fmt.Println(filepath.Clean(connectionInfo.CcpPath))
 	//? Create the connection using the config file and the wallet config
 	connection, err := gateway.Connect(
 		gateway.WithConfig(config.FromFile(filepath.Clean(connectionInfo.CcpPath))),
