@@ -68,7 +68,7 @@
 - Also denote that every insertion we also make a loop back to update the heigth of every node
 - Check own impl to see the comments
 - When deleting the case is almost the same, we make the delete happen, then we check out the 4 scenarios using the balance factor, but if needed to delete another node besides the given one, to replace in another place we should also make a operation over than node, because even with pointers and because of the recurcion it will not delete
-###  4. Red-Black Trees
+###  4. Red-Black Trees [LINK](BlackTrees/blacktree.go)
 6 Rules:
 - Every node either red or black
 - Root is always black (case it isnt we need to force it as so)
@@ -291,7 +291,7 @@ Scenarios:
 ###  5. Pre-orderer [Link](BinarieTreeTransversal/all-order.go)
 ###  6. In-order [Link](BinarieTreeTransversal/all-order.go)
 ###  7. Post-order [Link](BinarieTreeTransversal/all-order.go)
-# Hashing
+# Hashing [LINK](Hashing-resources/)
 ### 1. Hash Function Basics: Gain a solid understanding of what a hash function is and how it works. Learn about the key components of a hash function, such as the input data, hash value, and the mapping process.
 
 ### 2. Hash Function Properties: Explore the desirable properties of hash functions, including determinism (same input produces the same output), fast computation, uniformity (distribution of hash values), and preimage resistance (difficulty of finding the original input from the hash value).
