@@ -51,7 +51,7 @@
 - Cryptography is about the prevention and detection of cheating and other malicious activities
 - Examples of tools are: encryption schemes, hash functions and digital signature schemes.
 - Example of the primitives
-  ![Primitives](./assets/primitives.png)
+  ![Primitives](../assets/primitives.png)
 ## Primitives criteria evaluation
 ### 1. Level of Security
 - Hard to quantify
@@ -70,7 +70,7 @@
 ## 1-1 functions
 - A bijection is a function that for every domain of it, it has only one unique codomain
 - Inverse of a function is one function that each domain represents the codomain of other funtion and that each codomain represents the domain of the same other function (it is represented by function = otherfunction^-1)
-![Bijection](./assets/bijection.png)
+![Bijection](../assets/bijection.png)
 ---
 ## 1 way functions
 - It is easy to compute f(x), but it is hard to find x so that f(x)=y (only using a table and if you have one)
@@ -103,7 +103,7 @@
 - In this examples we are using small numbers, but if p and q had for example 100 digits, it would be very hard for the standard computers to deduce such numbers
 - Permutations is a bijective function
 - Involutions are a type of function that represents its own inverse, which means that f = f^-1 or f(f(x))=x
-![Involution example](assets/involution.png)
+![Involution example](../assets/involution.png)
 ## Basic terminology and concepts on the book
 ### Encryption domains and codomains
 - **A**, denotes a finite set called the alphabet of definition. A={0,1}, the binary alphabet. There are 32 binary strings of length five, each letter of the english alphabete as a unique binary string of length five (ex: A={/,?} and a string "A" can be denoted as "/?/")
@@ -133,11 +133,11 @@
   There are 3! = 6 bijections from M to C
   K = {1,2,3,4,5,6} has 6 elements, each specifying one of the transformations
   ```
-  ![result of this](assets/encrypt-scheme-example.png)
+  ![result of this](../assets/encrypt-scheme-example.png)
   - The result is as follows
   - Alice computes **E_1**(**m1**) = **c3** and sends **c3** to Bob
   - Bob decrypts **c3** by reversing the arrows on the diagram for **E_1** and observing that **c3** points to **m1**
-  ![Alice and bob](assets/Alice-Bob.png)
+  ![Alice and bob](../assets/Alice-Bob.png)
 ### Communication participants
 - An **entity** or party is someone which sends,receives or manipulates information. In the above example Alice and Bob are entities. A entity can be a person,computer,etc..
 - A **sender** is an entity in a two party communication (info transmitter)
@@ -197,9 +197,32 @@
   to decrypt d is applied (d=e^-1)
   supposing that e is the permutation that a letter will become the 3 positions to the right letter we will have something like the image bellow
   ```
-  ![Permutation symetric](assets/permutation-symmetric.png)
+  ![Permutation symetric](../assets/permutation-symmetric.png)
   - As you can see A become D, B became E and so on
   - So, if **m**=THISC IPHER ISCER TAINL YNOTS ECURE
   - **c** = **E_e**(**m**) = WKLVF LSKHU LVFHU WDLQO BQRWV HFXUH
-    ![Crypto scheme](assets/symmetric-example-crypto-scheme.png)
-PAGE 17 (after this image)
+    ![Crypto scheme](../assets/symmetric-example-crypto-scheme.png)
+- One of the main isues of the symmetric-key systems is to find a efficient method to agree upon and exchange keys securely
+- There are two classes of symetric-key encryption schemes: **block ciphers** and **stream ciphers**
+### **Block Cipher**
+- Encryption scheme which breaks up the plaintext into multiple strings (called blocks)
+- Blocks have a fixed length t over a Alphabet A
+- Then it encrypts one block at time
+- Most well-known symmetric-key encryption techniques are block ciphers
+- Block ciphers have 2 classes: **substitution ciphers** and **transposition ciphers**. **Product ciphers** is a combination of both
+#### Substitution Ciphers
+- Block ciphers which replace symbols (or groups of symbols) by other symbols or groups of symbols
+- Example:
+  
+**A** = alphabet of **q** symbols
+
+**M** = set of all strings of length **t** over **A**
+
+**K** = set of all permutations on the set **A**
+
+**e** is from **K**
+(**m_1** **m_2** ... **m_t**) are from **M**
+
+**E_e**(**m**) = (**e**(**m_1**) **e**(**m_2**)...**e**(**m_t**)) = (**c_1** **c_2** ... **c_t**) = **c**
+
+PAGINA 18, before HOMOPHINIC substitution ciphers
