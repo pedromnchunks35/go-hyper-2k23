@@ -212,17 +212,49 @@
 - Block ciphers have 2 classes: **substitution ciphers** and **transposition ciphers**. **Product ciphers** is a combination of both
 #### Substitution Ciphers
 - Block ciphers which replace symbols (or groups of symbols) by other symbols or groups of symbols
-- Example:
-  
-**A** = alphabet of **q** symbols
-
-**M** = set of all strings of length **t** over **A**
-
-**K** = set of all permutations on the set **A**
-
-**e** is from **K**
-(**m_1** **m_2** ... **m_t**) are from **M**
-
-**E_e**(**m**) = (**e**(**m_1**) **e**(**m_2**)...**e**(**m_t**)) = (**c_1** **c_2** ... **c_t**) = **c**
-
-PAGINA 18, before HOMOPHINIC substitution ciphers
+##### Example
+- **A** = alphabet of **q** symbols
+- **M** = set of all strings of length **t** over **A**
+- **K** = set of all permutations on the set **A**
+- **e** is from **K**
+- (**m_1** **m_2** ... **m_t**) are from **M**
+- **E_e**(**m**) = (**e**(**m_1**) **e**(**m_2**)...(**m_t**)) = (**c_1** **c_2** ... **c_t**) = **c**
+- **m** = (**m_1** **m_2**...**m_t**) E **M**
+- To decrypt **c** we need to compute the inverse permutation **d**=**e^-1**
+- **D_d**(**c**)=(**d**(**c_1**) **d**(**c_2**)...**d**(**c_t**)) = (**m_1** **m_2**...**m_t**) = **m**
+- **E_e** is a **simple substitution cipher**
+- This example of course is inadequated for security, even if the key space bigger
+- If the key space is the English alphabet the key space would be **26!** and the key used can be easily observed by observing a modest amount of ciphertext
+#### Homophonic Substitution Ciphers
+- To each symbol **a** E **A**
+- Associate a set **H**(**a**) of strings of **t** symbols
+- The restriction here is that the sets **H**(**a**),**a** E **A**,be pairwise disjoint (This means that for the set **H**(), there isnt a single member that is equal to a member of the set **A**)
+- In a homophonic substitution, the cipher replaces each symbol **a** in a plaintext message block with a randomly chosen string from **H**(**a**)
+- To decrypt a string **c** of **t** symbols, one must determine **a** E **A** such that **c** E **H**(**a**)
+- The key for the cipher consists of the sets **H**(**a**)
+##### Example
+- **A** = {**a**,**b**}
+- **H**(**a**)={00,10}
+- **H**(**b**)={01,11}
+- the plaintext message block **ab** encrypts to one of the following: 0001,0011,1001,1011
+- Since it will randomly choose one element from the sets **H**(**a**) and **H**(**b**), this is the solution space for different plaintexts:
+  ![Solution for different plaintexts](../assets/possible-solutions.png)
+- As you can see by this randomness and not apart of sets factor, it becomes more hard to compute ciphering
+#### Polyalphabetic substitution ciphers
+- is a block cipher with block length **t** over an alphabet **A**
+- it has the following properties:
+  - the key space **K** consists of all ordered sets of **t** permutations (**p_1**,**p_2**,...,**p_t**) where each permuation **p_i** is defined on the set **A**
+  - encryption of the message **m**=(**m_1** **m_2** ... **m_t**) under the key **e** = (**p_1**,**p_2**,...,**p_t**). It is given by **E_e**(**m**) = (**p_1**(**m_1**) **p_2**(**m_2**) ... **p_t**(**m_t**))
+  - the decryption key associated with **e** = (**p_1**,**p_2**,...,**p_t**) is **d**=(**(p_1)^-1**,**(p_2)^-1**,...,**(p_t)^-1**)
+##### Example
+- **A** = {**A**,**B**,**C**,...,**X**,**Y**,**Z**} and **t**=3
+- Choose **e** = (**p_1**,**p_2**,**p_3**)
+- **p_1** maps each letter to the letter three positions to its right
+- **p_2** maps to seven positions to its right
+- **p_3** ten positions to its right
+- **m** = THI SCI PHE RIS CER TAI NLY NOT SEC URE
+- **c** = **E_e**(**m**) = WOS VJS SOO UPC FLB WHS QSI QVD VLM XYO
+- The advantage of Polyalphabetic ciphers is that the frequency of symbols is not preserved
+- This is not significantly more difficult to cryptanalyze
+- the approach is similar to the other.. the difference is that we consider, accordinly to the length of each block that 1 <= **i** <= **t** where the permutation is **p_i** (basicly a frequency analysis is done)
+#### Transposition ciphers
