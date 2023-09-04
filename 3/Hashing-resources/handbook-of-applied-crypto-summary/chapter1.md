@@ -258,3 +258,136 @@
 - This is not significantly more difficult to cryptanalyze
 - the approach is similar to the other.. the difference is that we consider, accordinly to the length of each block that 1 <= **i** <= **t** where the permutation is **p_i** (basicly a frequency analysis is done)
 #### Transposition ciphers
+- Permutes the symbols in a block
+- Using a given permutation, it exchanges letters from position (ex: "HELLO" Permutation: (2, 1, 4, 3, 5) "EHLL0", 
+  
+    The letter in position 1 (H) goes to position 2 in the ciphertext.
+
+    The letter in position 2 (E) goes to position 1 in the ciphertext.
+
+    The letter in position 3 (L) goes to position 4 in the ciphertext.
+
+    The letter in position 4 (L) goes to position 3 in the ciphertext.
+
+    The letter in position 5 (O) remains in position 5 in the ciphertext.
+)
+##### Example
+- Consider symmetric-key block encryption scheme with block length **t**
+- **K** = set of all permutations on the set {1,2...,**t**}
+- For each **e** E **K**, **E_e**(**m**)=(**m_e**(1) **m_e**(2) ... **m_e**(**t**))
+- **m**=(**m_1** **m_2**...**m_t**) E **M**
+- the decryption key = **d** = **e^-1**
+- to decrypt **c** = (**c_1** **c_2** ... **c_t**), compute **D_d**(**c**)=(**c_d**(1) **c_d**(2)...**c_d**(**t**))
+- As you can see, there is the prob of the symbols order to be preserved, so this can be easily cryptanalyzed
+#### Composition of ciphers
+- This is to descrive product ciphers
+- Compositions are a convenient way of constructing more complicated functions from simpler ones 
+#### Composition of functions
+- **S**,**T** and **U** are finite sets
+- function **f**: **S** -> **T**
+- function **g**: **T** -> **U**
+- The composition of **g** with **f** = **g**º**f**
+- **g**º**f** is a function from **S** to **U**
+- (**g**º**f**)(**x**)=**g**(**f**(**x**)) 
+- all **x** E **S**
+- Composition goes like the picure bellow
+  ![Function composition](../assets/functionComposition.png)
+- Composition can be extended to more than two functions
+#### Compositions and involutions
+- As we saw before evolutions have the following property **E_k**(**E_k**(**x**))=**x** for all **x** in the domain of **E_k**
+- **E_k**º**E_k** is the identity function
+#### Product ciphers
+- Substitution and transposition ciphers individually do not provide very high level of security
+- Combining these two transformations it is possible to obtain strong ciphers
+- Some of the most effective symmetric-key systems are product ciphers
+- a product cipher is a composition of **t** >= 2 transformations **E_k1** **E_k2** **E_kt** where each **E_ki**,1<=**i**<=**t**, is either a substitution or a transposition cipher
+- In the book the composition of a substitution and a transposition is called round
+##### Example
+- **M**=**C**=**K** are sets of all binary strings of length six
+- Number os elements in **M** is 2^6, since the length is 6 and it is a binary string per place which equals to 64
+- **m** = (**m_1** **m_2** ... **m_6**)
+- **E_k**^(1)(**M**) = **m**⊕**k**, where **k** E **K**
+- **E**^(2)(**m**) = (**m_4** **m_5** **m_6** **m_1** **m_2** **m_3**)
+- ⊕ means exclusive-OR (XOR), operation defined as follows: 0⊕0=0,0⊕1=1,1⊕0=1,1⊕1=0
+- **E_k**^(1) is a polyalphabetic substitution cipher
+- **E**^(2) is a transposition cipher
+- The product **E_k**^(1) **E**^(2) is a round
+#### Remark
+- A **substitution** in a **round** is said to add **confusion** to the encryption process
+- **transposition** is said to add **diffusion** to the encryption process
+- **Confusion** is intended to make the relationship between the key and ciphertext as complex as possible
+- **Diffusion** rearranges/spreads the bits in the message so that the redundancy in the plaintext is spread
+- A **round** adds **confusion** and **diffusion** to the encryption
+- Modern block ciphers apply a number of rounds in succession to the encrypt plaintext
+### Stream Ciphers
+- Block ciphers that have block length equal to one
+- The encryption transformation can change for each symbol of plaintext being encrypted
+- They dont have error propagation, they are usefull where transmission errors are highly probable
+- Can be usefull when the data must be processed one symbol at a time (equipment without memory of buffering of data is limited)
+- In the block ciphers you may need to wait to receive all of the request from multiple requests in order to form a block. In the stream ciphers you dont need to wait, you can encrypt what you receive
+- It applies simple encryption transformations according to the keystream beeing used
+- Keystream could be generated randomly
+- This generated keystream is called **seed**
+- What generated the seed is called **keystream generator**
+#### keystream
+- **K** is the key space for a set of encryption transformations
+- A sequence of symbols **e_1** **e_2** **e_3** ... **e_i** E **K** is called a keystream
+#### Stream cipher definition
+- **A** is an alphabet of **q** symbols
+- **E_e** is a substitution cipher with block length 1
+- **e** E **K**
+- **m_1** **m_2** **m_3**... is the plaintext
+- **e_1** **e_2** **e_3**... is the keystream 
+- A stream cipher takes the plaintext string and produces a ciphertext **c_1** **c_2** **c_3**... where **c_i** = **E_ei**(**m_i**)
+- **d_i** denotes the inverse of **e_i**
+- **D_di**(**c_i**) = **m_i** which decrypts the ciphertext string
+#### Vernam cipher
+- It is well know for the simplicity and ease of implementation
+##### Definition
+- It is defined on the **A**={0,1}
+- A binary message **m_1** **m_2**...**m_t** is operated on by a binary key string **k_1** **k_2**...**k_t** which length is the same
+- It produces a ciphertext string **c_1** **c_2** ... **c_t**
+- **c_i** = **m_i** ⊕ **k_i**, i<=**i**<=**t**
+- There are 2 substitutions here because if we do **E_0** it sends 0 to 0 and 1 to 1, if we do **E_1** it sends 0 to 1 and 1 to 0
+- Case the key is reused, there are ways to attack the system, for example if **c_1** **c_2** ... **c_t** and **c_1'** **c_2'** ... **c_t'** are two ciphertext strings produced by the same keystream **k_1** **k_2** ... **k_t** then **c_i**=**m_i**⊕**k_i**, **c_i'**=**m_i'**⊕**k_i**
+- Theorically, the one-time pad can be shown to be theoretically unbreakable
+#### The Key Space
+- This refers to the number of encryption/decryption key pairs that are avalable in the cipher system
+- A transposition cipher of block length **t** has **t**! encryption functions from which to select
+- A necessary, but usually not sufficient, condition for an encryption scheme to be secure is that the key space be large enough to preclude exhaustive search
+---
+## Digital Signatures
+- Cryptographic primitive which is fundamental in authentication,authorization and non-repudiation
+- It is meant to bind a identity to a piece of information
+### Nomenclature and set-up
+- **M** is the set of messages which can be signed
+- **S** is a set of elemnts called signatures, possibly binary strings of a fixed length
+- **S_A** is a transformation from the message set **M** to the signature set **S**, and is called a signing transformation for entity **A**
+- The transformation **S_A** is kept secret by **A**
+- This transformation will be used to create signatures for messages **M**
+- **V_A** is a transformation from the set **M** x **S** to the set {true,false}.
+- **V_A** is the verification transformation
+- **V_A** is publically known and used by other entities to verify signatures created by **A**
+- Alice will be entity **A**
+- Bob will be entity **B**
+### Example
+- **M** = {**m_1**,**m_2**,**m_3**}
+- **S** = {**s_1**,**s_2**,**s_3**}
+  ![Result from this sets](./assets/../../assets/example-signature.png)
+### Signing procedure
+- Entity **A** (the signer) creates a signature for a message **m** E **M** by doing the following: 
+  1. Compute **s** = **S_A**(**m**)
+  2. Transmit the pair (**m**,**s**). **s** is called the signature for message **m**
+### Verification procedure
+- To verify that a signature **s** on a message **m** was created by **A**, the entity **B** (the verifier) performs the following:
+  1. Obtain the verification function **V_A** of **A**
+  2. Compute **u** = **V_A**(**m**,**s**)
+  3. Accept the signature as having been created by **A** if **u**=true and reject case **u**=false
+### Remark
+- Normally **S_A** and **V_A** are represented by keys
+- The algorithms for signing and verifying are publicly known
+- In the signing algorithm the key **k_A** is kept secret
+- For the verification algorithm **V_A**, the key **l_A** for that algorithmn is made public
+### Another Remark
+- Handwritten signatures could be interpreted as a special class of digital signatures
+- The problem of this is that it is not message dependent, so when veryfing it only checks if the set of signatures contains this signature
