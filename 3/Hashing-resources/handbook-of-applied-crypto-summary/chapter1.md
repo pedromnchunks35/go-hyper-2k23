@@ -391,3 +391,83 @@
 ### Another Remark
 - Handwritten signatures could be interpreted as a special class of digital signatures
 - The problem of this is that it is not message dependent, so when veryfing it only checks if the set of signatures contains this signature
+### Properties required for signing and verification functions
+1. **s** is a valid signature of **A** on a message **m** if **V_A**(**m**,**s**) = true
+2. It is computationally infeasible for any entity other than **A** to find, for any **m** E **M**, an **s** E **S** such that **V_A**(**m**,**s**) = true
+## Authentication and identification
+- The objectives are entity authentication,message authentication,message authentication,data integrity,non repudiation, and key authentication
+- This is one of the most important of all information security objectives
+- Authentication is specific to the security objective
+- Identification in another hand is authentication as well, but in a more specific way a entity authentication,which serves as a form of a question that only the entity that we are trying to identify can answer
+- Techniques to authenticate the originator of the message are called data origin authentication
+### Identification
+- Identity or entity authentication assures one party (through acquisition of corroborative evidence) of both the identity of a second party involved, and that the second was active at the time evidence was created or acquired
+#### Example
+- **A** calls **B** on the phone
+- If **A** and **B** know each other, then authentication is provided by voice
+- Altought not foolproof, this works effectively in practise
+#### Example 2
+- **A** provides to a banking machine the **PIN**, along with a magnetic stripe card containing information about **A**
+- Case the information provided got a verification success, **A** may access the services 
+### Data origin authentication or message authentication
+- Provide to one party which receives a message (throught corroborative evidence) of the identity of the party which originated the message
+#### Example
+- **A** sends to **B** an email
+- The message may be travelling throught a lot of systems and be stored to **B** retrieve it later
+- **A** and **B** are usually not in direct communication
+- **B** whishes some means to identify that the message was created by **A**
+- Data origin authentication implicity provides data integrity since, if themessage was modified during transmission, **A** would no longer be the creator
+## Public-key encryption
+- Let {**E_e**: **e** E **K**} be a set of encryption transformations
+- Let {**D_d**: **d** E **K**} be the set of corresponding decryption transformations
+- **K** is the key space
+- Consider the pair (**E_e**,**D_d**)
+- Each pair has the property that knowing **E_e** is computationally infeasible to determine **m** E **M** from **c** E **C** such that **E_e**(**m**)=**c**
+- This property implies that given **e** it is infeasible to determine the decryption key **d**
+- **e** and **d** are responsible for determining the encryption and decryption functions
+- **E_e** is a trapdoor one-way function
+- **d** is the trapdoor information necessary to compute the inverse function and allow decryption
+- Unlike symmetric-key ciphers, **e** and **d** are not the same
+### Example
+- **Bob** selects a key pair (**e**,**d**)
+- **Bob** sends the encryption key **e** (public key) to **Alice**
+- **Bob** keeps the decryption key **d** (private key) secure and secret
+- **Alice** send a message **m** applying the encryption transformation determined by **Bob's public key** to get **c**, because **c** = **E_e**(**m**)
+- **Bob** receives the **c** and decrypts it using **D_d**, uniquely determined by the **private key** or **d** 
+![Example public key](../assets/example-publickey.png)
+- As you can see both channels are insecured because the public key is public
+### Example 2
+- **A_1** **A_2** and **A_3** are different entities
+- Note that if **A_1** destroys message **m_1** after encrypting to **c_1**, it cannot recover **m_1** from **c_1**
+- Only **Bob** can retrieve **m_1** after the transformation, it is like a look that only **Bob** knows about how to defuse
+- Everyone can lock the lock, but not everyone can open it
+- This assumes the existence of a trapdoor one-way functions
+![Example public key 2](../assets/example-publickey2.png)
+- This is a encryption scheme
+- This scheme has 2 sets of encryption and decryption transformations {**E_e**:**e** E **K**} and {**D_d**:**d** E **K**}
+- The encryption method is said to be a public-key encryption scheme if for each pair (**e**,**d**), one key **e** (the public key) is made public while the other **d** is made secret
+- It must be infeasible to compute **d** and **e**
+### Remark (private key vs secret key)
+- private key is used in public-key cryptosystems
+- secret key is used in symmetric-key cryptosystems
+- we must have atleast 2 parties to share a secret (symmetric-key)
+- only one party can know the secret so it is private (public-key)
+- There are a lot of believed secure public-key encryption methods, but none have been mathematically proven to be secure independent of qualifying assumptions
+- On the other hand symmetric-key only has the one-time paid proven as secure
+### The necessity of authentication in public-key systems
+- It could appear that the public-key cryptography is a ideal system, not requiring a secure channel to pass the encryption key
+- This would imply that the two entities never needed to exchange the keys
+- A **enemy**/**adversary** may try to break the protocol without breaking the encryption system
+- To achieve this lets think in a scenario
+- The **enemy** impersonates entity **B** by sending entity **A** a public key **e'** 
+- **A** assumes incorrectly to be the public key of **B**
+- **enemy** intercepts the encrypted messages from **A** to **B**, decrypts with its own private key **d'**, re-encrypts the message under **B' public key e** and sends it on to **B** 
+- This show the importance of **authentication public keys** to achieve **data origin authentication** of the **public keys**
+- **A** must be convinced that is encrypting under the legitimate **public key** of **B**
+- There is a **public-key** technique to solve this problem
+![Attack public key example](../assets/attack-public-key-example.png)
+### Digital signatures from reversible public-key encryption
+- Digital signature schemes based on public-key encryption systems
+- **E_e** is a **public-key** encryption transformation with message space **M** and ciphertext space **C**
+- Suppose that **M**=**C**
+PAGE 29
