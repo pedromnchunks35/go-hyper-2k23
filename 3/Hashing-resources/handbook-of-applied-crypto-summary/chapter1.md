@@ -470,4 +470,74 @@
 - Digital signature schemes based on public-key encryption systems
 - **E_e** is a **public-key** encryption transformation with message space **M** and ciphertext space **C**
 - Suppose that **M**=**C**
-PAGE 29
+- **D_d** is the decryption transformation corresponding to **E_e**
+- Since **E_e** and **D_d** are both permutations, one has **D_d**(**E_e**(**m**)) = **E_e**(**D_d**(**m**)) = **m**, for all **m** E **M**
+- A public-scheme of this type is called **reversible**
+- **M** = **C** for this to be valid, otherwise **D_d**(**m**) will be meaningless for **m** E/ **C**
+### Construction for a digital signature scheme
+- **M** is the message space
+- **C**=**M** is the signature space **S**
+- (**e**,**d**) is the key pair
+- The signing function **S_A** is **D_d**, for **m** E **M**, **s** = **D_d**(**m**)
+- The verification function is **V_A**
+  ```
+              / true, if E_e(s)=m,
+  V_A(m,s) = |
+              \ false, otherwise
+  ```
+- This scheme can be simplified if **A** only signs messages having a special structure, structure this which is made public
+#### Another scenario
+- **M'** is a subset of **M**
+- **M'** elements have a well-defined special structure
+- **M'** contains only a few messages from the set
+- ex: Suppose that **M** consists of all binary strings of length 2t for some positive integer **t**. Let **M'** be the subset of **M** consisting of all strings where the first **t** bits are replicated in the last **t** positions (ex: 101101 would be **M'** for **t**=3)
+- **A** only signs messages within the subset **M'**, these are easily recognized by a verifier
+- In this case **V_A** would be as so
+  ```
+            / true, if E_e(s) E M'
+  V_A(s) = |
+            \ false, otherwise
+  ```
+- To put it simple, the first one needs the message and the other does not because it recognizes a pattern 
+- This last scheme is called scheme with **message recovery**
+![Digital signature, message recovery](../assets/digital-signature-message-recovery.png)
+- This mechanism is important to achieve that is enfisable to determine V_A(m,s)=true, because the subset is known but the signature space is bigger because **C**=**M**=**S**
+#### Example of attack
+- **B** can select a element **s** E **S** and apply **E_e**
+- this would get **u**=**E_s**(**s**)
+- Since **S**=**M** and **E_e** is public
+- **B** may then take the message **m** = **u**
+- and the signature on **m** to be **s** and transmit (**m**,**s**)
+- in this scenario **s** will verify as a signature created by **A** for **m** where **A** had no part
+- **B** forged a signature of **A** or **existential forgery**
+- if **M'** contains only a fraction of **M**, then this becomes impossible
+##### Notes about this attack
+- The public key is public and the key space is **M**
+- If the signer only signs in the key space **M'** it means the private key is from the key space **M**
+- This means that the public key can still verify the signature but it becomes infeasible to create a fake signature, because by generating a random **s**, even if it is from the key space **M'**, it becomes really hard to fake the message because the verifying is made using the public key which is from the key space **M**
+#### Remark (digital signatures vs confidentiality)
+- digital signatures schemes based on reversible public-key encryption are atractive but they require encryption methods as primitives
+- There are situations where a digital signature is required but encryption is forbidden
+### Digital signatures in practise
+1. Must be easy to compute by the signer
+2. be easy to verify by anyone
+3. have an lifespan and be computationally secure from forgery until the signature is no longer necessary for its original purpose
+### Resolution of disputes
+- The purpose of digital signatures is to permit resolution of disputes (A denying a given action for example, or B falsely claiming A did some action)
+- In order to colmatate this, we need a **TTP** or **trusted third party**
+- This **trusted third party** must be someone both agree on
+- This **TTP** would establish rules so that **V_A**(**m**,**s_A**)= true, then **B** is right for example. **A** cannot deny such thing
+#### Requirements for resolution of disputed signatures
+1. **S_A** and **V_A** must have a valid signature of **A** on a message **m** such **V_A**(**m**,**s**)=true and must be infeasible for other entity than **A** to forge a signature **s** such **V_A**(**m**,**s**)=true
+2. The **TTP** must have an authentic copy of **V_A**
+3. The signing transformation **S_A** has been kept secret and remains secure
+- In order to support this statements, the entity **A** or **B** must be in agreement with **TTP** in a given time or period. In case **A** revoked his credentials before the signing, that signing becomes invalid
+### Symmetric-key vs public-key cryptography
+#### Advantages of symmetric-key cryptography
+1. Symmetric-key ciphers can be designed to have high rates of data throughput (encryption of a lot of megabytes per second for example)
+2. Keys are relatively short
+3. It can be used as primitive to construct various cryptographic mechanisms such pseudorandom number generators,hash functions and computationally efficient digital signature schemes
+4. can be composed to produce strong ciphers. Simple transformations are easy to analyze but it can construct a strong product cipher.
+5. most of the knowledge was generated in the start of the digital computer area (early 1970s)
+
+PAGE 32
