@@ -539,5 +539,138 @@
 3. It can be used as primitive to construct various cryptographic mechanisms such pseudorandom number generators,hash functions and computationally efficient digital signature schemes
 4. can be composed to produce strong ciphers. Simple transformations are easy to analyze but it can construct a strong product cipher.
 5. most of the knowledge was generated in the start of the digital computer area (early 1970s)
+#### Disadvantages of symmetric-key cryptography
+1. In a two-party communication, the key must remain secret at both 
+2. In a large network it becomes hard to manage many key pairs. Effective management requires the use of an unconditionally trusted TTP
+3. In a two-party communication the cryptographic practise says that the key should be changed frequently
+4. Digital signature mechanisms either require large keys or the use of a TTP
+#### Advantages of public-key cryptography
+1. Only private key must be kept secret (authenticity of the public key must be garanteed)
+2. The administration of keys on a network requires the presence of a trusted TTP and in this case it can be a offline one
+3. private/public key may remain unchanged for considerable periods of time
+4. Many public-key schemes have efficient digital signature mechanisms. Also, the key is much smaller compared to symmetric-key
+5. In a large network, the number of keys are much smaller
+#### Disadvantages of public-key encryption
+1. Throughput is much slower than the best symmetric-key schemes
+2. Key sizes are much larger
+3. No public-key scheme has been proven to be secure (the same is said for block ciphers). The securance is presumed by its difficulty of a small set of number-theoric problems
+4. Does not have a extensive history as symmetric-key encryption
+#### Summary of comparasion
+- Symmetric and public complement each other
+- They explore the strengths of each
+- public-key makes efficient signatures and key management
+- symmetric-key is efficient to encrypt large sets of data and to provide data integrity in apps
+#### Remark
+- Private keys in public-key systems must be larger (1024 bits for RSA for ex)
+- Secret keys in symetric muchme smaller (64 or 128 bits for ex)
+- In symmetric they make exhaustive search to find the key
+- In public they make short-cut attacks (ex: factoring)
+- This makes the security equivalent between both with different key sizes
+- Use the public-key for starting communicating since it is no problem sharing the public-key to others and signing the message over a unsecured channel and then we can use symmetric-key sharing the key using the public-key practises for then using symmetric to encrypt data which is much faster and since it changes frequently it makes it more secure
+## Hash Functions
+- One of the primitives in modern cryptography
+- It is called one-way hash function
+- efficient function mapping binary strings of a certain length to binary strings of some fixed length, called hash-values
+### Theoric definition
+- For a hash function which outputs **n**-bit hash-values(n=128 or 160) 
+- the probability that a randomly chosen string gets mapped to a particular **n**-bit hash value is 2^(-**n**)
+- Hash value is a compact representive of a input string
+- To be of cryptographic use, a hash function **h** is typically chosen such that it is computationally infeasible to find two distinct inputs which hash to a common value (ex: h(x)=h(y) must be infeasible)
+- and that becomes infeasible to find a **x** such that h(**x**) = **y**
+- common uses are **digital signatures** and **data integrity**
+- with **digital signatures** a long message is usually hashed (using public hash function) and only hash-value is signed
+- The party that receives the message then hashes the received message, and verifies it
+- The inability to find two messages with the same hash is a security requirement
+- data integrity works when we hash the data and store its hash and then we hash once again and verify if the hash matches the older one to check if there were no changes
+- When used to see if a message was changed, they are called **modification detection codes(MDCs)**
+- Hash functions which involve a secret key, and provide **origin authentication** and **data integrity** are called **message authentication codes(MACs)**
+## Protocols and mechanisms
+- Crypthografic protocol is a distributed algorithm defined by a sequence of steps that specify the actions required of two or more entities to achieve a specific security objective
+- They play a major role in cryptography and are essential in meeting cryptographic goals
+- Encryption schemes,digital signatures,hash functions and random number generation are among the primitives which may be utilized to build a protocol
+### Protocol vs mechanism
+- mechanism is more general, because it has to do with encompassing protocols,algorithms(the steps followed by a single entity) and non cryptographic techniques (hardhare protection,procdedural controls,etc..) 
+#### Example (simple key agreement protocol)
+- **Alice** and **Bob** have chosen a symmetric-key encryption scheme for communicating over a unsecured channel
+- To encrypt info they require a key
+- The protocol is the following:
+  1. **Bob** constructs a public-key encryption scheme and sends his public key to **Alice** over the channel
+  2. **Alice** generates a key for the symmetric-key encryption scheme
+  3. **Alice** encrypts the key using **Bob's** public key and sends the encrypted key to **Bob**
+  4. **Bob** decrypts using his private key and recovers the symmetric (**secret**) key
+  5. **Alice** and **Bob** begin communicating with privacy by using the symmetric-key system and the common secret key
+- This protocol uses basic functions to attemp to realize private communications on a unsecured channel
+- The basic primitives are symmetric-key and public-key encryption schemes
+- The protocol has threats, including the impersonation attack
+- It is a normal behavior to use public-key encryption for exchange keys for subsequent symmetric-key encryption. This is motivated by symmetric-key performance
+### Protocol and mechanism failure
+- **protocol failure** or **mechanism failure** occurs when a mechanism fails to meet the goals for which it was intended
+- An enemy gains advantage not by breaking an underlying primitive such as an encryption algorithm directly, but by manipulating the protocol or mechanism itself
+#### Example (mechanism failure)
+- **Alice** and **Bob** are communicating using a **stream cipher**
+- The message they encrypt are known to have a special form: the first twenty bits carry information which represents a monetary amount
+- An enemy can simply **XOR** an appropriate bitstring into the first twenty bits of ciphertext and change the amount
+- This happens because the stream cipher encrypts bit by bit, so we know that the first 20 bits do not depend of anything besides themselfs, so we can change the bits for what we would like to be
+- While not able to read the message, the enemy got a way to change the transmission
+- The encryption was not compromised but it got manipulated
+- data integrity assumption was incorrect
+#### Example (forward search attack)
+- Suppose that in an electronic bank transaction the 32 bit field records the value of the transaction is to be encrypted using a public-key scheme
+- The protocol is meant to provide privacy of the value field
+- An enemy could easily take all 2^32 possible entries that could be plaintext in this field and encrypt them using the public encryption function (encryption function is public)
+- By comparing each of the 2^32 chiphertexts with the one which is actually encrypted in the transaction, the enemy can determine the plaintext
+- The public-key encryption is not compromised but the way it is used yes
+- A closely related attack is the dictionary attack
+- This of course rely on the attacker knowledge of the message key space and the length of it and it violates privacy
+#### Causes of protocol failure
+1. Weaknesses in a particular primitive which may be amplified by the protocol or mechanism
+2. claimed or assumed security guarantees are overstated or not understood
+3. the oversight of some principle applicable to a broad class of primitives such as encryption (the proper properties itself make a vulnerabilitie)
+#### protocol design 
+- When designing cryptographic protocols and mechanisms, the follwing two steps are essential:
+  1. identify all assumptions in the protocol or mechanism design
+  2. for each assumption, determine the effect on the security objective if that assumption is violated
+## Key establishment, management and certification
+- **Key establishment** is any process whereby a shared secret key becomes available to two or more parties, for subsequent cryptographic use
+- is the set of processes and mechanisms which support key establishment and the maintenance of ongoing keying relationships between parties, including replacing older keys with new keys as necessary
+- It can be subdivided into **key agreement** and **key transport**
+### Example
+- Suppose we have 6 entities
+- This means we have 15 possible two-party communications
+- This require the exchange of 15 key pairs
+- In a network with **n** entities, the number of secure key exchanges required is (**n**|2) = (**n**(**n**-1))/2
+  ![Simple 6 party network](../assets/simple-6-party-network.png)
+### Key Management using symmetric-key techniques
+- One solution is using a **TTP**
+- Each entity **A_i** shares a distinct symmetric key **k_i** with the **TTP**
+- It is assumed this keys got shared in a secured channel
+- If they whish to communicate, the **TTP** generate a key **k** (called **session key**) and sends it encrypted under each of the provided keys by the **A_i** entity
+![symmetric solution ttp](../assets/symmetric-ttp-solution.png)
+#### Advantages
+1. Easy to add or remove entities from the network
+2. Each entity needs to store only one long-term secret key
+#### Disadvantages
+1. All communications require initial interaction with the **TTP**
+2. The **TTP** must store **n** long-term secret keys
+3. The **TTP** can read all the messages
+4. If the **TTP** is compromised, all communications become insecure
+### Key Management using public-key techniques
+- There are a lot of ways to address key management problems with public-key techniques
+- This will be one
+- Each entity of the network has a **public/private** encryption key pair
+- The **public key** along with the identity of the entity is stored in a central repository called a **public file**
+- if entity **A_1** wishes to send encrypted messages to entity **A_6**,**A_1** retrieves the public key **e_6** of **A_6** from the **public file**, encrypts the emssage using this key, and sends the ciphertext to **A_6**
+![Public key techniques](../assets/solution-public-key-techniques.png)
+#### Advantages
+1. No **TTPS** required
+2. The public file can reside with each entity
+3. Only **n** public keys need to be stored to allow secure communications beetween the parties, assuming the only attack is the passive enemy
+#### Problem
+- The key management problem becomes more difficult when one must take into account an adversary who is active(an adversary that somehow can alter this public file)
+- The **enemy** alters the **public file** by replacing the public key **e_6** of entity **A_6** by the **enemy's public key** **e'**
+- Any message encrypted for **A_6** using the public key from **public file** can be decrypted by only the **enemy** 
+- Having decrypted and read the message,the **enemy** can now encrypt it using the public key of **A_6** and forward the ciphertext to **A_6**
+- **A_1** however believes that only **A_6** can decrypt the chiphertext **c**
+![impersonation problem](../assets/impersonation-problem.png)
 
-PAGE 32
+PAGE 39
