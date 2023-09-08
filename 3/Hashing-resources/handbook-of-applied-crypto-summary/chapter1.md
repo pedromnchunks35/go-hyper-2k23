@@ -672,5 +672,124 @@
 - Having decrypted and read the message,the **enemy** can now encrypt it using the public key of **A_6** and forward the ciphertext to **A_6**
 - **A_1** however believes that only **A_6** can decrypt the chiphertext **c**
 ![impersonation problem](../assets/impersonation-problem.png)
-
-PAGE 39
+##### Solution
+- To prevent this type of attack, the entities may use a **TTP** to certify the **public key** of each entity
+- The **TTP** has a private signing algorithm **S_T** and a verification algorithm **V_T**
+- The **TTP** carefully verifies the identity of each entity, and signs a message consisting of a identifier and a entity's authentic public key
+- This is a example of a **certificate**, binding the identity of an entity to its public key
+![impersonate problem solved](../assets/impersonation-problem-solved.png)
+- **A_1** uses the public key of **A_6** only if the certificate signature verifies sucessfully
+###### Advantages of using this strategy
+1. It prevents an active adversary from imperonation on the network
+2. The **TTP** cannot monitor communications
+3. Entities only need to trust the **TTP** to bind identities to public keys properly
+4. Per-communication interation with the public file can be eliminated if entities store certificates locally
+###### Concerns
+1. If the signing key of the **TTP** is compromised, all communications become insecure
+2. All trust is placed under one entity
+## Trusted third parties and public-key certificates
+- **unconditionally** trusted if it is trusted on all matterns
+- it may have access to the secret and private keys of users
+- it also may be charged with the association of public keys to identifiers
+- it becomes **functionally trusted** if the entity is assumed to be honest and fair but it does not have access to the secret and private keys of users
+### Public-key certificates
+- The distribution of public keys is easier over symmetric keys because it does not require secrecy
+- In the other hand the integrity,authenticity of public keys is critical
+- It consists of a data part and a signature part
+- Data part consists in the name of an entity, the public key of that entity and possibly additional relevant information (street,network address, validity period and various other attributes)
+- The signature part consists of the signature of a **TTP** over the data part.
+#### Scenario
+- In order for a entity **B** verify authenticity of the public key of an entity **A**, **B** must have a authentic copy of the public signature verification function of the **TTP**
+- For simplicity, we suppose that the authenticity of this verification is provided by non cryptographic means, for example by obtaining it in person which represents the **TTP**
+- With this in mind **B** can do the following:
+  1. Acquire the public-key certificate of **A** over some unsecured channel, either from a central database of certificates, from **A** directly, or otherwise
+  2. Use the **TTP's** verification function to verify the **TTP'S** signature on **A's** certificate
+  3. If the signature verifies correctly, accept the public key in the certificate as **A's** authentic public key, otherwise assume it is invalid
+- Before creating a public-key certificate for **A**, the **TTP** must take appropriate measures to verify the identity of **A** and the fact that the public key to be certificated actually belong to **A**
+- One method is to require that **A** appear before the **TTP** with a conventional passport as proof of identity, and obtain **A's** public key from **A** in person, along with evidence that **A** knows the corresponding private key
+- Once **TTP** creates a certificate for a party, the trust that all other entities have in the authenticity of the **TTP** public key, can be used to gain authenticity of the party's public key
+- They can verify it by acquisition of the certificate
+## Pseudorandom numbers and sequences
+- Random number generation is a important primitive in many cryptographic mechanisms
+- Random number generation represents challenging issues
+- Often one of the follwing steps must be performed in cryptographic apps:
+  - From a finite set of **n** elements(1,2,...,**n**), select an element at random
+  - From the set of all sequences (strings) of length **m** over some finite Alphabet **A** of **n** symbols, select a sequence at random
+  - Generate a random sequence (string) of symbols of length **m** over a set of **n** symbols
+- Call a number a random number without context makes no sense
+- If we select a random number from 1 to 49 from a pool of identical balls and this pool mixes the balls uniformly and drops one ball out which will represent a number, this has context and is valid
+- In this case we would say that the ball observed was gererated randomly from a **uniform distribution**
+- The probability of getting 1 number, lets suppose 23, is 1/49 in this case
+- if we do this 6 times, then we generate a random sequence of 6 elements on the Alphabet = {1,2,...,49}
+- The chance of getting a sequence of lets say 17,45,1,7,23,35 is (1/49)x(1/49)x(1/49)x(1/49)x(1/49)x(1/49) = (1/13841287201)
+- There are precisely 13841287201 sequences of length 6 over the alphabet **A**
+- The probability would be the same if we removed the 49 balls and placed 13841287201 balls and taked only one
+- These description is relative to the secound and third steps above
+### Example
+- To generate a random sequence of 0's and 1's, a coin coin could tossed with the head landing up recorded as 1 and a tail as 0
+- It is assumed that the coin is unbiased
+- This means that the probability of getting one of the 2 options is 1/2
+- This method would be of little value in a system where random sequences must be generated quickly and often
+- only serves as example of the idea of number generation
+### Example 
+- A noise diode may be used to produce random binary sequences
+- This is reasonable if one has some way to be convinced that a 1 will be produced on any given trial is 1/2
+- case this is false, it would not be selected from a uniform distribution
+- This only may take effect if we carry out statistically tests of its output
+- Case it proves as true, it is a effective way to generate random sequences
+### Continuation of definition
+- Since most true sources of random sequences come from physical means, they tend to be either constly or slow in the generation
+- To overcome this problems, methods have been devised to construct pseudorandom sequences in a deterministic manner from a shorter random sequence called a seed
+- This pseudorandom sequences appear to be truly random source to anyone not knowing the method of generation
+- The generation algorithm is known to all but the seed is unknown except by the entity generating the sequence
+- There a lot of algorithms that produce pseudorandom bit sequences of various types
+- Many of these are unsuitable for cryptographic purposes and one must be cautious of calims by creators of such algorithms as to the random nature of the output
+## Classes of attacks and security models
+- Over the years many different types of attacks on cryptographic primitives and protocols have been spoted
+- **passive attacker** is one where the attacker only monitors the communication, which only threatens **confidentiality** of data
+- **active attacker** is one where the attacker attemps to delete,add or in some other way alter the transmission on the channel. He threatens data integrity,authentication and confidentiality
+- THe **passive attacker** can also be subdivided into more specialized attacks for deducting plaintext from ciphertext as we saw before
+## Attacks on encryption schemes
+- The following attacks are related to systematically recover plaintext from ciphertext, or even more drastically, deduce the decryption key
+1. **cipher-only** attack is one where the adversary or cryptanalyst tries to deduce the decryption key or plaintext by only observing ciphertext. Any encryption scheme vulnerable to this type of attack is considered to be insecure
+2. **known-plaintext** attack is one where the adversary has a quantity of plaintext and corresponding ciphertext. This attack is more difficult to mount
+3. **chosen-plaintext** attack is one where the adversary chooses plaintext and somehow gots this plaintext ciphered. By getting the ciphered text, it then tries to recover the known plaintext from the cipher text
+4. **adaptive chosen-plaintext** attack is a chosen plaintext attack where the choice of plaintext depend on the ciphertext received from previous requests
+5. **chosen-ciphertext** attack is one where the adversary selects the ciphertext and is then given the corresponding plaintext. One way to come up with this attack is the attacker gaining acess to the equipment used for decryption (but not the decryption key, which may be securely embedded in the equipment). The objective is then to be able, without access to the equipment to deduce the plaintext from different ciphertext
+6. **adaptive chosen-ciphertext** is a chosen-ciphertext attack where the choice of ciphertext may depend on the plaintext received from previous requests
+- Most of these attacks also apply to digital signatures schemes and message authentication codes
+- In this case the objective of the attacker is to forge messages or **MACs**
+## Attacks on protocols
+- These are some of the **known attacks** to protocols
+- There may be more attacks that people just don't know about
+- Vulnerabilities and attacks come from everywhere at any time
+1. **known-key** is a attack where the adversary obtains some keys used previously and then uses this information to determine new keys
+2. **replay** is a attack where the adversary records a communication session and replays the entire session, or a portion thereof, at some later point in time
+3. **impersonation** is a attack where the adversary assumes the identity of one of the legitimate parties in the network
+4. **dictionary** is an attack usually against passwords where basicly it uses a list of probable passwords, hashes them and compares them with the hashes that a given file that contains the passwords ciphered. If he has luck, it may found a hash that matches the hash in that file and by that he founds the password
+5. **forward search** is an attack similar to dictionary attack and is used for decrypt messages. A example of this was mentioned before
+6. **interleaving attack** is a attack that usually involves some form of impersonation in the authentication protocol (we spoke about this before)
+## Models for evaluating security
+- The most practical security metrics are computational,provable and ad hoc methodology (this is dangerous)
+- The confidence level is the amout of security provided by a primitive or protocol increases with time and investigation of the scheme
+- Time is not enough if few people have given the method careful analysis
+### Unconditional security
+- This is called **perfect secrecy**
+- It is assumed that the attacker as unlimited computer resources, the information is what dictates the security
+- For **perfect secrecy**, the uncertainty in the plaintext, after observing the ciphertext, must be equal to the uncertanty before observing the ciphertext. Observatuon of the ciphertext provides no information whatsoever to an adversary
+- A necessary condition for a symmetric-key encryption scheme to be **unconditionally secure** is that the key be at least as long as the message
+- The **one-time paid** is an example of unconditionally secure encryption algorithm
+- In general, encryption schemes do not offer perfect secrecy
+- Each character observed decreases the theoretical uncertainty in the plaintext and the encryption key
+- Public key encryption schemes cannot be unconditionally secure, since given a ciphertext **c**, the plaintext can in principle be recovered by encrypting all possible plaintexts until **c** is obtained
+### Complexity-theoretic security
+- An appropiate model of computation is defined and enemyes are modeled as having polynomial computation power
+- This means that they will mount attacks involving time and space polynomial in the size of appropriate security parameters
+- A proof of security to the model is constructed
+- The objective is to design a cryptographic method based on the weakest assumptions possible anticipating a powerful adversary
+- Asymptotic analysis (which means a analysis that is close to a certain scenario) and usualy also worst case analysis is used 
+- They must determine when proofs have practise significance
+- Polynomial attacks, which are feasible under the model might, in practise still be computationally infeasible
+- This may clear the path to a better overall understanding of security
+- It is unvaluable for formulating fundamental principals and confirming intuition
+- Like many other sciences, whose practical techniques are discovered early in the development, well before a theorical basis and understanding is attained
