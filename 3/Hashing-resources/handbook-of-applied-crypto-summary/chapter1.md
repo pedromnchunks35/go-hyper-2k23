@@ -793,3 +793,29 @@
 - This may clear the path to a better overall understanding of security
 - It is unvaluable for formulating fundamental principals and confirming intuition
 - Like many other sciences, whose practical techniques are discovered early in the development, well before a theorical basis and understanding is attained
+### Provable Security
+- It is said that a algorithm is **probaby secure** if the difficulty of defeating it can be shown by beeing as much difficult as a mathematical problem
+- Examples if this are factorization or computation of discrete logarithms
+### Computational security
+- This means the computational effort required
+- It says that a algorithm is secure if the computational effort required to break it is more that the enemy resources can take, using the best known attack
+- The majority of algorithms are secure based on this criteria
+- This criteria is inserted in a **practical security** class
+### Ad hoc security
+- Consists in a variety of arguments that every successfull atack requires in terms of resources
+- Case the required resources surpass the resources of the adversary, it is said that the algorithm has **heuristic security**
+## Perspective for computational security
+- To evaluate security of cryptographic schemes, certain quantities are often considered
+- The work factor **W_d** is the minimum amount of work (measured in appropriate units such as elementary operations or clock cycles) required to compute the private key **d** given the public key **e** or ,in the case of symmetric-key schemes, to determine the secret key **k**
+- The notation that refers to the work required under a ciphertext-only attack given **n** ciphertexts is **W_d**(**n**)
+- Case **W_d** is **t** years, then for a sufficiently large **t**, taking into perspective the requirements of the application, the cryptographic scheme is a secure system
+- Until this date no public-key system has been found where one can prove sufficiently large lower bound on the work factor **W_d**
+- The best to rely is this criteria, atleast as basic of security
+## Another definition
+- The historical work factor min(**W_d**) is the minimum amount of work required to compute the private key **d** from the public key **e** using the best known algorithms a given point in time
+- This work factor varies with time and algorithmns technology improve
+## How large is large
+- This is a reference in terms of magnitude comparation
+  ![Table large comparation](../assets/table-large-magnitude.png)
+- The following table is the prefix that we give to certain magnitudes
+  ![Table large comparation 2](../assets/table-large-magnitude2.png)
