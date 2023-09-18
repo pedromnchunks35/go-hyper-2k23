@@ -1,0 +1,207 @@
+# Mathematical Background
+## Notations
+- **Z** denotes the set of integers
+- **Q** denotes the set of rational numbers
+- **R** denotes the set of real numbers
+- π = 3,14159
+- **e** is the base of the natural logarithm; **e**~=2,17828
+- [**a**,**b**] denotes the intefers **x** satisfying **a**<=**x**<=**b**
+- [**x**] is the largest integer less than or equal to **x**. Ex: [5.2] = 5 and [-5.2] = -6
+- [**x**] is the smallest integer greater than or equal to **x**. Ex: [5.2] = 6 and [-5.2] = -5
+- If **A** is a finite set, then |**A**| denotes the number of elements in **A**, called the cardinality of **A**
+- **a** E **A** means that element **a** is a member of the set **A**
+- **A** C/ **B** means that **A** is a subset of **B**
+- **A** C **B** means that **A** is a subset of **B**, that is **A** C/ **B** and **A** != **B**
+- Intersection of sets is **A** ∩ **B**
+- Union of sets is **A** ∪ **B**
+- The difference of sets is **A** - **B**
+- The cartesian product of sets **A** and **B** is the set **A** X **B** = {(**a**,**b**)|**a** E **A** and **b** E **B**}. Example: {**a_1**,**a_2**} X {**b_1**,**b_2**,**b_3**} = {(**a_1**,**b_1**),(**a_1**,**b_2**),(**a_1**,**b_3**),(**a_2**,**b_1**),(**a_2**,**b_2**),(**a_2**,**b_3**)}
+- **f**: **A** -> **B**, means the f(**a**)=**b**, where **a** E **A** and **b** E **B**. **A** is the domain(**a** is the object) and **B**(**b** is the image) the codomain
+- **f**: **A** -> **B** is 1-1 or injective if each element of **B** is the image of at most one element in **A**
+- **f**: **A** -> **B** is onto or surjective if each **b** E **B** is the image of at least one **a** E **A**
+- **f**: **A** -> **B** is a bijection if it is both 1-1 and onto. if **f** is a bijection between finite sets **A** and **B**, then |**A**|=|**B**|(ex: A{1,2,3} B(10,9,11)). If **f** is a bijection between set **A** and itself, then **f** is called a permutation on **A**(ex: f(1)=2 f(2)=3 f(3)=1, the domain is **A** and also the codomain is **A**)
+- **ln**(**x**) is the natural logarithm of **x**; that is the logarithm of **x** to the base **e**
+- **lg**(**x**) is the logarithm of **x** to the base 2
+- **exp**(**x**) is the exponential function **e**^(**x**)
+- The expression bellow denotes the sum **a_1**+**a_2**+...+**a_n**
+  ```
+  / n
+  |     a_i
+  \ i=1
+  ```
+- The following expression denotes the produc **a_1** x **a_2** x ... x **a_n**
+  ```
+  __ n
+  ||    a_i
+    i=1
+  ```
+- for a positive integer **n**, the factorial function is **n**! = **n**(**n**-1)(**n-2**)...1. 0! = 1
+## Probability Theory
+### Definition 
+- An **experiment** is a procedure that yields one of a given set of outcomes. 
+- **simple events** are individual possible outcomes
+- **sample space** is the set of all possible outcomes
+- **discrete sample spaces** are the most common samples in this chaper and it is **sample spaces** with only finitely many possible outcomes
+- Simple events of a sample space **S** will be labeled **S_1**,**S_2**,...,**S_n**
+### Definition 
+- A **probability distribution** **P** on **S** is a sequence of numbers **p_1**,**p_2**,...,**p_n** that are all non-negative and sum to 1
+- The number **p_i** is interpreted as the probability of **s_i** being the outcome of the experiment
+### Definition 
+- An event **E** is a subset of the sample space **S**
+- The probability that event **E** occurs, denoted **P**(**E**),is the sum of the probabilities **p_i** of all simple events **s_i** which belong to **E**
+- If **s_i** E **S**,**P**({**s_i**}) is simply denoted by **P**(**s_i**)
+### Definition
+- If **E** is an event, the **complementary event** is the set of simple events not belong to **E**, denoted **E**^-
+### Fact
+- Let **E** ⊆ **S**
+- 0 <= **P**(**E**) <= 1, **P**(**S**) = 1 and **P**(**θ**) = 0 (**θ** is the empty set)
+- **P**(**E**^-) = 1 - **P**(**E**)
+- If the outcomes in **S** are equally likely, then **P**(**E**) = |**E**| / |**S**|
+### Definition
+- Two events **E_1** and **E_2** are called **mutually exclusive** if **P**(**E_1**∩**E_2**)=0
+- This means that by one happening the other is ommited
+### Fact
+- Let **E_1** and **E_2** be two events
+- If **E_1** ⊆ **E_2** then **P**(**E_1**) <= **P**(**E_2**)
+- **P**(**E_1**∪**E_2**)+**P**(**E_1**∩**E_2**)=**P**(**E_1**)+**P**(**E_2**)
+- Case **E_1** and **E_2** are mutually exclusive, then **P**(**E_1**∪**E_2**)=**P**(**E_1**)+**P**(**E_2**)
+## Conditional Probability
+### Definition
+- **E_1** and **E_2** two events with **P**(**E_2**) > 0
+- The **conditional probability** of **E_1** given **E_2**,denoted **P**(**E_1**|**E_2**) is **P**(**E_1**|**E_2**)=**P**(**E_1**∩**E_2**)/**P**(**E_2**)
+- **P**(**E_1**|**E_2**) means the probability of event **E_1** occurring, given that **E_2** has ocurred
+### Definition
+- Events **E_1** and **E_2** are **independent** if **P**(**E_1**∩**E_2**)=**P**(**E_1**)x**P**(**E_2**)
+- If **E_1** and **E_2** are independent, then **P**(**E_1**|**E_2**)=**P**(**E_1**) and **P**(**E_2**|**E_1**)=**P**(**E_2**), this means that the occurence of one does not influence the ocurrence of the another
+### Fact
+- If **E_1** and **E_2** are events with **P**(**E_2**)>0, then **P**(**E_1**|**E_2**)=(**P**(**E_1**)x**P**(**E_2**|**E_1**))/**P**(**E_2**)
+## Random variables
+- Let **S** be a sample space with probability distribution **P**
+### Definition
+- A random variable **X** is a function from the sample space **S** to the set of real numbers
+- to each simple event **s_i** E **S**
+- **X** assigns a real number **X**(**s_i**)
+- Since **S** is assumed to be finite, **X** can only take on a finite number of values
+### Definition
+- **X** is a random variable on **S**
+- The **expected value** is:
+  ```
+  /
+  | X(s_i)xP(s_i)
+  \ 
+    s_i E S
+  ```
+### Fact
+- **X** is a random variable on **S**
+- Then:
+  ```
+  /
+  | (x) x P(X=(x))
+  \
+    x E R
+  ```
+### Fact
+- If **X_1**,**X_2**,...,**X_m** are random variables on **S**
+- And **a_1**,**a_2**,...,**a_m** are real numbers, then:
+  ```
+        m                m
+    ( /           )    /
+  E( |  a_i x X_i ) = | a_i x E(X_i)
+    ( \           )    \
+        i=1              i=1 
+  ```
+### Definition
+- The variance of a random variable **X** of mean **u** is a non-negative number **VAR**(**X**)=**E**((**X**-**u**)^2)
+- The standard deviation of **X** is the non-negative square root of **Var**(**X**)
+- If a random variable has small variance then large deviations from the mean are unlikely to be observed
+### Fact
+- **X** is a random variable with mean **u** = **E**(**X**) and variance **o**^2 = **VAR**(**X**)
+- Then for any **t** > 0:
+  ```
+  P(|X-u| >= t) <= ((o^2)/(t^2))
+  ```
+## Binomial Distribution
+### Definition
+- **n** and **k** are non-negative integers
+- The binomial coefficient 
+  ```
+  (
+    n
+    k
+  )
+  ```
+- is the number of diferent ways of choosing **k** distinct objects from a set of **n** distinct objects
+- the order is not important
+### Fact (binomial coefficients)
+- **n** and **k** are non-negative integers
+1. 
+```
+(
+  n  = (n!)/(k! x (n-k)!)
+  k
+)
+```
+2. 
+```
+(
+  n   = (
+  k       n
+)         n-k          
+        )
+```
+3.
+```
+(
+  n+1 = (         (
+  k+1     n   +    n
+)         k        k+1  
+        )          ) 
+```
+### Fact (binomial theorem)
+- For any real numbers **a**,**b** and non-negative integer **n**:
+  ```
+                n
+              /       (
+  (a+b)^n =  |          n   x a^k x b^(n-k)
+              \         k
+                k=0       )
+  ``` 
+### Bernoulli trial
+- Experiment with exacly two possible outcomes
+- These two possible outcomes are called success and failure
+### Fact
+- Suppose that the probability of success on a particular Bernoulli trial is **p**
+- Then the probability of exacly **k** successes in a sequence of **n**
+- such independent trials is:
+  ```
+    (
+      n  x p^k x (1-p)^(n-k) , for each 0<=k<=n
+      k
+    )
+  ```
+### Definition
+- The probability distribution is called **binomial distribution**
+### Fact
+- The expected number of successes in a sequence of **n** independent Bernoulli trials, with probability **p** of success in each trial, is **np**
+- The variance of the number of successes is **np**(1-**p**)
+### Fact (law of large numbers)
+- **X** is a random variable denoting the fraction of sucesses in **n** independent Bernoulli trials
+- **p** is the probability of success in each trial
+- Then for any **e** > 0, **P**(|**X**-**p**|>**e**) -> 0, as **n** -> ∞
+- In other words, as **n** gets larger, the proportion of successes should be close to **p**
+## Birthday problems
+1.
+- For positive integers **m**,**n**
+- With **m**>=**n**
+- The number $m^{(n)}$ = **m**(**m**-1)(**m**-2)...(**m**-**n**+1)
+2.
+- **m**,**n** are non-negative integers with **m** >= **n**
+- The stirling number of the second kind, denoted like $\binom{m}{n}$ is: $\binom{m}{n}$ = $\frac{1}{n!}$  $*$ $\sum_{k=0}^{n}$ $*$ $(-1)^{n-k}$ $*$ $\binom{n}{k}$ $*$ $k^{m}$
+- The exception is that $\binom{0}{0}$ = 1
+- $\binom{m}{n}$ counts the number of ways of partioning a set of **m** objects into **n** non-empty subsets
+### Fact (classic occupancy problem)
+- An urn has **m** balls numbered 1 to **m**
+- **n** balls are drawn from the urn one at a time, with replacement, and they numbers are listed
+1.
+- The probability of at least one coincidence (a ball drawn at least twice) is: $P_{1}$(m,n,t) = $\binom{n}{t}$ $*$ $\frac{m^{(t)}}{n^{(n)}}$, $1 \le t \le n$
+### Fact (birthday problem)
