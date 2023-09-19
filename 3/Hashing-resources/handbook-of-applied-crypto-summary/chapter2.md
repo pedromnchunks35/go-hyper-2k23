@@ -123,33 +123,14 @@
 ## Binomial Distribution
 ### Definition
 - **n** and **k** are non-negative integers
-- The binomial coefficient 
-  ```
-  (
-    n
-    k
-  )
-  ```
+- The binomial coefficient $\binom{n}{k}$
 - is the number of diferent ways of choosing **k** distinct objects from a set of **n** distinct objects
 - the order is not important
-### Fact (binomial coefficients)
+### Fact (properties of binomial coefficients)
 - **n** and **k** are non-negative integers
-1. 
-```
-(
-  n  = (n!)/(k! x (n-k)!)
-  k
-)
-```
-2. 
-```
-(
-  n   = (
-  k       n
-)         n-k          
-        )
-```
-3.
+1. $\binom{n}{k}$ = $\frac{n!}{k!*(n-k)!}$  
+2. $\binom{n}{k}$ = $\frac{n}{n-k}$
+3. $\binom{n+1}{k+1}$ = $\binom{n}{k}$ + $\binom{n}{k+1}$
 ```
 (
   n+1 = (         (
@@ -158,27 +139,14 @@
         )          ) 
 ```
 ### Fact (binomial theorem)
-- For any real numbers **a**,**b** and non-negative integer **n**:
-  ```
-                n
-              /       (
-  (a+b)^n =  |          n   x a^k x b^(n-k)
-              \         k
-                k=0       )
-  ``` 
+- For any real numbers **a**,**b** and non-negative integer **n**
+- $(a+b)^n$=$\sum_{k=0}^{n}$$\binom{n}{k}$$*$$a^{k}$$*$$b^{n-k}$
 ### Bernoulli trial
 - Experiment with exacly two possible outcomes
 - These two possible outcomes are called success and failure
 ### Fact
 - Suppose that the probability of success on a particular Bernoulli trial is **p**
-- Then the probability of exacly **k** successes in a sequence of **n**
-- such independent trials is:
-  ```
-    (
-      n  x p^k x (1-p)^(n-k) , for each 0<=k<=n
-      k
-    )
-  ```
+- Then the probability of exacly **k** successes in a sequence of **n** such independent trials is: $\binom{n}{k}$$p^k$$(1-p)^{n-k}$, for each $0 \le k \le n$
 ### Definition
 - The probability distribution is called **binomial distribution**
 ### Fact
@@ -187,7 +155,7 @@
 ### Fact (law of large numbers)
 - **X** is a random variable denoting the fraction of sucesses in **n** independent Bernoulli trials
 - **p** is the probability of success in each trial
-- Then for any **e** > 0, **P**(|**X**-**p**|>**e**) -> 0, as **n** -> ∞
+- Then for any **e** > 0, **P**(|**X**-**p**|$>$**e**) -> 0, as **n** -> $\infty$
 - In other words, as **n** gets larger, the proportion of successes should be close to **p**
 ## Birthday problems
 1.
@@ -196,12 +164,35 @@
 - The number $m^{(n)}$ = **m**(**m**-1)(**m**-2)...(**m**-**n**+1)
 2.
 - **m**,**n** are non-negative integers with **m** >= **n**
-- The stirling number of the second kind, denoted like $\binom{m}{n}$ is: $\binom{m}{n}$ = $\frac{1}{n!}$  $*$ $\sum_{k=0}^{n}$ $*$ $(-1)^{n-k}$ $*$ $\binom{n}{k}$ $*$ $k^{m}$
-- The exception is that $\binom{0}{0}$ = 1
-- $\binom{m}{n}$ counts the number of ways of partioning a set of **m** objects into **n** non-empty subsets
+- The stirling number of the second kind, denoted like $\left\{\frac{m}{n}\right\}$ is: $\left\{\frac{m}{n}\right\}$ = $\frac{1}{n!}$  $*$ $\sum_{k=0}^{n}$ $*$ $(-1)^{n-k}$ $*$ $\binom{n}{k}$ $*$ $k^{m}$
+- The exception is that $\left\{\frac{0}{0}\right\}$ = 1
+- $\left\{\frac{m}{n}\right\}$ counts the number of ways of partioning a set of **m** objects into **n** non-empty subsets
 ### Fact (classic occupancy problem)
 - An urn has **m** balls numbered 1 to **m**
 - **n** balls are drawn from the urn one at a time, with replacement, and they numbers are listed
 1.
 - The probability of at least one coincidence (a ball drawn at least twice) is: $P_{1}$(m,n,t) = $\binom{n}{t}$ $*$ $\frac{m^{(t)}}{n^{(n)}}$, $1 \le t \le n$
 ### Fact (birthday problem)
+- An urn has **m** balls numbered 1 to **m**
+- **n** balls are drawn from the urn one at a time. With replacement and the numbers are listed
+1.
+- The probability of at least one coincidence (a ball get drawn twice) is: $P_2(m,n)$=1-$P_1(m,n,n)$=1-$\frac{m_{(n)}}{m_n}$,$1 \le n \le m$
+- If n=O($\sqrt{m}$) and m -> $\infty$
+- Then $P_2$(m,n) -> 1 - exp($\frac{-n(n-1)}{2*m}$+O($\frac{1}{\sqrt{m}}$)) $\approx$ 1 - exp($\frac{-n^{2}}{2*m}$)
+2.
+- As m->$\infty$, the expected number of draws before a coincidence is $\sqrt{\frac{\pi*m}{2}}$
+#### Explanation (why probability distribution is refered as birthday surprise or birthday paradox)
+- The probability of 2 people in a room of 23 people having the same birthday is $P_{2}$(365,23) $\approx$ 0.507
+- This number is "large"
+- $P_2$(365,n) increases rapidly as **n** increases
+### Facts
+- There are 2 urns
+- One containing **m** white balls numbered 1 to **m**
+- The other contains **m** red balls numbered 1 to **m**
+- First, $n_1$ balls are selected from the first urn and their numbers listed
+- Then $n_2$ balls are selected from the second urn and their numbers listed
+- The number of **coincidences** between the two lists are counted
+#### Model A
+- In case the balls are drawn one at a time
+- With replacement
+- The probability of at least one coincidence is $P_3$(m,$n_1$,$n_2$) = 1 - $\frac{1}{m^{n_1+n_2}}$ * $\sum_{t_1,t_2}$$m^{t_1+t_2}$ $\left\{\frac{n_1}{t_2}\right\}$ $\left\{\frac{n_2}{t_2}\right\}$
