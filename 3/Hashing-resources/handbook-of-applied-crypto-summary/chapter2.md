@@ -195,4 +195,48 @@
 #### Model A
 - In case the balls are drawn one at a time
 - With replacement
-- The probability of at least one coincidence is $P_3$(m,$n_1$,$n_2$) = 1 - $\frac{1}{m^{n_1+n_2}}$ * $\sum_{t_1,t_2}$$m^{t_1+t_2}$ $\left\{\frac{n_1}{t_2}\right\}$ $\left\{\frac{n_2}{t_2}\right\}$
+- The probability of at least one coincidence is $P_3$(m,$n_1$,$n_2$) = 1 - $\frac{1}{m^{n_1+n_2}}$ * $\sum_{t_1,t_2}$$m^{t_1+t_2}$ $\left\{\frac{n_1}{t_2}\right\}$ $\left\{\frac{n_2}{t_2}\right\}$. The summation is over all $0 \le t_1 \le n_1$,$0 \le t_2 \le n_2$
+- Case the n=$n_1$=$n_2$,n=O($\sqrt{m}$) and m->$\infty$
+- then $P_3$(m,$n_1$,$n_2$) -> 1 - exp(-$\frac{n^{2}}{m}$ $*$ [1+O($\frac{1}{\sqrt{m}})$]) $\approx$ 1 - exp(-$\frac{n^{2}}{m}$)
+### Model B
+- If the balls from both urns are drawn without replacement, then the probability of at least one coincidence is is $P_4$(m,$n_1$,$n_2$)=1-$\frac{m^{(n_1+n_2)}}{m^{(n_1)}*m^{(n_2)}}$.
+- If $n_1$=O($\sqrt{m}$),$n_2$=O($\sqrt{m}$),and m -> $\infty$
+- Then $P_4$(m,$n_1$,$n_2$)->1-exp(-$\frac{n_1*n_2}{m}$*[1+$\frac{n_1+n_2-1}{2*m}$+O($\frac{1}{m}$)])
+### Model C
+- If the $n_1$ white balls are drawn one at a time, with replacement, and the $n_2$ red balls are drawn without replacement
+- Then the probability of at least one coincidence is: $P_5$(m,$n_1$,$n_2$)=1-$(1-\frac{n_2}{m})^{n_1}$
+- If $n_1$ = O($\sqrt{m}$),$n_2$=O($\sqrt{m}$) and m->$\infty$ then $P_5$(m,$n_1$,$n_2$) -> 1 - exp(-$\frac{n_1*n_2}{m}$*[1+O($\frac{1}{\sqrt{m}})$]) $\approx$ 1-exp(-$\frac{n_1*n_2}{m}$)
+## Random mappings
+- Let $F_n$ denote the collection of all functions (mappings) from a finite domain of size **n** to a finite codomain of size **n**
+- Models where random elements of $F_n$ are considered are called **random mappings models**
+- such models arise frequently in cryptography and algorithmic number theory
+- |$F_n$|=$n^{n}$
+- The probability that a particular function from $F_n$ is chosen is $\frac{1}{n^{n}}$
+### Another definition
+- Let **f** be a function in $F_n$ with domain and codomain equal to {1,2,...,**n**}
+- The functional graph of **f** is a directed graph whose points (or vertices) are the elements {1,2,...,**n**} and whose edges are the orderer pairs (**x**,f(**x**)) for all **x** $\in$ {1,2,...,**n**}
+### example of a Functional graph
+- **f**: {1,2,...,13} -> {1,2,...,13}
+- f(1) = 4
+- f(2) = 11
+- f(3) = 1
+- f(4) = 6
+- f(5) = 3
+- f(6) = 9
+- f(7) = 3
+- f(8) = 11
+- f(9) = 1
+- f(10) = 2
+- f(11) = 10
+- f(12) = 4
+- f(13) = 7
+![Graph example](../assets/graph-example.png)
+### Fact
+- As **n** tends to infinity, the following statements regarding the functional graph of a random function **f** from $F_n$ are true:
+1. The expected number of components is $\frac{1}{2}$*ln(**n**)
+2. The expected number of points which are on the cycles is $\sqrt{\frac{\pi * n}{2}}$
+3. The expected number of **terminal points** (points which have no preimages) is $\frac{n}{e}$
+4. The expected number of **k**-th iterate image points (**x** is a **k**-th iterate image point if **x**=f(f(...f(y)...)) for some **y**) is (1-$T_k$)*n, where $T_k$ satisfy the recurrence $T_0$=0,$T_{k+1}$=$e^{-1+T_k}$ for k $\ge$ 0 
+### Another definition
+- Let **f** be a random function from {1,2,...,**n**} to {1,2,...,**n**} and let **u** $\in$ {1,2,...,**n**}
+- Considere the sequence of points $u_0,u_1,u_2,...$ defined by $u_0=u,u_i=f(u_{i-1})$ for $i \ge 1$
