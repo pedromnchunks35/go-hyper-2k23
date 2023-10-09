@@ -146,7 +146,7 @@
 - These two possible outcomes are called success and failure
 ### Fact
 - Suppose that the probability of success on a particular Bernoulli trial is **p**
-- Then the probability of exacly **k** successes in a sequence of **n** such independent trials is: $\binom{n}{k}$$p^k$$(1-p)^{n-k}$, for each $0 \le k \le n$
+- Then the probability of exacly **k** successes in a sequence of **n** such independent trials is: $$\binom{n}{k}$$ $$p^k$$ $$(1-p)^{n-k}$$, for each $$0 \le k \le n$$
 ### Definition
 - The probability distribution is called **binomial distribution**
 ### Fact
@@ -240,3 +240,76 @@
 ### Another definition
 - Let **f** be a random function from {1,2,...,**n**} to {1,2,...,**n**} and let **u** $\in$ {1,2,...,**n**}
 - Considere the sequence of points $u_0,u_1,u_2,...$ defined by $u_0=u,u_i=f(u_{i-1})$ for $i \ge 1$
+- In the graph of f, this sequence describes a path that connects to a cycle
+1. The number of edges in the path is called the tail length of u,denoted &lambda;(u)
+2. The number of edges in the cycle is called the cycle length of u,denoted &mu;(u)
+3. The rho-length of u is the quantity p(u)=&lambda;(u)+&mu;(u)
+4. The tree size of u is the number of edges in the maximal tree rooted on a cycle in the component that contains u.
+5. The component size of u is the number of edges in the component that contains u.
+6. The prodecessors size of u is the number of iterated preimages of u.
+### Example
+- The functional graph in figure 2.1 has 2 components and 4 terminal points
+- The point u=3 has parameters &lambda;(u)=1,&mo;(u)=4,p(u)=5
+- The tree,component and predecessors sizes of u=3 are 4,9 and 3
+### Fact
+- As n tends to infinity
+- There are expectatons of some parameters associated with a random point in {1,2,...,n} and a random function from $F_n$
+1. Tail length: $\sqrt{\frac{\pi*n}{8}}$
+2. Cycle length: $\sqrt{\frac{\pi*n}{8}}$
+3. Rho length: $\sqrt{\frac{\pi*n}{2}}$
+4. Tree size: $\frac{n}{3}$
+5. Component size: $\frac{2n}{3}$
+6. predecessors size: $\sqrt{\frac{\pi*n}{8}}$
+### Fact
+- As n tends to infinity 
+- the expectations of the maximum tail,cycle, and rho lengths in a random function from $F_n$ are $c_1$$\sqrt{n}$,$c_2$$\sqrt{n}$ and $c_3$$\sqrt{n}$,respectively,where $c_1$$\approx$ 0,78248, $c_2$$\approx$ 1,73746 and $c_3$$\approx$ 2,4149
+## Information theory
+### Entropy
+- Let X be a random variable which takes a finite set of values $x_1$,$x_2$,...$x_n$ with probability P(X=$x_i$)=$p_i$ where $0 \le p_i \le 1$
+- for each i, $1 \le i \le n$ and where $\sum_{i=1}^n$$p_i$=1
+- Y and Z are random variables which take on finite sets of values
+- The entropy of X is a mathematical measure of the amount of information provided by an observation of X
+- It is also the uncertainity about the outcome before an observation of X
+- Entropy is also useful for approximating the average number of bits required to encode the elemnts of X
+### Definition
+- The entropy of uncertainty of X is defined to be H(X)=-$\sum_{i=1}^n$$p_i$$*$lg$*$$p_i$=$\sum_{i=1}^n$$p_1$$*$lg$*$lg($\frac{1}{p_i}$) where by convention $p_i$*lg $p_i$ = $p_i$ * lg ($\frac{1}{p_i}$)=0 if $p_i$=0
+### Fact (properties of entropy)
+- Let X be a random variable which takes on n values
+1. $0 \le H(X) \le lg(n)$
+2. H(X)=0 if and only if $p_i$=1 for some i, and $p_j$=0 for all j$\ne$i
+3. H(X)=lg(n) if and only if $p_i$=$\frac{1}{n}$ for each i,$1 \le i \le n$ (all the outcomes are equally likely)
+### Definition (The joint entropy of X and Y is defined to be)
+- H(X,Y)=-$\sum_{x,y}$P(X=x,Y=y)$*$lg(P(X=x,Y=y))
+- Where the summation indices x and y range over all values of X and Y,respectively
+- The definition can be extended to any number of random variables 
+### Fact
+- If X and Y are random variables
+- $H(X,Y) \le H(X) + H(Y)$, with equality if and only if X and Y are independent
+### Definition
+- If X,Y are random variables
+- The conditional entropy of X and given Y = y is H(X|Y=y)=-$\sum_{x}$$P(X=x|Y=y)$$*$lg(P(X=x|Y=y))
+- Where the summation index x ranges over all values of X
+- The conditional entropy of X given Y, also called the equivocation of Y about X, is H(X|Y) = $\sum_{y}$P(Y=y)H(X|Y=y), where the summation index y ranges over all values of Y
+### Fact (properties of conditional entropy)
+- Let X and Y be random variables
+1. The quantity H(X|Y) measures the amount of uncertainty remaining about X after Y has been observed
+2. H(X,Y)$\ge$ 0 and H(X|X)=0
+3. H(X,Y)=H(X)+H(Y|X)=H(Y)+H(X|Y)
+4. H(X|Y)$\le$H(X),with equality if and only if X and Y are independent
+## Mutual information
+### Definition (mutual information or transinformation of random variables X and Y)
+- it is I(X;Y)=H(X)-H(X|Y) when the random variables are X and Y
+- it is also I(X;Y,Z)=H(X)-H(X|Y,Z) when the random variables are X and the pair Y,Z
+### Fact (properties of mutual transformation)
+1. The quantity I(X;Y) can be thought of as the amount of information that Y reveals about X
+The quantity I(X;Y,Z) can be thought as the amount of information Y and Z reveal about X
+2. I(X;Y)$\ge$ 0
+3. I(X;Y)=0 if and only if X and Y are independent (that is, Y contributes no information about X)
+4. I(X;Y)=I(Y;X)
+### Definition (the conditional transformation)
+- The conditional transiformation of the pair X,Y given Z is defined to be $I_Z$(X;Y)=H(X|Z)-H(X|Y,Z)
+### Fact (properties of conditional transiformation)
+1. The quantity $I_Z$(X;Y) can be interpreted as the amount of information that Y provides about X,given that Z has already been observed
+2. I(X;Y,Z)=I(X;Y)+$I_Y$(X;Y)
+3. $I_Z$(X;Y)=$I_Z$(Y;X)
+## Complexity Theory
