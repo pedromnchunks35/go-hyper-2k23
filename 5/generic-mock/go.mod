@@ -1,4 +1,4 @@
-module github.com/pedromnchunks35/go-hyper-2k23/5/generic-mock v1.0.0
+module generic-mock
 
 go 1.20
 
