@@ -1,4 +1,4 @@
-module github.com/pedromnchunks35/generic-mock
+module github.com/pedromnchunks35/5/generic-mock
 
 go 1.20
 
