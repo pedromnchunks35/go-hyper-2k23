@@ -313,3 +313,74 @@ The quantity I(X;Y,Z) can be thought as the amount of information Y and Z reveal
 2. I(X;Y,Z)=I(X;Y)+$I_Y$(X;Y)
 3. $I_Z$(X;Y)=$I_Z$(Y;X)
 ## Complexity Theory
+- Main goal is to provide mechanisms for classifying computational problems according to the resources needed to solve them
+- Classification could not depend on a particular computational model
+- It should measure the intrinsic difficulty of the problem
+- Resources measured may include time,storage space,random bits,number of processors,etc..
+- The main thing is time and sometimes space
+- Algorithm is a well-defined computational procedure that takes a variable input and halts with an output
+- The term "well-defined computational procedure" is not mathematically precise
+- It can be made so by using formal computational models such as **Turing machines**,**random acess** machines or **boolean circuits**
+### Definition
+- The size of a input is the total number of bits needed to represent the input in ordinary notation using an appropriate encoding scheme
+- Sometimes it can be the number of items of the input
+### Example (Sizes of some objects)
+1. The number of bits in the binary representation of a positive integer n is 1+[lg(n)] bits. For simplicity, the size of n will be approximated by lg(n)
+2. If f is a polynomial of degree at most k, eacho coefficient being a non-negative integer at most n, then the size of f is (k+1)log(n) bits
+3. If A is a matrix with r rows,s columns, and with non-negative integer entries each at most n, then the size of A is r$*$s$*$log(n) bits
+### Definition running time of a algorithm
+- The running time of a algorithm on a particular input is the number of primitive operations or steps executed
+- Often a step is taken to mean a bit operation
+- For some algorithms it will be more convenient to take step to mean something else such as a comparison, a machine instruction,a machine clock cycle, a modular multiplication,etc..
+### Definition worst-case running time
+- The worst-case running time of a algorithm is an upper bound on the running time of any input, expressed as a function of a input size
+### Definition average-case running time
+- The average-case running time of a algorithm is the average running time over all inputs of a fixed size, expressed as a function of the input size
+## Asymptotic notation
+- It is often difficult to derive the exact running time of a algorithm
+- In such situations we are forced to settle approximations of the running time (this is called asymptotic running time)
+- This is the study of how the time of the algorithm increases as the size of the input increases without bound
+- The only functions considered are those which are defined on the positive integers and take on real values that are always positive from some point onwards
+- Let f and g be two such functions
+### Definition orderer notation
+1. (asymptotic upper bound)f(n)=O(g(n)) if there exists a positive constant c and a positive integer $n_0$ such that $0 \le f(n) \le cg(n)$ for all $n \ge n_0$
+2. (asymptotic lower bound)f(n)=$\Omega$(g(n)) if there exists a positive constant c and a positive integer $n_0$ such that $0 \le cg(n) \le f(n)$ for all $n \ge n_0$
+3. (asymptotic tight bound)f(n)=$\Theta$(g(n)) if there exist positive constants $c_1$ and $c_2$, and a positive integer $n_0$ such that $c_1 g(n) \le f(n) \le c_2 g(n)$ for all $n \ge n_0$
+4. (o-notation)f(n)=o(g(n)) if for any positive constant c>0 there exists a constant $n_0 > 0$ such that $0 \le f(n) < cg(n)$
+- f(n)=O(g(n)) means that f grows no faster asymptotically than g(n) to within a constant multiple, while f(n)=$\Omega$(g(n)) means that f(n) grows at least as fast assymptically as g(n) to within a constant multiple.f(n)=o(g(n)) means that g(n) is an upper bound for f(n) that is not asymptotically tight, or in other words, the function f(n) becomes insignificant relative to g(n) as n gets large. The expression o(1) is often used to signify a function f(n) whose limit as n approaches $\infty$ is 0
+### Fact (properties of order notation)
+- For any functions f(n),g(n),h(n) and l(n), the following are true
+1. f(n)=O(g(n)) if and only if g(n)=$\Omega$(f(n))
+2. f(n)=$\Theta$(g(n)) if and only if f(n)=O(g(n)) and f(n)=$\Omega$(f(n))
+3. If f(n)=O(h(n)) and g(n)=O(h(n)), then (f+g)(n)=O(h(n))
+4. If f(n)=O(h(n)) and g(n)=O(l(n)), then (f·g)(n)=O(h(n)l(n))
+5. (relexivity)f(n)=O(f(n))
+6. (transitivity) if f(n)=O(g(n)) and g(n)=O(h(n)),then f(n)=O(h(n))
+### Fact (approximations of some commonly occuring functions)
+1. (polynomial function) If f(n) is a polynomial of degree k with positive leading term, then f(n)=$\Theta$($n^k$)
+2. For any constant $c>0,log_c n=\Theta(lg(n))$
+3. (Stirling's formula) for all integers $n \ge 1$,
+- $\sqrt{2 \pi n}(\frac{n}{e})^n \le n! \le \sqrt{2 \pi n}(\frac{n}{e})^{n+(\frac{1}{12n})}$
+- Thus n!=$\sqrt{2 \pi n}(\frac{n}{e})^{n}(1+\Theta(\frac{1}{n}))$
+- n!=$o(n^n)$ and n!=$\Omega(2^n)$
+4. lg(n!)=$\Theta(n lg(n))$
+### Example (comparative growth rates of some functions) 
+- Let e and c be arbitrary constants with $0< e < 1 < c$. The following functions are listed in increasing order of their asymptotic growth rates: $1<ln ln(n)<ln(n)<exp(\sqrt{ln n ln ln n})<n^{\epsilon}<n^c<n^{ln n}<c^n<n^n<c^{c^{n}}$
+## Complexity classes
+- A polynomial-time algorithm is a algorithm whose worst-case running time function is of the form $O(n^k)$, where n is the input size and k is a constant
+- Any algorithm whose running time cannot be so bounded is called an exponential-time algorithm
+- Roughly speaking, polynomial-time algorithms can be equated with good or efficient algorithms, while exponential-time algorithms are considered inefficient
+- There are however, some practical situations when this distinction is not appropriate
+- When considering polynomial-time complexity, the degree of the polynomial is significant
+- For example tought algorithm with a running time of $O(n^{ln ln n})$, n beeing the input size, is asymptotically slower than a algorithm with a running time of $O(n^{100})$, the former algorithm may be faster in practise for smaller values of n, especially if the constant hidden by the big-O notation are smaller
+- Furthermore, in cryptography, average-case complexity is more important than worst-case complexity
+- A necessary condition for an encryption scheme to be considered secure is that the corresponding cryptanalysis problem is difficult on average(or more precisely,almost always difficult), and not just for some isolated cases
+### Definition subexponential-time algorithm
+- A subexponential-time algorithm is an algorithm whose worst-case running time function if of the form $e^{o(n)}$,where n is the input size
+- A subexponential-time algorithm is asymptotically faster than an algorithm whose running time is fully exponential in the input size, while it is asymptotically slower than a polynomial-time algorithm
+### Example (subexponential running time)
+- Let A be an algorithm whose inputs are either elements of a finite Field $F_q$, or a integer q. If the expected running time of A is of the form: $L_q[\alpha,c]=O(exp((c+o(1))(ln(q)^{\alpha}(lnlnq)^{1-\alpha})))$
+- Where c is a positive constant and $alpha$ is a constant satisfying $0 < \alpha < 1$, then A is a subexponential-time algorithm
+- For $\alpha = 0, L_q[0,c] is a polynomial in ln(q), while for \alpha = 1,L_q[1,c]$ is a polynomial in q, and thus fully exponential in ln q.
+- For simplicity, the theory of computational complexity restricts its attention to decision problems. ex: Prolems which have either YES or NO as answer
+- This is not to restricted in practise, as all the computational problems that whill be encountered here can be phrased as decision problems in such a way that a efficient algorithm for the decision problem yields an efficient algorithm for the computational problem and vice versa
