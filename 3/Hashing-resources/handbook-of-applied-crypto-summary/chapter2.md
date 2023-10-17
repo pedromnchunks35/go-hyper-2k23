@@ -384,3 +384,288 @@ The quantity I(X;Y,Z) can be thought as the amount of information Y and Z reveal
 - For $\alpha = 0, L_q[0,c] is a polynomial in ln(q), while for \alpha = 1,L_q[1,c]$ is a polynomial in q, and thus fully exponential in ln q.
 - For simplicity, the theory of computational complexity restricts its attention to decision problems. ex: Prolems which have either YES or NO as answer
 - This is not to restricted in practise, as all the computational problems that whill be encountered here can be phrased as decision problems in such a way that a efficient algorithm for the decision problem yields an efficient algorithm for the computational problem and vice versa
+### Definition (complexity class)
+- The complexity class P is the set of all decision problems that are solvable in polynomial time
+- The complexity class NP is the set of all decision problems for which a YES answer can be verifed in polynomial time given some extra information, called a certificate
+- The complexity class co-NP is the set of all decision problems for each a NO answer can be verified in polynomial time using an appropriate certificate
+- If a decision is in NP, it may not be the case that the certificate of a YES answer can be easily obtained. What is asserted is that such a certificate does not exist, and, if known can be used to efficiently verify the YES answer. The same is true of the NO answers for problems in co-NP
+### Example (problem in NP)
+- The instance is a positive integer n
+- The question is: "Is n composite?". That is, are there integers a,b > 1 such that n = ab?
+- Composites belongs to NP because if an integer n is composite, then this fact can be verified in polynomial time if one is given a divisor a of n, where $1<a<n$(the certificate in this case consists of the divisor a). It is in fact also the case that COMPOSITES belongs to co-NP. It is still unknown wheter or not COMPOSITES belong to P
+### Fact P $\subseteq$ NP and P $\subseteq$co-NP
+- The following are among the outstanding unresolved questions in the subject of complexity theory:
+1. Is P=NP?
+2. Is NP=co-NP?
+3. Is P=NP $\cap$ co-NP
+- Mot of the experts believe that the answer is NO
+### Defition 
+- Let $L_1$ AND $L_2$ be two decision problems. $L_1$ is said to polytime reduce to $L_2$, written $L_1 \le_P L_2$
+- If there is a algorithm that solves $L_1$ which uses, as a subroutine,an algorithm for solving $L_2$, and which runs in polynomial time if the algorithm for $L_2$ does
+- Informally, if $L_1 \le_P L_2$, then $L_2$ is at least as difficult as $L_1$, or, equivalently, $L_1$ is no harder than $L_2$
+### Definition
+- Let $L_1$ and $L_2$ be two decision problems. If $L_1 \le_P L_2$ and $L_2 \le_P L_1$, then $L_1 and L_2$ are said to be computationally equivalent
+### Fact
+- Let $L_1,L_2, and L_3$ be three decision problems
+1. (transitivity) If $L_1 \le_P L_2$ and $L_2 \le_P L_3$, then $L_1 \le_P L_3$
+2. If $L_1 \le_P L_2$ and $L_2$  $\in$  P, then $L_1$ $\in$ P
+### Defition 
+- A decision problem L is said to be NP-complete if
+1. L $\in$ NP, and
+2. $L_1$ $\le_P$ L for every $L_1$ $\in$ NP
+- The class of all NP-complete problems is denoted by NPC
+- NP-complete problems are the hardest problems in NP in the sene that they are at least as difficult as every other problem in NP. There are thousands of problems drawn from diverse fields such as combinatorics,number theory and logic. That are known to be NP-complete
+### Example (subset sum problem)
+- The subset sum problem is the following: 
+    - given a set of positive integers {$a_1,a_2,...,a_n$} and a positive integer s,determine whether or not there is a subset of the $a_i$ that sum to s. The subset sum problem is NP-complete
+### Fact
+- Let $L_1$ and $L_2$ be two decision problems
+1. If $L_1$ is NP-complete and $L_1$ $\in$ P, then P=NP
+2. If $L_1$ $\in$ NP, $L_2$ is NP-complete, and $L_2 \le_P L_1$, then $L_1$ is also NP-complete
+3. If $L_1$ is NP-complete and $L_1$ $\in$ co-NP, then NP=co-NP
+![Complexity classes](../assets/complexity-classes.png)
+### Definition
+- A problem is NP-hard if there exists some NP-complete problem that polytime reduces to it
+- Np-hard is not only to decision problems
+- NP-complete is also NP-hard
+### Example(NP-hard problem)
+- Given positive integers $a_1,a_2,...a_n$ and a positive integer s
+- The computational version of the subset sum problem would ask to actually find a subset of the $a_i$ which sums to s, provided such a subset exists. This problem is NP-hard.
+## Randomized algorithms
+- The algorithms studied so far in this section are deterministic
+- They follow the same path of operations so far
+- Randomzied algorithm makes random decisions at certain points in the execution
+- The random decisions are based in random number generators
+- In some cases they are better than the deterministic
+### Definition
+- Let A be a randomized algorithm for a decision problem L, and let I denote an arbitrary instance of L
+1. A has 0-sided error if P(A outputs YES|I's answer is YES)=1,and P(A outputs YES|I's answer is NO)=0
+2. A has 1-sided error if P(A outputs YES|I's answer is YES)$\ge$$\frac{1}{2}$, and P(A outputs YES|I's answer is NO)=0
+3. A has 2-sided error if P(A outputs YES|I's answer is YES)$\ge$$\frac{2}{3}$, and P(A outputs YES|I's answer is NO)$\le$$\frac{1}{3}$
+The number $\frac{1}{2}$ in the definition of 1-sided error is somewhat arbitrary and can be replaced by any positive constant. Similarly, the numbers $\frac{2}{3}$ and $\frac{1}{3}$ in the definition of 2-sided error, can be replaced by $\frac{1}{2}$+$\in$ and $\frac{1}{2}$-$\in$,respectively, for any constant $\in$, $0 < \in < \frac{1}{2}$
+### Definition
+- The expected running time of a randomized algorithm is an upper bound on the expected running time for each input ( the expectation being over all outputs of the random number generator used by the algorithm), expressed as a function of the input size.
+- The important randomized complexity classes are defined next
+### Definition (randomized complexity classes)
+1. The complexity class ZPP("zero-sided probabilistic polynomial time")is the set of all decision problems for which there is a randomized algorithm with 0-sided error which runs in expected polynomial time
+2. The complexity class RP("randomized polynomial time") is the set of all decision problems for which there is a randomized algorithm with 1-sided error which runs in worst-case polynomial time
+3. The complexity class BPP("bounded error probabilistic polynomial time") is the set of all decision problems for which there is a randomized algorithm with 2-sided error which runs in (worst-case) polynomial time
+### Fact $P \in ZPP \in RP \in BPP and RP \in NP$
+## Number theory
+### The integers
+- The set of integers {...,-3,-2,-1,0,1,2,3,...} is denoted by the symbol $\Z$
+### Definition 
+- Let a,b be integers. Then a divides b (equivalently: a is a divisor of b or a is a factor of b). If there exists an integer c such that b=ac. if a divides b, then this is denoted by a|b
+### Example (i)-3|18, since 18=(-3)(-6).(ii)173|0,since 0=(173)(0)
+### Fact (properties of divisibility) 
+- For all a,b,c $\in$ $\Z$, the following are true:
+1. a|a
+2. IF a|b and b|c, then a|c
+3. If a|b and a|c, then a|(bx + cy) for all x,y $\in$ $\Z$
+4. If a|b and b|a, then a=$\pm$b
+### Definition (division algorithm for integers)
+- If a and b are integers with $b\ge1$, then ordinary long division of a by a yields integers q(the quotient) and r (the remainder) such that: a=qb+r,where $0\le r < b$
+- q and r are unique
+- The remainder of the division is denoted a mod b, and the quotient is denoted a div b
+### Fact
+- Let a,b $\in \Z$ with b $\ne$ 0. Then a div b = [a/b] and a mod b=a - b [a/b]
+### Example
+- If a=73,b=17,then q=4 and r=5.Hence 73 mod 17=5 and 73 div 17=4
+### Definition
+- An integer c is a common divisor of a and b if c|a and c|b
+### Definition
+- A non-negative integer d is the greatest common divisor of integers a and b, denoted d=gcd(a,b), if
+1. d is a common divisor of a and b; and
+2. whenever c|a and c|b, then c|d
+- gcd(a,b) is the largest positive integer that divides both a and b, with the exception that gcd(0,0)=0
+### Example
+- The common divisors of 12 and 18 are {$\pm 1,\pm 2,\pm 3,\pm 6$} and gcd(12,18)=6
+### Definition
+- A non-negative integer d is the least common multiple of integers a and b, denoted d=lcm(a,b), if
+1. a|b and b|d
+2. whenever a|c and b|c, then d|c
+- lcm(a,b) is also the smallest non-negative integer divisible by both a and b
+### Fact
+- If a and b are positive integers
+- then lcm(a,b)=a·b/gcd(a,b)
+### Example
+- Since gcd(12,18)=6
+- It follows that lcm(12,18)=12·18/6=36
+### Definition
+- Two integers a and b are said to be relatively prime or coprime if gcd(a,b)=1
+### Definition 
+- An integer $p \ge 2$ is said to be prime if its only positive divisors are 1 and $p$
+- Otherwise, $p$ is called composite
+### Fact
+- If $p$ is prime and $p$|$ab$,then either $p$|$a$ or $p$|$b$ (or both)
+### Fact
+- There are an infinite number of prime numbers
+### Fact (prime number theorem)
+- Let $\pi$(x) denote the number of prime numbers $\le$ $x$
+- Then $\lim_{x \longrightarrow \infty}$ $\frac{\pi(x)}{x/ln(x)}$=1
+- This means that for large values of $x$,$\pi(x)$ is closely approximated by the expression $x/ln(x)$
+- For instance, when x=$10^{10}$,$\pi$(x)=455,052,511,whereas $\lfloor x/ln(x) \rfloor$ = 434,294,481.
+- A more explicit estimate for $\pi$(x) is given below
+### Fact 
+- Let $\pi$(x) denote the number of primes $\le x$
+- Then for $x \ge 17$
+- $\pi(x) > \frac{x}{ln(x)}$ and for $x>1$, $\pi(x)<1.25506\frac{x}{ln(x)}$
+### Fact (fundamental theorem of arithmetic)
+- Every integer $n \ge 2$ has a factorization as a product of prime powers
+- n=$p^{e_1}_1 p^{e_2}_2 ... p^{e_k}_k$
+- Where $p_i$ are different primes and the $e_i$ are positive integers
+- Furthermore, the factorization is unique up to rearrangement of factors
+### Fact
+- if a=$p^{e_1}_1 p^{e_2}_2 ... p^{e_k}_k$,b=$p^{f_1}_1 p^{f_k}_k$, where each $e_i \ge 0$ and $f_i \ge 0$
+- Then gcd(a,b)=$p^{min(e_1,f_1)}_1 p^{min(e_2,f_2)}_2 ... p^{max(e_k,f_k)}_k$
+- and lcm(a,b)=$p^{max(e_1,f_1)}_1 p^{max(e_2,f_2)}_2 ... p^{max(e_k,f_k)}_k$
+### Example
+- Let a=4864=$2⁸$·19
+- b=3458=2·7·13·19
+- gcd(4864,3458)=2·19=38
+- lcm(4864,3458)=2⁸·7·13·19=442624
+### Definition
+- For $n \ge 1$
+- Let $\phi$(n) denote the number of integers in the interval $[1,n]$ which are relatively prime to $n$
+- The function $\phi$ is called the $Euler$ $phi$ $function$
+### Fact (properties of Euler phi function)
+1. IF $p$ is a prime, then $\phi$(p)=p-1
+2. The Euler phi function is mutiplicative. This means that if gcd(m,n)=1, then $\phi$(mn)=$\phi$(m)·$\phi$(n)
+3. If n=$p^{e_1}_1 p^{e_2}_2 ... p^{e_k}_k$ is the prime factorization of $n$, then $\phi(n)=n(1-\frac{1}{p_1})(1-\frac{1}{p_2})...(1-\frac{1}{p_k})$
+### Fact
+- For all integers $n \ge 5$, $\phi(n)>\frac{n}{6lnlnn}$
+## Algorithms in $\Z$ 
+- Let $a$ and $b$ be non-negative integers each less than or equal to $n$
+- The number of bit operations for the four basic integer operations of addition,subtraction,multiplication, and division using the classical algoritms is summarized in the table 
+![Bit complexity](../assets/bit-complexity.png)
+- More sophisticated techniques for multiplication and division have smaller complexities
+- The euclidean algorithm is a efficient algorithm for computing the greatest common divisor of two integers that does not require the factorization of the integers
+- It is based on the following simple fact
+### Fact
+- If $a$ and $b$ are positive integers with $a > b$, then gcd(a,b) = gcd(b,a mod b)
+### Algorithm Euclidean algorithm
+- Input: two non-negative integers $a$ and $b$ with $a \ge b$
+- Output: the greatest common divisor of $a$ and $b$
+1. While b $\neq$ 0 do the following: Set r<-a mod b, a<-b,b<-r
+2. Return(a)
+### Fact
+- Algorithm has a running time of $O((lg n)^2)$ bit operations
+### Example (Euclidean algorithm)
+- The following are the division steps of Algorithm 2.104 for computing gcd(4864,3458)=38:
+```
+4864=1·3458+1406
+3458=2·1406+646
+1406=2·646+114
+646=5·114+76
+114=1·76+38
+76=2·38+0
+```
+- The algorithm can be extended so that it not only yield the greatest common divisor $d$ of two integers $a$ and $b$, but also integers $x$ and $y$ satisfying $ax+by=d$
+### Algorithm Extended Euclidean algorithm
+- Input: two non-negative integers $a$ and $b$ with $a \ge b$
+- Ouput: d = gcd(a,b) and integers $x,y$ satisfying $ax + by = d$
+1. If b=0 then set d<-a,x<-1,y<-0, and return(d,x,y)
+2. Set $x_2$<-1,$x_1$<-0,$y_2$<-0,$y_1$<-1
+3. While $b>0$ do the following:
+   
+   3.1. q<-$\lfloor$a/b$\rfloor$,r<-a-qb,x<-$x_2$-q$x_1$,y<-$y_2$-q$y_1$ 
+
+   3.2. a<-b,b<-r,$x_2$<-$x_1$,$x_1$<-x,$y_2$<-$y_1$ and $y_1$<-y
+4. Set d<-a,x<-$x_2$,y<-$y_2$ and return(d,x,y)
+### Fact
+- The last algorithm has a running time of $O((lg(n))^2)$ bit operations
+### Example
+![Euclidean algorithm extended](../assets/example-euclidean-algorithm.png)
+## Integers modulo $n$
+- $n$ is a positive integer
+### Definition
+- If $a$ and $b$ are integers, then $a$ is said to be congruent to $b$ modulo $n$, written a $\equiv$ $b$ (mod $n$), if $n$ divides ($a-b$). The integer $n$ is called the modulos of the congruence
+### Example
+1.  24 $\equiv$ 9(mod 5) since 24-9 $\equiv$ = 3·5
+2.  -11 $\equiv$ 17 (mod 7) since -11-17=-4·7 
+### Fact (properties of congruences)
+- For all $a,a_1,b,b_1,c \in \Z$
+- The following is true:
+1. $a \equiv b$ (mod $n$) if and only if $a$ and $b$ leave the same remainder when divided by $n$
+2. (reflexivity) $a$ $\equiv$ $a$ (mod $n$)
+3. (symmetry) If $a$ $\equiv$ $b$ (mod $n$) then $b$ $\equiv$ $a$ (mod $n$)
+4. (transitivity) If $a$ $\equiv$ $b$ (mod $n$) and $b$ $\equiv$ $c$ (mod $n$), then $a$ $\equiv$ $c$ (mod $n$)
+5. If $a$ $\equiv$ $a_1$(mod $n$) and $b$ $\equiv$ $b_1$ (mod $n$), then $a$+$b$ $\equiv$ $a_1 + b_1$(mod $n$) and $ab$ $\equiv$ $a_1 b_1$(mod $n$)
+- The equivalence class of an integer $a$ is the set of all integers congruent to $a$ modulo $n$
+- From properties 2,3, and 4 above, it can be seen that for a fixed $n$ the relation of congruence modulo $n$ partitions $\Z$ into equivalence classes
+- If $a$ $\equiv$ $qn + r$, where $0 \le r < n$, then $a \equiv r$ (mod $n$)
+- Hence each integer $a$ is congruent modulo $n$ to a unique integer between 0 and $n-1$,called the least residue of $a$ of a module $n$
+- Thus $a$ and $r$ are in the same equivalene class, and so $r$ may simply be used to represent the equivalence class
+### Definition
+- The integers modulo $n$,denoted $\Z_n$, is the set of (equivalence classes of) integers {0,1,2,...,$n$-1}. Addition, subtraction, and multiplication in $\Z_n$ are performed modulo $n$
+### Example
+- $\Z_{25}$={0,1,2,...,24}
+- In $\Z_{25}$, 13+16=4, since 13+16=29$\equiv$4(mod 25). Similarly 13·16=8 in $\Z_{25}$
+### Definition 
+- Let $a \in \Z_{n}$
+- The multiplicative inverse of $a$ modulo $n$ is an integer $x \in \Z_{n}$ such that $ax$$\equiv$ 1 (mod $n$)
+- If such an $x$ exists,then it is unique, and $a$ is said to be invertible, or a unit; the inverse of $a$ is denoted by $a^{-1}$
+### Definition
+- Let $a,b \in \Z_{n}$
+- Divisition of $a$ by $b$ modulo $n$ is the product of $a$ and $b^{-1}$ modulo $n$,and is only defined if $b$ is invertible modulo $n$
+### Fact
+- Let $a \in \Z_n$. Then $a$ is invertible if and only if gcd($a$,$n$)=1
+### Example
+- The invertible elements in $Z_9$ are 1,2,4,5,7 and 8. For example, 4^{-1}=7 because 4·7 $\equiv$ 1 (mod 9)
+### Fact
+- Let $d=gcd(a,n)$
+- The congruence equation $ax \equiv b$ (mod $n$) has a solution $x$ if and only if $d$ divides $b$,in which case there are exacly $d$ solutions beteen 0 and n-1;
+- These solutions are all congruent modulo $n/d$
+### Fact (Chinese remainder theorem,CRT)
+- If the integers $n_1,n_2,...,n_k$ are pairwise relatively prime
+- Then the system of simultaneous congruences
+
+$x \equiv a_1$ (mod $n_1$)
+
+$x \equiv a_2$ (mod $n_2$)
+          
+          .
+          .
+          .
+$x \equiv a_k$ (mod $n_k$)
+- has a unique solution modulo = $n_1 n_2 ... n_k$
+### Algorithm
+- The solution $x$ to the simultaneous congruences in the Chinese remainder theorem may be computed as $x$=$\sum^{k}_{i=1}$$a_i N_i M_i$ mod $n$
+- Where $N_i = n/n_i$ and $M_i$=$N_i^{-1}$ mod $n_i$
+- These computations can be performed in $O((lg n)^{2})$ bit operations
+### Example 
+- The pair of congruences $x \equiv 3$ (mod 7), $x \equiv 7$ (mod 13) has a unique solution $x \equiv 59$ (mod 91)
+### Fact 
+- If $gcd(n_1,n_2)$=1, then the pair of congruences $x \equiv a$ (mod $n_1$), $x \equiv a$ (mod $n_2$) has a unique solution $x \equiv a$ (mod $n_1 n_2$)
+### Definition
+- The multiplicative group of $\Z_n$ is $\Z_n^{*}$={$a \in \Z_n | gcd(a,n)=1$}
+- In particular, if $n$ is a prime, then $Z_n^{*}$={$a|1 \le a \le n-1$}
+### Definition
+- The order of $Z_n^{*}$ is defined to be the number of elements in $Z_n^{*}$,namely |$Z_n^{*}$|
+- It follows from the definition of the Euler phi function that |$Z_n^{*}$|=$\phi$(n)
+- Note that if $a \in \Z_n^{*}$ and $b \in \Z_n^{*}$, then $a·b \in \Z_n^{*}$, and so $\Z_n^{*}$ is closed under multiplication
+### Fact
+- Let $n \le 2$ be an integer
+1. If $a \in \Z_n^{*}$ then $a^{\phi(n)}$ $\equiv$ 1 (mod $n$)
+2. If $n$ is a product of distinc primes, and if $r \equiv s$ (mod $\phi(n)$), then $a^r \equiv a^s$ (mod $n$) for all integers $a$. In other words, when working modulo a prime $p$, exponents can be reduced modulo $p-1$
+3. In particular $a^p \equiv a$ (mod $p$) for all integers $a$
+### Definition
+- Let $a$ $\in$ $\Z_n^{*}$. The order of $a$,denoted $ord(a)$, is the least positive integer $t$ such that $a^t \equiv 1$ (mod $n$)
+### Fact
+- If the order of $a \in \Z_n^{*}$ is $t$, and $a^8 \equiv 1$ (mod $n$), then $t$ divides $s$. In particular $t|\phi(n)$
+### Example
+- Let n=21
+- Then $\Z_{21}^{*}$={1,2,4,5,8,10,11,13,16,17,19,20}
+- Note that $\phi(21)=\phi(7)\phi(3)=12=|\Z_{21}^{*}|$
+- The orders of elements in $\Z_21^{*}$ are listed in table 2.3 
+![The orders of elements in Z](../assets/orders-elements-inZ21*.png)
+### Definition
+- Let $\alpha \in \Z_{n}^{*}$
+- If the order of $\alpha$ is $\phi(n)$
+- Then $\alpha$ is said to be a generator or a primitive element of $\Z_{n}^{*}$
+- If $\Z_{n}^{*}$ has a generator, then $\Z_n^{*}$ is said to be cyclic
+### Fact (properties of generators of $\Z_n^{*}$)
+1. $Z_n^{*}$ has a generator if only if $n$=2,4,$p^k$ or 2$p^k$, where $p$ is an odd prime and $k \ge 1$. In particular, if $p$ is a prime, then $Z_n^{*}$ has a generator
+2. If $\alpha$ is a generator of $\Z_n^{*}$,then $Z_n^{*}$={$\alpha^{i}$ mod n | $0 \le$ i $\le$ $\phi$ (n) - 1}
+3. Suppose $\alpha$ is a generator of $\Z_n^{*}$, Then $b=\alpha^i$ mod $n$ is also a generator of $\Z_n^{*}$ if and only if $gcd(i,\phi(n))$=1. It follows that if $Z_n^{*}$ is cyclic, then the number of generators is $\phi(\phi(n))$
+4. 
