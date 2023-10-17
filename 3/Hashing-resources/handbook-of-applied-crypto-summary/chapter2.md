@@ -576,3 +576,96 @@ The number $\frac{1}{2}$ in the definition of 1-sided error is somewhat arbitrar
 - The last algorithm has a running time of $O((lg(n))^2)$ bit operations
 ### Example
 ![Euclidean algorithm extended](../assets/example-euclidean-algorithm.png)
+## Integers modulo $n$
+- $n$ is a positive integer
+### Definition
+- If $a$ and $b$ are integers, then $a$ is said to be congruent to $b$ modulo $n$, written a $\equiv$ $b$ (mod $n$), if $n$ divides ($a-b$). The integer $n$ is called the modulos of the congruence
+### Example
+1.  24 $\equiv$ 9(mod 5) since 24-9 $\equiv$ = 3·5
+2.  -11 $\equiv$ 17 (mod 7) since -11-17=-4·7 
+### Fact (properties of congruences)
+- For all $a,a_1,b,b_1,c \in \Z$
+- The following is true:
+1. $a \equiv b$ (mod $n$) if and only if $a$ and $b$ leave the same remainder when divided by $n$
+2. (reflexivity) $a$ $\equiv$ $a$ (mod $n$)
+3. (symmetry) If $a$ $\equiv$ $b$ (mod $n$) then $b$ $\equiv$ $a$ (mod $n$)
+4. (transitivity) If $a$ $\equiv$ $b$ (mod $n$) and $b$ $\equiv$ $c$ (mod $n$), then $a$ $\equiv$ $c$ (mod $n$)
+5. If $a$ $\equiv$ $a_1$(mod $n$) and $b$ $\equiv$ $b_1$ (mod $n$), then $a$+$b$ $\equiv$ $a_1 + b_1$(mod $n$) and $ab$ $\equiv$ $a_1 b_1$(mod $n$)
+- The equivalence class of an integer $a$ is the set of all integers congruent to $a$ modulo $n$
+- From properties 2,3, and 4 above, it can be seen that for a fixed $n$ the relation of congruence modulo $n$ partitions $\Z$ into equivalence classes
+- If $a$ $\equiv$ $qn + r$, where $0 \le r < n$, then $a \equiv r$ (mod $n$)
+- Hence each integer $a$ is congruent modulo $n$ to a unique integer between 0 and $n-1$,called the least residue of $a$ of a module $n$
+- Thus $a$ and $r$ are in the same equivalene class, and so $r$ may simply be used to represent the equivalence class
+### Definition
+- The integers modulo $n$,denoted $\Z_n$, is the set of (equivalence classes of) integers {0,1,2,...,$n$-1}. Addition, subtraction, and multiplication in $\Z_n$ are performed modulo $n$
+### Example
+- $\Z_{25}$={0,1,2,...,24}
+- In $\Z_{25}$, 13+16=4, since 13+16=29$\equiv$4(mod 25). Similarly 13·16=8 in $\Z_{25}$
+### Definition 
+- Let $a \in \Z_{n}$
+- The multiplicative inverse of $a$ modulo $n$ is an integer $x \in \Z_{n}$ such that $ax$$\equiv$ 1 (mod $n$)
+- If such an $x$ exists,then it is unique, and $a$ is said to be invertible, or a unit; the inverse of $a$ is denoted by $a^{-1}$
+### Definition
+- Let $a,b \in \Z_{n}$
+- Divisition of $a$ by $b$ modulo $n$ is the product of $a$ and $b^{-1}$ modulo $n$,and is only defined if $b$ is invertible modulo $n$
+### Fact
+- Let $a \in \Z_n$. Then $a$ is invertible if and only if gcd($a$,$n$)=1
+### Example
+- The invertible elements in $Z_9$ are 1,2,4,5,7 and 8. For example, 4^{-1}=7 because 4·7 $\equiv$ 1 (mod 9)
+### Fact
+- Let $d=gcd(a,n)$
+- The congruence equation $ax \equiv b$ (mod $n$) has a solution $x$ if and only if $d$ divides $b$,in which case there are exacly $d$ solutions beteen 0 and n-1;
+- These solutions are all congruent modulo $n/d$
+### Fact (Chinese remainder theorem,CRT)
+- If the integers $n_1,n_2,...,n_k$ are pairwise relatively prime
+- Then the system of simultaneous congruences
+
+$x \equiv a_1$ (mod $n_1$)
+
+$x \equiv a_2$ (mod $n_2$)
+          
+          .
+          .
+          .
+$x \equiv a_k$ (mod $n_k$)
+- has a unique solution modulo = $n_1 n_2 ... n_k$
+### Algorithm
+- The solution $x$ to the simultaneous congruences in the Chinese remainder theorem may be computed as $x$=$\sum^{k}_{i=1}$$a_i N_i M_i$ mod $n$
+- Where $N_i = n/n_i$ and $M_i$=$N_i^{-1}$ mod $n_i$
+- These computations can be performed in $O((lg n)^{2})$ bit operations
+### Example 
+- The pair of congruences $x \equiv 3$ (mod 7), $x \equiv 7$ (mod 13) has a unique solution $x \equiv 59$ (mod 91)
+### Fact 
+- If $gcd(n_1,n_2)$=1, then the pair of congruences $x \equiv a$ (mod $n_1$), $x \equiv a$ (mod $n_2$) has a unique solution $x \equiv a$ (mod $n_1 n_2$)
+### Definition
+- The multiplicative group of $\Z_n$ is $\Z_n^{*}$={$a \in \Z_n | gcd(a,n)=1$}
+- In particular, if $n$ is a prime, then $Z_n^{*}$={$a|1 \le a \le n-1$}
+### Definition
+- The order of $Z_n^{*}$ is defined to be the number of elements in $Z_n^{*}$,namely |$Z_n^{*}$|
+- It follows from the definition of the Euler phi function that |$Z_n^{*}$|=$\phi$(n)
+- Note that if $a \in \Z_n^{*}$ and $b \in \Z_n^{*}$, then $a·b \in \Z_n^{*}$, and so $\Z_n^{*}$ is closed under multiplication
+### Fact
+- Let $n \le 2$ be an integer
+1. If $a \in \Z_n^{*}$ then $a^{\phi(n)}$ $\equiv$ 1 (mod $n$)
+2. If $n$ is a product of distinc primes, and if $r \equiv s$ (mod $\phi(n)$), then $a^r \equiv a^s$ (mod $n$) for all integers $a$. In other words, when working modulo a prime $p$, exponents can be reduced modulo $p-1$
+3. In particular $a^p \equiv a$ (mod $p$) for all integers $a$
+### Definition
+- Let $a$ $\in$ $\Z_n^{*}$. The order of $a$,denoted $ord(a)$, is the least positive integer $t$ such that $a^t \equiv 1$ (mod $n$)
+### Fact
+- If the order of $a \in \Z_n^{*}$ is $t$, and $a^8 \equiv 1$ (mod $n$), then $t$ divides $s$. In particular $t|\phi(n)$
+### Example
+- Let n=21
+- Then $\Z_{21}^{*}$={1,2,4,5,8,10,11,13,16,17,19,20}
+- Note that $\phi(21)=\phi(7)\phi(3)=12=|\Z_{21}^{*}|$
+- The orders of elements in $\Z_21^{*}$ are listed in table 2.3 
+![The orders of elements in Z](../assets/orders-elements-inZ21*.png)
+### Definition
+- Let $\alpha \in \Z_{n}^{*}$
+- If the order of $\alpha$ is $\phi(n)$
+- Then $\alpha$ is said to be a generator or a primitive element of $\Z_{n}^{*}$
+- If $\Z_{n}^{*}$ has a generator, then $\Z_n^{*}$ is said to be cyclic
+### Fact (properties of generators of $\Z_n^{*}$)
+1. $Z_n^{*}$ has a generator if only if $n$=2,4,$p^k$ or 2$p^k$, where $p$ is an odd prime and $k \ge 1$. In particular, if $p$ is a prime, then $Z_n^{*}$ has a generator
+2. If $\alpha$ is a generator of $\Z_n^{*}$,then $Z_n^{*}$={$\alpha^{i}$ mod n | $0 \le$ i $\le$ $\phi$ (n) - 1}
+3. Suppose $\alpha$ is a generator of $\Z_n^{*}$, Then $b=\alpha^i$ mod $n$ is also a generator of $\Z_n^{*}$ if and only if $gcd(i,\phi(n))$=1. It follows that if $Z_n^{*}$ is cyclic, then the number of generators is $\phi(\phi(n))$
+4. 
