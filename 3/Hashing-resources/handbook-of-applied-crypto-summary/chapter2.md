@@ -668,4 +668,88 @@ $x \equiv a_k$ (mod $n_k$)
 1. $Z_n^{*}$ has a generator if only if $n$=2,4,$p^k$ or 2$p^k$, where $p$ is an odd prime and $k \ge 1$. In particular, if $p$ is a prime, then $Z_n^{*}$ has a generator
 2. If $\alpha$ is a generator of $\Z_n^{*}$,then $Z_n^{*}$={$\alpha^{i}$ mod n | $0 \le$ i $\le$ $\phi$ (n) - 1}
 3. Suppose $\alpha$ is a generator of $\Z_n^{*}$, Then $b=\alpha^i$ mod $n$ is also a generator of $\Z_n^{*}$ if and only if $gcd(i,\phi(n))$=1. It follows that if $Z_n^{*}$ is cyclic, then the number of generators is $\phi(\phi(n))$
-4. 
+4. $\alpha \in Z_n^{*}$ is a generator of $Z_n^{*}$ if and only if $\alpha^{\phi(n)/p}$ $\not\equiv$ 1 (mod $n$) for each prime divisor $p$ of $\phi(n)$
+### Example 
+- $\Z_{21}^{*}$  is not cycle since it doeos not contain an element of order $\phi(21)$=12
+- 21 does not satisfy the condition of Fact 2.132(i)
+- $\Z_{25}^{*}$ is cyclic, and has a generator $\alpha$=2
+### Definition
+- Let $\alpha$ $\in$ $\Z_{n}^{*}$
+- a is said to be a quadractic residue module $n$ or a square modulo n,if there exists an $x$ $\in$ $\Z_{n}^{*}$ such that $x²$ $\equiv$ $a$ (mod n)
+- If no $x$ exists, then a is called a quadratic non-residue module n
+- The set of all quadratic residudes module n is denoted by $Q_n$ and the set of all quadratic non-residue is denoted by $\overline{Q}_{n}$
+- By definition 0 $\notin$ $\Z_{n}^{*}$, whence 0 $\notin$ $Q_n$ and 0 $\notin$ $\overline{Q}_n$
+### Fact
+- Let p be an odd prime and let $\alpha$ be a generator of $\Z_{p}^{*}$
+- Then a $\in$ $Z_{p}^{*}$ is q quadratic residue modulo $p$
+- If and only if $a=a^i$ mod p, where i is an even integer
+- If follows that |$Q_p$|=(p-1)/2 and |$\overline{Q}_{p}$|=(p-1)/2
+- This means that half of the elements in $\Z_{p}^{*}$ are quadratic residues and the other half are quadratic non-residues
+### Example
+- $\alpha$=6 is a generator of $Z_{13}^{*}$
+- The powers of $\alpha$ are listed in the following table
+![powers of alpha](../assets/powersa.png)
+- Ence $Q_{13}$={1,3,4,9,10,12} and $\overline{Q}_{13}$={2,5,6,7,8,11}
+### Fact
+- Let n be a product of two distinct odd primes p and q
+- n=pq
+- Then a $\in$ $Z_{n}^{*}$ is a quadratic residue module $n$ if and only if a $\in$ $Q_p$ and a $\in$ $Q_q$
+- It follows that |$Q_n$|=|$Q_p$|·|$Q_q$|=(p-1)(q-1)/4 and |$\overline{Q}_{n}$|=3(p-1)(q-1)/4
+### Example 
+- Let n=21
+- $Q_{21}$={1,4,16}
+- $\overline{Q}_{21}$={2,5,8,10,11,13,17,19,20}
+### Definition
+- Let $\alpha$ $\in$ $Q_n$
+- If x $\in$ $\Z_{n}^{*}$ satisfies $x^2$ $\equiv$ a (mod n)
+- x is called a square root of a modulo n
+### Fact
+1. if p is an odd prime a $\in$ $Q_p$, then a has exacly two square roots modulo p
+2. More generally, let n = $p_{1}^{e_1}$$p_{2}^{e_2}$···$p_{k}^{e_k}$ where the $p_i$ are distinct odd primes and $e_i$ $\geq$ 1. If a $\in$ $Q_{n}$, then $a$ has precisely $2^k$ distinct square roots modulo n
+### Example
+- The square roots of 12 modulo 37 are 7 and 30
+- The square root of 121 modulo 315 are 11,74,101,151,164,214,241 and 304
+## ALgorithms in $\Z_n$
+- Let $n$ be a positive integer. As before, the elements of $\Z_n$ will be represented by the integers {0,1,2,...,n-1}
+- if a,b $\in \Z_{n}$, then
+(a+b) mod n = $\{^{a+b, if  a+b < n,}_{a+b-n, if a+b \geq n}$
+- Hence modular addition (and subtraction) can be performed without the need of a long division
+- Modular multiplication of a and b may be accomplished by simply multiplying a and b as integers, and then taking the remainder of the result after division by n
+- Inverses in $\Z_{n}$ can be computed using the extended Euclidean algorithm as next described
+### Algorithm Computing multiplicative inverses in $\Z_n$
+- Input: a $\in$ $\Z_n$
+- Output: $a^{-1}$ mod n, provided that it exists
+
+1. Use the extended Euclidean algorithm to find integers x and y such that $ax+ny=d$, where d=gcd(a,n)
+2. If d > 1, then $a_{-1}$ mod n does not exist.Otherwise return(x)
+
+- Modular exponentation can be performed efficiently with the repeated square-and-multiply algorithm
+- This is crucial for many cryptographic protocols
+- One version of the algorithm is based on the following observation
+- Let the binary representation of k be $\sum^{t}_{i=0}$$k_i$ $2^i$, where each $k_i$ $\in$ {0,1}. Then $a^k$=$\prod^{t}_{i=0}$$a^{k_{i}2^{i}}$=$(a^{2^0})^{k_{0}}$ $(a^{2^{1}})^{k_1}$···$(a^{2^{t}})^{k_t}$
+### Algorithm
+- Input: a $\in$ $\Z_{n}$, and integer $0\le k < n$ whose binary representation is k=$\sum^{k}_{i=0}$ $k_{i}2^{i}$
+- Output: $a^k$ mod n
+1. Set b $\leftarrow$ 1. If k=0 then return(b)
+2. Set A $\leftarrow$ a
+3. If $k_0$=1 then set b $\leftarrow$a
+4. For i from 1 to t do the following:
+   
+   4.1- Set A $\leftarrow$$A^2$ mod n
+   4.2- If $k_i$=1 then set b $\leftarrow$A·b mod n
+5. Return(b)
+### Example (modular exponentiation)
+- Table 2.4 shows the steps involved in computation of $5^{596}$ mod 1234=1013
+- The number of bit operations for the basic operations in $\Z_n$ is summarized in table 2.5
+- Efficient algorithms for performing modular multiplication and exponention are further examined in another ocasions
+![Table 2.4 and 2.5](../assets/table2.4&2.5.png)
+### The legendre and jacobi symbols
+- The legendre symbol is a useful tool for keeping track of whether or not an integer a is a quadratic residue modulo a prime p
+#### Definition
+- Let p be an odd prime and a an integer
+- The legendre symbol ($\frac{a}{p}$) is defined to be
+![Legendre symbol](../assets/legendresymbol.png)
+#### Fact
+- Let p be an odd prime and a,b $\in$ $\Z$. Then the legendre symbol has the following props:
+1. ($\frac{a}{p}$) $\equiv$ $a^{(p-1)/2}$ (mod p). In particular, ($\frac{1}{p}$)=1 and ($\frac{-1}{p}$)=$(-1)^{(p-1)/2}$. Hence -1 $\in$ $Q_p$ if $p \equiv 1$ (mod 4), and -1 $\in$ $\overline{Q}_{p}$ if p $\equiv$ 3 (mod 4)
+2. $\frac{ab}{p}$=($\frac{a}{b}$)($\frac{b}{p}$). Hence if a $\in$ $\Z_{p}^{*}$, then ($\frac{a^2}{p}$)=1
