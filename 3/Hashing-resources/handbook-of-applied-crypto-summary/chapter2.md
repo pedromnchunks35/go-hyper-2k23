@@ -753,3 +753,74 @@ $x \equiv a_k$ (mod $n_k$)
 - Let p be an odd prime and a,b $\in$ $\Z$. Then the legendre symbol has the following props:
 1. ($\frac{a}{p}$) $\equiv$ $a^{(p-1)/2}$ (mod p). In particular, ($\frac{1}{p}$)=1 and ($\frac{-1}{p}$)=$(-1)^{(p-1)/2}$. Hence -1 $\in$ $Q_p$ if $p \equiv 1$ (mod 4), and -1 $\in$ $\overline{Q}_{p}$ if p $\equiv$ 3 (mod 4)
 2. $\frac{ab}{p}$=($\frac{a}{b}$)($\frac{b}{p}$). Hence if a $\in$ $\Z_{p}^{*}$, then ($\frac{a^2}{p}$)=1
+3. If a $\equiv$ b (mod p), then ($\frac{a}{p}$)=($\frac{b}{p}$)
+4. ($\frac{2}{p}$)=$(-1)^{(p²-1)/8}$. Hence ($\frac{2}{p}$)=1 if p $\equiv$ 1 or 7 (mod 8), and ($\frac{2}{p}$)=-1 if p $\equiv$ 3 or 5 (mod 8)
+5. (law of quadratic reciprocity) If q is an odd prime distinct from p, then ($\frac{p}{q}$)=($\frac{q}{p}$)$(-1)^{(p-1)(q-1)/4}$. In other words, ($\frac{p}{q}$)=($\frac{q}{p}$) unless both p and q are congruent to 3 modulo 4, in which case ($\frac{p}{q}$)=-($\frac{q}{p}$)
+#### Definition
+- Let n $\geq$ 3 be odd with prime factorization n=$p_{1}^{e^{1}}$ $p_{2}^{e_2}$···$p_{k}^{e_k}$
+- Then the jacobi symbol ($\frac{a}{n}$) is defined to be ($\frac{a}{n}$)=$(\frac{a}{p_1})^{e_1}$ $(\frac{a}{p_2})^{e_2}$···$(\frac{a}{p_k})^{e_k}$
+- Observe that if n is prime, then the jacobi symbol is just the Legendre symbol
+#### Fact (properties of jacobi symbol)
+- Let $m \geq 3$, $n \geq 3$ be odd integers,and a,b $\in$ $\Z$. Then the jacobi symbol has the following properties:
+1. $(\frac{a}{n})$=0,1, or -1. Moreover, ($\frac{a}{n}$)=0 if and only if gcd(a,n) $\neq$ 1
+2. ($\frac{ab}{n}$)=($\frac{a}{n}$)($\frac{b}{n}$).Hence if a $\in$ $\Z_{n}^{*}$, then $(\frac{a^2}{n})$=1
+3. $(\frac{a}{mn})$=$(\frac{a}{m})$ $(\frac{a}{n})$
+4. If a $\equiv$ b (mod n), then ($\frac{a}{n}$)=($\frac{b}{n}$)
+5. ($\frac{1}{n}$)=1
+6. ($\frac{-1}{n}$)=$(-1)^{(n-1)/2}$. Hence $(\frac{-1}{n})$=1 if n $\equiv$ 1 (mod 4), and ($\frac{-1}{n}$)=-1 if n $\equiv$ 3 (mod 4)
+7. ($\frac{2}{n}$)=$(-1)^{(n^2-1)/8}$. In other words, ($\frac{m}{n}$)=($\frac{n}{m}$) unless both m and n are congruent to 3 modulo 4, in which case ($\frac{m}{n}$)=-($\frac{n}{m}$)
+8. ($\frac{m}{n}$)=($\frac{n}{m}$)$(-1)^{(m-1)(n-1)/4}$. In other words, ($\frac{m}{n}$)=($\frac{n}{m}$) unless both m and n are congruent to 3 modulo 4, in which case ($\frac{m}{n}$)=-($\frac{n}{m}$). By properties of jacobi symbo it follows that if n is odd and a=$2^e_{a1}$ where $a_1$ is odd, then ($\frac{a}{n}$)=($\frac{2^e}{n}$)($\frac{a_1}{n}$)=$(\frac{2}{n})^{e}$ $(\frac{n \mod a_1}{a_1})$ $(-1)^{(a_1-1)(n-1)/4}$. This observation yields the following recursive algorithm for computing ($\frac{a}{n}$), which does not require the prime factorization of n
+#### Algorithm Jacobi Symbol
+- JACOBI(a,n)
+- INPUT: an odd integer n $\geq$ 3, and an integer a,0$\leq$a$\leq$n
+- OUTPUT: the Jacobi symbol ($\frac{a}{n}$)(and hence the Legendre symbol when n is prime)
+  
+  1. If a=0 then return(0)
+  2. If a=1 then return(1)
+  3. Write a=$2^e$a1, where $a_1$ is odd
+  4. If $e$ is even then set s $\leftarrow$ 1. Otherwise set s $\leftarrow$ 1 if n $\equiv$ 1 or 7 (mod 8), or set s $\leftarrow$ -1 if n $\equiv$ 3 or 5 (mod 8)
+  5. If n $\equiv$ 3 (mod 4) and $a_1$ $\equiv$ 3 (mod 4) then s $\leftarrow$ -s
+  6. Set $n_1 \leftarrow n$ mod $a_1$
+  7. If $a_1$ = 1 then  return(s); otherwise return(s · JACOBI($n_1,a_1$))
+#### Fact 
+- Algorithm 2.149 has a running time of $O((lg n)^2)$ bit operations
+#### Remark (Finding quadratic non-residues modulo a prime p)
+- Let p denote an odd prime
+- Even tought it is known that half of the elements in $\Z_{p}^{*}$ are quadratic non-residues modulo p
+- There is no deterministic polynomial-time algorithm known for finding one
+- A randomized algorithm for finding a quadratic non-residue is to simply select random integer $a \in \Z_p^{*}$ until one is found satisfying ($\frac{a}{p}$)=-1
+- The expected number iterations before a non-residue is found is 2 and hence the procedure takes expected polynomial-time
+#### Example (jacobi symbol computation)
+- For a=158 and n=235, Algorithm 2.149 computes the Jacobi symbol ($\frac{158}{235}$) as follows: ($\frac{158}{235}$) = ($\frac{2}{235}$)($\frac{79}{235}$) = (-1) ($\frac{235}{79}$)(-1)^{78·234/4}=($\frac{77}{79}$) = ($\frac{2}{77}$)=-1
+- Unlike the legendre symbol, the jacobi symbol ($\frac{a}{n}$) does not reveal whether or not a is a quadratic residue modulo n. It is indeed true that if $a \in Q_n$, then  ($\frac{a}{n}$)=1. However, ($\frac{a}{n}$)=1 does not imply that $a \in Q_n$
+#### Example (quadratic residues and non-residues)
+- The table 2.6 lists the elements in $\Z_{21}^{*}$ and their Jacobi symbols
+- Recall from Example 2.138 that $Q_{21}$={1,4,16}
+- Observe that ($\frac{5}{21}$)=1 but 5 $\notin$ $Q_{21}$
+![Table 2.6](../assets/table2.6.png)
+#### Definition 
+- Let n $\geq$ 3 be an odd integer
+- $J_N$={a $\in$ $\Z_n^{*}$|$(\frac{a}{n})=1$}
+- The set of pseudosquares modulo n, denoted $\widetilde{Q}_n$, is defined to be the set $J_n-Q_n$
+#### Fact
+- Let n=pq be a product of two distinct odd primes. Then |$Q_n$|=|$\widetilde{Q}_n$|=(p-1)(q-1)/4
+- That is, half of the elements in $J_n$ are quadratic residues and the other half are pseudosquares
+## Blum Integers
+- A blum integer is a composite integer of the form n=pq, where p and q are distinct primes each congruent to 3 modulo 4
+### Fact
+- Let n=pq be a Blum integer, and let a $\in$ $Q_n$. Then a has precisely four square roots modulo n, exacly one of which is also in $Q_n$
+### Definition
+- Let n be a Blum integer and let a $\in$ $Q_n$
+- The unique square root of a in $Q_n$ is called the principal square root of a modulo n
+### Example (Blum integer)
+- For the Blum integer n=21,$J_n$={1,4,5,16,17,20} and $\widetilde{Q}_{n}$={5,17,20}. The four square roots of a=4 are 2,5,16, and 19, of which only 16 is also in $Q_{21}$. Thus 16 is the principal square root of 4 modulo 21
+### Fact 
+- If n=pq is a Blum integer, then the function f:$Q_n \rightarrow Q_n$ defined by f(x)=$x^2$ mod n is a permutation. The inverse function of f is: $f^{-1}$(x)=x^{((p-1)(q-1)+4)/8} mod n
+## Abstract Algebra
+- A binary operation * on a set S is a mapping from SxS to S. That is, * is a rule which assigns to each ordered pair of elements from S an element of S
+### Groups
+#### Definition
+- A group (G,*) consists of a set G with binary operation * on G satisfying the following three axioms:
+1. The group operation is associative. That is,$a*(b*c)=(a*b)*c$ for all a,b,c $\in$ G
+2. There is an element 1 $\in$ G, called the identity element, such that $a*1=1*a=a$ for all a $\in$ G
+3. For each $a \in G$ exists an element $a^{-1} \in G$,called the inverse of a, such that $a*a^{-1}=a^{-1}*a=1$ 
